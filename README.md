@@ -1,8 +1,18 @@
+<table align="center" border="0" cellpadding="0" cellspacing="0">
+  <tr><td align="center" bgcolor="#052e27">
+    <img src="data/images/logo.png" alt="IDEA — технологический радар" width="190">
+  </td></tr>
+</table>
+
 # IDEA
 
 ## Технологический радар
 
 Главная страница открывает поиск ранних технологических сигналов: многоязычный план → открытые источники → чтение документов → кандидаты → проверка зрелости → финальный ТОП-15 кандидатов и отчёты. Сначала в списке идут подтверждённые слабые сигналы по убыванию уверенности; затем, если их меньше 15, остальные кандидаты также по убыванию уверенности. Исходный статус каждого сохранён. Исходное приложение гипотез сохранено на `/lab`.
+
+<p align="center">
+  <img src="data/images/radar.png" alt="Направления поиска IDEA Radar" width="100%">
+</p>
 
 ### Быстрый запуск
 
@@ -117,22 +127,31 @@ RADAR_DEADLINE_SECONDS=1200 .venv/bin/python -m uvicorn app.main:app --port 8091
 
 `RADAR_PROVIDER=local` переводит на свой OpenAI-совместимый сервер (Ollama, vLLM, SGLang, LM Studio)
 и радар, и разметку признаков; `LOCAL_LLM_BACKEND` выбирает, как у сервера выключаются рассуждения.
-Веб-поиск остаётся — сервис поиска с SearXNG без ключей, так что весь стек работает на своём железе;
-модель скоринга берётся обученная на признаках той же LLM (`app/ml/model/logreg_v1_<модель>.json`).
-Выбор модели и измеренное качество — [docs/10-model-comparison.md](docs/10-model-comparison.md).
+Ключ OpenRouter для радара не нужен. Веб-поиск и открытые источники продолжают обращаться в интернет.
+Модель скоринга выбирается по используемой LLM разметки; доступные локальные варианты и их метрики —
+[docs/10-model-comparison.md](docs/10-model-comparison.md).
 
 ```bash
-brew install ollama && ollama serve &          # или vLLM на GPU-сервере
-ollama pull qwen3.6:35b-a3b                    # из списка ТЗ; лучшее качество — qwen3.8:27b
-RADAR_PROVIDER=local LOCAL_MODEL=qwen3.6:35b-a3b RADAR_DEADLINE_SECONDS=2400 \
-  .venv/bin/python -m uvicorn app.main:app --port 8091
+ollama serve                                    # запустить Ollama на хосте
+ollama pull qwen3.6:35b-a3b                    # один из поддерживаемых вариантов
 ```
 
-В Docker Compose сервер на хосте доступен как `http://host.docker.internal:11434/v1` (по умолчанию
-для `LOCAL_LLM_URL`); или поднимите его профилем: `--profile ollama` (`http://ollama:11434/v1`),
-`--profile vllm` (`http://vllm:8000/v1`, `LOCAL_LLM_BACKEND=vllm`), `--profile sglang`
-(`http://sglang:30000/v1`, `LOCAL_LLM_BACKEND=sglang`); vLLM и SGLang требуют NVIDIA GPU. На ноутбуке M5 32 ГБ разметка одной технологии занимает ~12 с у
-`qwen3.6:35b-a3b` и ~40 с у `qwen3.8:27b` — поднимите `RADAR_DEADLINE_SECONDS`.
+Для Docker Compose укажи в `.env`:
+
+```env
+RADAR_PROVIDER=local
+LOCAL_LLM_URL=http://host.docker.internal:11434/v1
+LOCAL_LLM_BACKEND=ollama
+LOCAL_MODEL=qwen3.6:35b-a3b
+FEATURE_MODEL=qwen3.6:35b-a3b
+FEATURE_LLM_TIMEOUT=300
+FEATURE_LLM_TRIES=2
+RADAR_DEADLINE_SECONDS=2400
+```
+
+Затем пересобери сервис: `docker compose up -d --build`. Для запуска API прямо на хосте, вне Docker,
+замени `LOCAL_LLM_URL` на `http://localhost:11434/v1`. Вместо Ollama можно указать vLLM или SGLang
+с их OpenAI-совместимым адресом; vLLM и SGLang требуют NVIDIA GPU.
 
 Тестовый прогон «Новые технологии защиты ИИ-агентов в банках»: 5 минут, 74 источника, 24 кандидата,
 все оценены моделью, 15 сигналов в ТОП-15.
