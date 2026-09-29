@@ -1,0 +1,1 @@
+"""Nornickel research hypothesis MVP."""

@@ -1,0 +1,96 @@
+term,source
+tensor network compression,gold-001
+agent identity management,gold-002
+Automated Red Teaming,gold-003
+tool poisoning defense,gold-004
+deep generative design,gold-005
+autonomous procurement agents,gold-006
+neuromorphic processor,gold-008
+optical circuit switching,gold-009
+tiered KV cache,gold-010
+robot app store,gold-011
+quadruped inspection robot,gold-012
+AI safety certification,gold-013
+teleoperation data collection,gold-014
+remote identity verification,gold-015
+ultra-low-power NPU,gold-016
+event-based vision sensor,gold-017
+orbital edge computing,gold-018
+cross-silo federated learning,gold-019
+LLM firewall,gold-020
+self-healing prompt injection defense,gold-021
+automated AI governance,gold-022
+differentially private synthetic data,gold-023
+confidential inference,gold-024
+large language model watermarking,gold-025
+industrial foundation models,gold-026
+zero-shot anomaly detection,gold-027
+human-in-the-loop autonomous agents,gold-029
+autonomous robotic welding,gold-030
+virtual power plant bidding,gold-031
+3D wafer-scale integration,gold-032
+deep learning compilers,gold-033
+nuclear-powered data centers,gold-034
+air-gapped sovereign cloud,gold-035
+dexterous robotic hand,gold-036
+swarm robotics,gold-037
+embodied AI accelerator,gold-038
+conversational debt collection,gold-039
+autonomous core banking,gold-040
+decentralized credit scoring,gold-041
+on-chain foreign exchange,gold-042
+federated fraud detection,gold-043
+analog in-memory computing,gold-044
+neuromorphic edge processor,gold-045
+Edge AI orchestration,gold-046
+photonic AI accelerator,gold-047
+machine unlearning,gold-048
+representation monitoring,gold-049
+HTTP message signatures,gold-050
+AI supply chain security,gold-051
+chain-of-thought monitoring,gold-052
+time series foundation models,gold-053
+acoustic condition monitoring,gold-054
+virtual metrology,gold-055
+collaborative edge inference,gold-056
+CXL memory pooling,gold-057
+decentralized inference,gold-058
+orbital edge computing,gold-059
+optical neural network,gold-060
+autonomous underwater vehicle swarms,gold-061
+telematics-based underwriting,gold-062
+visuotactile VLA models,gold-063
+egocentric imitation learning,gold-064
+purpose-bound money,gold-065
+autonomous compliance agents,gold-066
+HTTP micropayments,gold-067
+zero-knowledge KYC,gold-068
+agent payment protocols,gold-069
+artificial intelligence liability insurance,gold-070
+on-device AI agents,gold-072
+on-device fine-tuning,gold-073
+on-device language models,gold-074
+edge-cloud collaborative inference,gold-075
+memory poisoning defense,gold-076
+LLM backdoor detection,gold-077
+PLC code generation,gold-078
+automated P&ID generation,gold-079
+cross-silo federated learning,gold-082
+3D in-memory computing,gold-083
+analog in-memory computing,gold-084
+embedded microchannel cooling,gold-085
+LLM inference accelerator,gold-086
+cryogenic computing,gold-087
+zero-shot sim-to-real transfer,gold-088
+soft robotic metamaterials,gold-089
+medical microrobots,gold-090
+agent identity management,gold-091
+trading agent benchmark,gold-092
+tokenized deposits,gold-093
+embedded confidential computing,gold-094
+in-sensor computing,gold-095
+speculative offloading,gold-096
+biohybrid muscle actuators,gold-097
+self-healing electronic skin,gold-098
+hydraulically amplified electrostatic actuators,gold-099
+post-quantum cryptography migration,gold-100

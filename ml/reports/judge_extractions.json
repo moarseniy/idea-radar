@@ -1,0 +1,104 @@
+{
+ "judge": "anthropic/claude-opus-5.5",
+ "rows": 116,
+ "models": {
+  "google/gemini-3.8-flash": {
+   "rows": 116,
+   "event_precision": 0.952,
+   "event_recall": 0.442,
+   "events_per_row": 5.6,
+   "stage_justified": 4.16,
+   "stage_abs_err_vs_judge": 0.38,
+   "is_technology_acc": 0.991,
+   "mass_market_acc": 0.897,
+   "overall": 6.32,
+   "win_share": 0.159
+  },
+  "google/gemma-4-26b-a4b-it": {
+   "rows": 116,
+   "event_precision": 0.622,
+   "event_recall": 0.728,
+   "events_per_row": 13.53,
+   "stage_justified": 3.99,
+   "stage_abs_err_vs_judge": 0.54,
+   "is_technology_acc": 0.974,
+   "mass_market_acc": 0.793,
+   "overall": 6.07,
+   "win_share": 0.13
+  },
+  "google/gemma-4-31b-it": {
+   "rows": 116,
+   "event_precision": 0.834,
+   "event_recall": 0.639,
+   "events_per_row": 9.06,
+   "stage_justified": 4.15,
+   "stage_abs_err_vs_judge": 0.39,
+   "is_technology_acc": 0.948,
+   "mass_market_acc": 0.81,
+   "overall": 6.59,
+   "win_share": 0.175
+  },
+  "nvidia/nemotron-3.5-lightning#nothink": {
+   "rows": 116,
+   "event_precision": 0.223,
+   "event_recall": 0.755,
+   "events_per_row": 34.82,
+   "stage_justified": 2.8,
+   "stage_abs_err_vs_judge": 1.03,
+   "is_technology_acc": 0.931,
+   "mass_market_acc": 0.724,
+   "overall": 2.82,
+   "win_share": 0.011
+  },
+  "openai/gpt-5.6-luna": {
+   "rows": 116,
+   "event_precision": 0.925,
+   "event_recall": 0.591,
+   "events_per_row": 7.84,
+   "stage_justified": 4.18,
+   "stage_abs_err_vs_judge": 0.37,
+   "is_technology_acc": 0.991,
+   "mass_market_acc": 0.94,
+   "overall": 6.53,
+   "win_share": 0.227
+  },
+  "qwen/qwen3.6-35b-a3b#nothink": {
+   "rows": 116,
+   "event_precision": 0.49,
+   "event_recall": 0.829,
+   "events_per_row": 20.86,
+   "stage_justified": 3.91,
+   "stage_abs_err_vs_judge": 0.57,
+   "is_technology_acc": 0.966,
+   "mass_market_acc": 0.862,
+   "overall": 5.53,
+   "win_share": 0.075
+  },
+  "qwen/qwen3.8-27b#nothink": {
+   "rows": 116,
+   "event_precision": 0.862,
+   "event_recall": 0.619,
+   "events_per_row": 8.79,
+   "stage_justified": 4.11,
+   "stage_abs_err_vs_judge": 0.42,
+   "is_technology_acc": 1.0,
+   "mass_market_acc": 0.862,
+   "overall": 6.51,
+   "win_share": 0.224
+  }
+ },
+ "judge_stage_vs_customer": {
+  "n": 37,
+  "exact": 0.405,
+  "within_1": 0.811
+ },
+ "overall_by_position": {
+  "A": 5.48,
+  "B": 6.04,
+  "C": 5.67,
+  "D": 5.96,
+  "E": 5.8,
+  "F": 5.44,
+  "G": 5.97
+ }
+}

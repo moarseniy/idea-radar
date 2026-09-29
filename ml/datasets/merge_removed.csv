@@ -1,0 +1,539 @@
+id,source,label,name_ru,search_term,reason
+pos_1038fe0dd4389146,arseniy,1,устройства на двумерных полупроводниках для малопотребляющих сенсоров,2D semiconductor devices,дубль технологии «2d semiconductor device» → pos_0f81bbfebf605965
+pos_4ff3453af0db099b,arseniy,1,устройства на двумерных полупроводниках для сетевых накопителей энергии,2D semiconductor devices,дубль технологии «2d semiconductor device» → pos_0f81bbfebf605965
+pos_57ccfc69160167fb,arseniy,1,устройства на двумерных полупроводниках для гибких медицинских устройств,2D semiconductor devices,дубль технологии «2d semiconductor device» → pos_0f81bbfebf605965
+pos_6f1c4579dabc7d7d,arseniy,1,устройства на двумерных полупроводниках для циклического производства,2D semiconductor devices,дубль технологии «2d semiconductor device» → pos_0f81bbfebf605965
+pos_b5cce33660287901,arseniy,1,устройства на двумерных полупроводниках для аэрокосмических конструкций,2D semiconductor devices,дубль технологии «2d semiconductor device» → pos_0f81bbfebf605965
+neg_423c78b427e5351a,arseniy,0,активированный уголь для фильтрация воздуха,activated carbon adsorption,дубль технологии «activated carbon adsorption» → neg_3b816d739c92aee6
+neg_4fc319398e20294a,arseniy,0,активированный уголь для удаление запахов,activated carbon adsorption,дубль технологии «activated carbon adsorption» → neg_3b816d739c92aee6
+neg_7e1522acfc503453,arseniy,0,активированный уголь для очистка питьевой воды,activated carbon adsorption,дубль технологии «activated carbon adsorption» → neg_3b816d739c92aee6
+neg_85b3c796c9b1fb19,arseniy,0,активированный уголь для очистка фармацевтических веществ,activated carbon adsorption,дубль технологии «activated carbon adsorption» → neg_3b816d739c92aee6
+neg_b5aa0a4e6ab1166b,arseniy,0,активированный уголь для пищевая промышленность,activated carbon,дубль технологии «activated carbon adsorption» → neg_3b816d739c92aee6
+neg_bbe955816565fe65,arseniy,0,активированный уголь для химическое разделение,activated carbon adsorption,дубль технологии «activated carbon adsorption» → neg_3b816d739c92aee6
+neg_e0ce9a763639293b,arseniy,0,активированный уголь для очистка промышленных газов,activated carbon adsorption,дубль технологии «activated carbon adsorption» → neg_3b816d739c92aee6
+pos_49169836549bf9cf,arseniy,1,адаптивная маршрутизация инференса между устройством и облаком для диагностики непосредственно у пациента,adaptive inference offloading,дубль технологии «adaptive inference offloading» → pos_1b1c987ee1c1308d
+pos_6fa54d10558deb21,arseniy,1,адаптивная маршрутизация инференса между устройством и облаком для навигации беспилотников,adaptive inference offloading,дубль технологии «adaptive inference offloading» → pos_1b1c987ee1c1308d
+pos_7101fb5bc5755b24,arseniy,1,адаптивная маршрутизация инференса между устройством и облаком для мониторинга дикой природы,adaptive inference offloading,дубль технологии «adaptive inference offloading» → pos_1b1c987ee1c1308d
+pos_89ff82d078d6bc86,arseniy,1,адаптивная маршрутизация инференса между устройством и облаком для IoT-устройств с батарейным питанием,adaptive inference offloading,дубль технологии «adaptive inference offloading» → pos_1b1c987ee1c1308d
+pos_8b988330f13e6334,arseniy,1,адаптивная маршрутизация инференса между устройством и облаком для носимого мониторинга здоровья,adaptive inference offloading,дубль технологии «adaptive inference offloading» → pos_1b1c987ee1c1308d
+pos_cd2e7797a8c6df2c,arseniy,1,адаптивная маршрутизация инференса между устройством и облаком для предиктивного обслуживания оборудования,adaptive inference offloading,дубль технологии «adaptive inference offloading» → pos_1b1c987ee1c1308d
+pos_e845efc94957cfba,arseniy,1,адаптивная маршрутизация инференса между устройством и облаком для автономного транспорта,adaptive inference offloading,дубль технологии «adaptive inference offloading» → pos_1b1c987ee1c1308d
+pos_80b516968953534d,arseniy,1,адаптивная роботизированная сварка с машинным зрением для пищевого производства,vision-guided robotic welding,термин совпадает с золотой валидацией
+pos_3d35d5370c3ca3bb,arseniy,1,адаптивная роботизированная сварка с машинным зрением для фармацевтического производства,vision-guided robotic welding,термин совпадает с золотой валидацией
+pos_8791216a7012491c,arseniy,1,адаптивная роботизированная сварка с машинным зрением для производства стали,vision-guided robotic welding,термин совпадает с золотой валидацией
+pos_12f9b793680ffb9c,arseniy,1,адаптивная роботизированная сварка с машинным зрением для аэрокосмической сборки,vision-guided robotic welding,термин совпадает с золотой валидацией
+pos_1a0440d93cb06df6,arseniy,1,адаптивная роботизированная сварка с машинным зрением для полупроводниковых фабрик,vision-guided robotic welding,термин совпадает с золотой валидацией
+pos_12d82a05b3517e0e,arseniy,1,непрерывный автоматизированный red teaming ИИ для агентов научных исследований,automated red teaming,дубль технологии «adversarial prompt generation» → pos-1836827
+pos_1d252793700ba561,arseniy,1,непрерывный автоматизированный red teaming ИИ для оборонных систем,automated red teaming,дубль технологии «adversarial prompt generation» → pos-1836827
+pos_66905df37ca5e668,arseniy,1,непрерывный автоматизированный red teaming ИИ для эксплуатации критической инфраструктуры,automated red teaming,дубль технологии «adversarial prompt generation» → pos-1836827
+pos-3660059,ours,1,Анализ намерений и поведенческий контроль действий автономных ИИ-агентов на конечных устройствах,agent behavioral monitoring,дубль технологии «agent behavioral monitoring» → pos-0020599
+pos_9147200e66f61feb,arseniy,1,защита памяти ИИ-агентов от отравления для агентов финансовых сервисов,memory poisoning defense,дубль технологии «agent memory poisoning defense» → pos_2678310f82ff06b3
+pos_bdcc86856a3e49b3,arseniy,1,защита памяти ИИ-агентов от отравления для оборонных систем,memory poisoning defense,дубль технологии «agent memory poisoning defense» → pos_2678310f82ff06b3
+pos_e9be790ba7e42edc,arseniy,1,защита памяти ИИ-агентов от отравления для периферийных систем ИИ,memory poisoning defense,дубль технологии «agent memory poisoning defense» → pos_2678310f82ff06b3
+pos_fdcd9df17bd1a9b7,arseniy,1,защита памяти ИИ-агентов от отравления для агентов промышленного управления,memory poisoning defense,дубль технологии «agent memory poisoning defense» → pos_2678310f82ff06b3
+pos_3750019c47940cbe,arseniy,1,протоколы авторизации платежей ИИ-агентов для программируемых расчётов,agent payment authorization,дубль технологии «agent payment authorization» → pos_0dccc17ff2ffc28e
+pos_678ed38676829c55,arseniy,1,протоколы авторизации платежей ИИ-агентов для противодействия отмыванию денег,agent payment authorization,дубль технологии «agent payment authorization» → pos_0dccc17ff2ffc28e
+pos_9735f4e98d0ba04a,arseniy,1,протоколы авторизации платежей ИИ-агентов для торгового финансирования,autonomous payment authorization,дубль технологии «agent payment authorization» → pos_0dccc17ff2ffc28e
+pos_9da21a6c4f72849e,arseniy,1,протоколы авторизации платежей ИИ-агентов для цифровых валют центральных банков,agent payment authorization,дубль технологии «agent payment authorization» → pos_0dccc17ff2ffc28e
+pos_9dbd3eddde968ead,arseniy,1,протоколы авторизации платежей ИИ-агентов для финансовой доступности на развивающихся рынках,agent payment authorization,дубль технологии «agent payment authorization» → pos_0dccc17ff2ffc28e
+pos_d619fa085c7454b7,arseniy,1,протоколы авторизации платежей ИИ-агентов для хранения цифровых активов,autonomous payment authorization,дубль технологии «agent payment authorization» → pos_0dccc17ff2ffc28e
+pos-3548919,ours,1,Автоматизация жизненного цикла кредитования и взыскания задолженности мультиагентными ИИ-системами,multi-agent systems,дубль технологии «agentic ai» → pos-1666420
+pos-8383106,ours,1,Защита среды исполнения и мониторинг действий автономных ИИ-агентов генерации кода,AI agent sandboxing,дубль технологии «ai agent sandboxing» → pos-739200
+pos_5a1d96130c03419f,arseniy,1,провенанс моделей ИИ и ведомости компонентов для автономной разработки программного обеспечения,AI Bill of Materials,дубль технологии «ai bill of material» → pos_3b308a95441fdc6a
+pos_9050134a2b8b5a8c,arseniy,1,провенанс моделей ИИ и ведомости компонентов для агентов научных исследований,AI Bill of Materials,дубль технологии «ai bill of material» → pos_3b308a95441fdc6a
+pos_950385c1e11c4121,arseniy,1,провенанс моделей ИИ и ведомости компонентов для периферийных систем ИИ,AI Bill of Materials,дубль технологии «ai bill of material» → pos_3b308a95441fdc6a
+pos_bbd68b5185cb0b49,arseniy,1,провенанс моделей ИИ и ведомости компонентов для эксплуатации критической инфраструктуры,AI Bill of Materials,дубль технологии «ai bill of material» → pos_3b308a95441fdc6a
+pos_c6070a01c069c1e6,arseniy,1,провенанс моделей ИИ и ведомости компонентов для агентов финансовых сервисов,AI Bill of Materials,дубль технологии «ai bill of material» → pos_3b308a95441fdc6a
+pos_ff10af07c7cec7d4,arseniy,1,провенанс моделей ИИ и ведомости компонентов для оборонных систем,AI Bill of Materials,дубль технологии «ai bill of material» → pos_3b308a95441fdc6a
+pos-3897996,ours,1,Автоматизированное проектирование заказных микросхем с применением искусственного интеллекта,AI-driven EDA,дубль технологии «ai driven chip design» → pos-3657783
+pos-7630626,ours,1,Вторичная торговая инфраструктура для обеспечения ликвидности долей в недвижимости,alternative trading system,противоречие меток в группе «alternative trading system»
+neg-c0746489,ours,0,Альтернативные торговые системы для вторичного обращения непубличных активов,alternative trading system,противоречие меток в группе «alternative trading system»
+pos_46a732bacf5ffe5d,arseniy,1,аналоговые вычисления в памяти для крупномасштабных рекомендательных систем,analog in-memory computing,дубль технологии «analog neuromorphic computing» → pos-5165447
+pos_7dca45aebec4bfa7,arseniy,1,аналоговые вычисления в памяти для инференса языковых моделей с длинным контекстом,analog in-memory computing,дубль технологии «analog neuromorphic computing» → pos-5165447
+pos_97ace1f3423b4e52,arseniy,1,аналоговые вычисления в памяти для энергоэффективного edge-инференса,analog in-memory computing,дубль технологии «analog neuromorphic computing» → pos-5165447
+pos_aa3a97997e669a8e,arseniy,1,аналоговые вычисления в памяти для высокопроизводительных научных вычислений,analog in-memory computing,дубль технологии «analog neuromorphic computing» → pos-5165447
+pos_ad411ca8204c9291,arseniy,1,аналоговые вычисления в памяти для конфиденциального инференса,analog in-memory computing,дубль технологии «analog neuromorphic computing» → pos-5165447
+pos_b11d0ed034457ee6,arseniy,1,аналоговые вычисления в памяти для энергоэффективных центров обработки данных ИИ,analog in-memory computing,дубль технологии «analog neuromorphic computing» → pos-5165447
+neg-w7398579,ours,0,Шарнирный промышленный манипулятор для пространственного перемещения рабочих инструментов,articulated manipulator,дубль технологии «articulated manipulator» → neg-8473477
+pos-4480688,ours,1,Асинхронная выгрузка контрольных точек через теневой CPU-процесс для дообучения моделей,asynchronous checkpointing,противоречие меток в группе «asynchronou checkpointing»
+neg-c3565798,ours,0,Асинхронная запись данных на накопитель без блокировки основных вычислений,asynchronous checkpointing,противоречие меток в группе «asynchronou checkpointing»
+pos-578298,ours,1,Автоматизированное состязательное тестирование моделей машинного обучения для выявления уязвимостей,automated adversarial testing,дубль технологии «automated adversarial testing» → pos-5749661
+pos-4334717,ours,1,Контекстная оркестровка агентных процессов для автоматизации согласования и учета корпоративных закупок,multi-agent orchestration,дубль технологии «autonomou agent orchestration» → pos-0515128
+pos-5077002,ours,1,Оркестрация автономных цифровых сотрудников для сквозной автоматизации корпоративных рабочих процессов,Autonomous agent orchestration,дубль технологии «autonomou agent orchestration» → pos-0515128
+pos-5492754,ours,1,Мультиагентная оркестрация валидации и сверки разнородных финансовых данных,multi-agent orchestration,дубль технологии «autonomou agent orchestration» → pos-0515128
+pos-8086773,ours,1,Автономное исполнение сквозных процессов соответствия нормативным требованиям с помощью ИИ-агентов,autonomous regulatory compliance,противоречие меток в группе «autonomou regulatory compliance»
+pos-7794501,ours,1,Интеграция регуляторных требований в ИИ-агентов для автоматизированного комплаенс-контроля,automated regulatory compliance,противоречие меток в группе «autonomou regulatory compliance»
+neg-c2158111,ours,0,Автоматизированное управление рисками и регуляторным соответствием корпоративных структур,automated regulatory compliance,противоречие меток в группе «autonomou regulatory compliance»
+neg_70c4d64d5007f15c,arseniy,0,штрихкод для идентификация товара,barcode,дубль технологии «barcode» → neg_02044777cbae0919
+neg_b9dc57365a1dd645,arseniy,0,штрихкод для складская логистика,barcode,дубль технологии «barcode» → neg_02044777cbae0919
+neg_c40096401feea04b,arseniy,0,штрихкод для управление библиотекой,barcode,дубль технологии «barcode» → neg_02044777cbae0919
+neg_f098afcd08ebc6d7,arseniy,0,штрихкод для управление запасами,barcode,дубль технологии «barcode» → neg_02044777cbae0919
+neg_556548b88451cb96,arseniy,0,штрихкод для прослеживаемость производства,barcode traceability,дубль технологии «barcode tracking» → neg_1873d87e72201ae5
+neg_de77cd5d9d776885,arseniy,0,BeeCount (программный продукт),BeeCount,дубль технологии «beecount cloud» → neg_60e58f40d0d64da6
+pos-1631357,ours,1,Однобитное квантование больших языковых моделей для снижения объема памяти и энергопотребления,1-bit quantization,дубль технологии «binary and ternary quantization» → pos-1466673
+pos_0c4a1b6be602e2d7,arseniy,1,биогибридные приводы из живой ткани для интерфейсов мозг–компьютер,biohybrid actuators,термин совпадает с золотой валидацией
+pos_6dacff1438233a78,arseniy,1,биогибридные приводы из живой ткани для регенерации тканей,biohybrid actuators,термин совпадает с золотой валидацией
+pos_37a68e621baa9793,arseniy,1,биогибридные приводы из живой ткани для адресной доставки лекарств,biohybrid actuators,термин совпадает с золотой валидацией
+pos_e1cc96562817c072,arseniy,1,биогибридные приводы из живой ткани для лечения редких заболеваний,biohybrid actuators,термин совпадает с золотой валидацией
+pos_0ca8b3dce3a24be5,arseniy,1,биогибридные приводы из живой ткани для скрининга лекарств,biohybrid actuators,термин совпадает с золотой валидацией
+pos_1a506eb8baecb3b5,arseniy,1,биогибридные приводы из живой ткани для антимикробной терапии,biohybrid actuators,термин совпадает с золотой валидацией
+neg_2ddd4df0839281fd,arseniy,0,Bluetooth для носимые устройства,Bluetooth Low Energy,дубль технологии «bluetooth» → neg_184065e2c5836a75
+neg_4e3141b38e7b5cbd,arseniy,0,Bluetooth для учёт активов,Bluetooth Low Energy,дубль технологии «bluetooth» → neg_184065e2c5836a75
+neg_a8472d4d97f9aa0d,arseniy,0,Bluetooth для промышленные датчики,Bluetooth Low Energy,дубль технологии «bluetooth» → neg_184065e2c5836a75
+neg_eabb3174d1d9fe29,arseniy,0,Bluetooth для автомобильная связь,Bluetooth,дубль технологии «bluetooth» → neg_184065e2c5836a75
+neg_ffe54b3550a40f52,arseniy,0,Bluetooth для отслеживание фитнеса,Bluetooth Low Energy,дубль технологии «bluetooth» → neg_184065e2c5836a75
+neg_5e5b65bd67a43aee,arseniy,0,информационное моделирование зданий для строительное проектирование,building information modeling,дубль технологии «building information modeling» → neg_43ce06c5632e7f42
+pos-5232809,ours,1,Автоматическое разбиение карточных транзакций на беспроцентные рассрочки при оплате,buy now pay later,противоречие меток в группе «buy now pay later»
+neg-c6521299,ours,0,Потребительский кредит в рассрочку для оплаты покупок фиксированными частями,Buy Now Pay Later,противоречие меток в группе «buy now pay later»
+neg-c1196579,ours,0,Дробление стоимости товара на фиксированные платежи по договору рассрочки,buy now pay later,противоречие меток в группе «buy now pay later»
+pos_71e67ea0d9dbfe1e,arseniy,1,цементные материалы с отрицательным углеродным следом для хранения водорода,carbon-negative cement,дубль технологии «carbon negative cement» → pos_71ac8382e83f7f66
+pos_f2740e8395fa9507,arseniy,1,цементные материалы с отрицательным углеродным следом для циклического производства,carbon-negative cement,дубль технологии «carbon negative cement» → pos_71ac8382e83f7f66
+pos_f4f0cff0249b585d,arseniy,1,цементные материалы с отрицательным углеродным следом для очистки воды,carbon-negative cement,дубль технологии «carbon negative cement» → pos_71ac8382e83f7f66
+pos-4899177,ours,1,Инспекция рассуждений языковых моделей для предотвращения небезопасных действий автономных агентов,chain-of-thought monitoring,термин совпадает с золотой валидацией
+neg-w6049982,ours,0,синхронизация оперативной памяти и накопителя для предотвращения потери данных,checkpointing,дубль технологии «checkpointing» → neg-c4257740
+neg_416fd547853c1906,arseniy,0,обработка на станках с ЧПУ для детали авиации,CNC machining,дубль технологии «cnc machining» → neg_3c5de4ed791e226a
+neg_5d0d4e366c9f7580,arseniy,0,обработка на станках с ЧПУ для изготовление инструментов,CNC machining,дубль технологии «cnc machining» → neg_3c5de4ed791e226a
+neg_6541970bdfb4d219,arseniy,0,обработка на станках с ЧПУ для детали автомобилей,CNC machining,дубль технологии «cnc machining» → neg_3c5de4ed791e226a
+neg_9468692bd282de0a,arseniy,0,обработка на станках с ЧПУ для изготовление пресс-форм,CNC machining,дубль технологии «cnc machining» → neg_3c5de4ed791e226a
+neg_d08fd42d8db2ad7f,arseniy,0,обработка на станках с ЧПУ для резка металла,CNC machining,дубль технологии «cnc machining» → neg_3c5de4ed791e226a
+neg_36c81690826c0414,arseniy,0,Заявление: ПО для когнитивных тренировок для память и когнитивные способности,computerized cognitive training,дубль технологии «cognitive training» → neg_32ce60b23687fbc2
+neg_54dce1e493ad7163,arseniy,0,компьютерная томография для визуализация травм,computed tomography,дубль технологии «computed tomography» → neg_46f481dfc22bcdcf
+neg_8c9b7d2b902d47a5,arseniy,0,компьютерная томография для диагностика инсульта,computed tomography,дубль технологии «computed tomography» → neg_46f481dfc22bcdcf
+neg_ad4bf7764440172f,arseniy,0,компьютерная томография для визуализация костей,computed tomography,дубль технологии «computed tomography» → neg_46f481dfc22bcdcf
+neg_d3b9bcb722d333d2,arseniy,0,компьютерная томография для скрининг рака,computed tomography,дубль технологии «computed tomography» → neg_46f481dfc22bcdcf
+neg_d16c9004a431eb9d,arseniy,0,cmms (программный продукт),computerized maintenance management system,дубль технологии «computerized maintenance management system» → neg-c8035544
+neg_18ab5298dc858d94,arseniy,0,армирование бетона для строительство мостов,concrete reinforcement,дубль технологии «concrete reinforcement» → neg_0307f3c2901b0629
+neg_215a17852de516ad,arseniy,0,армирование бетона для строительство дорог,concrete reinforcement,дубль технологии «concrete reinforcement» → neg_0307f3c2901b0629
+neg_aac41ab3c727ed55,arseniy,0,армирование бетона для строительство тоннелей,concrete reinforcement,дубль технологии «concrete reinforcement» → neg_0307f3c2901b0629
+neg-c3955822,ours,0,Сеть доставки контента: распределённое кэширование данных на периферии для снижения задержек,Content Delivery Network,дубль технологии «content delivery network» → neg-2977146
+pos-4460115,ours,1,Диалоговый ИИ-помощник в мессенджере для маршрутизации и исполнения трансграничных финансовых услуг,conversational AI,противоречие меток в группе «conversational ai»
+neg_a83ccf6117896925,arseniy,0,Разговорный ИИ с обещанием гарантированной прибыли,conversational AI,противоречие меток в группе «conversational ai»
+neg_43dee0f88fec96c1,arseniy,0,Заявление: AI chat technology для клиентские контракты и выручка,conversational AI,противоречие меток в группе «conversational ai»
+pos-8691749,ours,1,Автоматизированная оценка рисков и андеррайтинг коммерческой недвижимости с применением ИИ,automated underwriting,дубль технологии «conversational underwriting» → pos-7626840
+neg_7b6cb42eb77a9ef5,arseniy,0,deepchat (программный продукт),Deep Chat,дубль технологии «deep chat» → neg_4afa1d1651f0613f
+pos_1f970274381f8b4e,arseniy,1,обучение с подкреплением на промышленных контроллерах для целлюлозно-бумажного производства,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_309e008288e317b5,arseniy,1,обучение с подкреплением на промышленных контроллерах для производства цемента,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_63bbd031a127e71c,arseniy,1,обучение с подкреплением на промышленных контроллерах для пищевого производства,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_7039ea960b05b89a,arseniy,1,обучение с подкреплением на промышленных контроллерах для фармацевтического производства,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_784a6f9f50ab053e,arseniy,1,обучение с подкреплением на промышленных контроллерах для станций водоочистки,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_7e9a71ddd899224e,arseniy,1,обучение с подкреплением на промышленных контроллерах для производства стали,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_9976f145b9c84d55,arseniy,1,обучение с подкреплением на промышленных контроллерах для полупроводниковых фабрик,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_c786796be560f113,arseniy,1,обучение с подкреплением на промышленных контроллерах для химических производств,reinforcement learning control,дубль технологии «deep reinforcement learning control» → pos_1bb600faeb5304e4
+pos_54423fdee5d1ba75,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для агентов промышленного управления,delegated authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_59f1b98bd37f0272,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для автономных решений в здравоохранении,delegated authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_684d1d248da9a8a6,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для периферийных систем ИИ,delegated agent authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_9e1ea35dba2dcb74,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для автономных цепочек поставок,delegated authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_9f2055ec911ea84f,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для эксплуатации критической инфраструктуры,delegated authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_bc3f3a2a30b93ee5,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для медицинских копилотов,delegated authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_c2f5b8bfc15982eb,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для многоагентных корпоративных процессов,delegated agent authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_ec876f5c10dfce77,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для автономной разработки программного обеспечения,delegated agent authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_ffcd8cdf5fce633d,arseniy,1,идентичность ИИ-агентов и делегированная авторизация для оборонных систем,delegated authorization,дубль технологии «delegated agent authorization» → pos_2846b481ac27f83e
+pos_5c5d56b0a8365bc2,arseniy,1,алмазные квантовые сенсоры для мониторинга подземной инфраструктуры,diamond quantum sensor,дубль технологии «diamond quantum sensor» → pos_518a4ea76f349c4b
+pos_c19cdd30e2d16b58,arseniy,1,алмазные квантовые сенсоры для медицинской визуализации,diamond quantum sensor,дубль технологии «diamond quantum sensor» → pos_518a4ea76f349c4b
+neg-w9107446,ours,0,Прямой доступ к оперативной памяти без участия центрального процессора,Direct Memory Access,дубль технологии «direct memory access» → neg-w7293036
+pos-6769768,ours,1,Прямое жидкостное охлаждение чипов сверхчистыми водными растворами с аналитическим контролем,direct-to-chip liquid cooling,дубль технологии «direct to chip liquid cooling» → pos-0275847
+neg_a02d0df2bd0cd6c5,arseniy,0,Заявление: генетическое тестирование и алгоритм сопоставления для отчёты о происхождении и здоровье,direct-to-consumer genetic testing,дубль технологии «direct to consumer genetic testing» → neg_009dceecba6b43b1
+pos_33ad75fb1c1bb728,arseniy,1,дезагрегированное хранение KV-кэша для крупномасштабных рекомендательных систем,disaggregated KV cache,дубль технологии «disaggregated kv cache» → pos-050316
+pos_423b65d1ba3a10d5,arseniy,1,дезагрегированное хранение KV-кэша для энергоэффективного edge-инференса,disaggregated KV cache,дубль технологии «disaggregated kv cache» → pos-050316
+pos_510177cb74f4c793,arseniy,1,дезагрегированное хранение KV-кэша для энергоэффективных центров обработки данных ИИ,disaggregated KV cache,дубль технологии «disaggregated kv cache» → pos-050316
+neg_eba32d4b0bc6b8a6,arseniy,0,ветровая турбина для распределённая генерация,distributed wind turbine,дубль технологии «distributed wind turbine» → neg_dfa62fbce97b1dd7
+pos-5059075,ours,1,Структурирование неструктурированных медицинских и юридических записей для урегулирования страховых споров,document information extraction,дубль технологии «document information extraction» → pos-4899681
+neg_034a68d61fb84785,arseniy,0,капельное орошение для земледелие в засушливых районах,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_2871d08c44b0c8e1,arseniy,0,капельное орошение для производство хлопка,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_37ded3543025f461,arseniy,0,капельное орошение для производство овощей,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_628b3dd1bd2c81e7,arseniy,0,капельное орошение для орошение садов,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_705efd728c68f944,arseniy,0,капельное орошение для тепличное выращивание,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_7064650e8ae1403c,arseniy,0,капельное орошение для сельскохозяйственное производство,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_7960753dcc68297c,arseniy,0,капельное орошение для выращивание оливок,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_9175633fab29f29b,arseniy,0,капельное орошение для городское сельское хозяйство,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_c7102d5c32898d72,arseniy,0,капельное орошение для орошение виноградников,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg_cf8fc0ae636765b6,arseniy,0,капельное орошение для овощеводство,drip irrigation,дубль технологии «drip irrigation» → neg_02461e61fc9f212e
+neg-c9994867,ours,0,Динамический анализ работающего приложения для поиска брешей безопасности,Dynamic Application Security Testing,дубль технологии «dynamic application security testing» → neg-c3461147
+pos-4904628,ours,1,Динамический контроль полномочий и инвентаризация подключений серверов MCP для ИИ-агентов,dynamic authorization,дубль технологии «dynamic authorization» → pos-400539
+neg_ef1cffe98fd2c1a8,arseniy,0,ультразвуковая диагностика для визуализация сердца,echocardiography,дубль технологии «echocardiography» → neg_1709a4eee11d2ef1
+pos-4654386,ours,1,Энергоэффективные процессоры для распределенной гибридной обработки данных искусственного интеллекта,Edge AI processor,дубль технологии «edge ai processor» → pos-1655151
+neg_c44abd727f442bd6,arseniy,0,оркестрация контейнеров для телекоммуникационные сети,container orchestration,дубль технологии «edge container orchestration» → neg_5ff76c175af38c63
+neg_e75bd843c4a93e22,arseniy,0,оркестрация контейнеров для облачные приложения,container orchestration,дубль технологии «edge container orchestration» → neg_5ff76c175af38c63
+neg_5b21a23e02d419ee,arseniy,0,электрокардиография для предоперационная оценка,electrocardiography,дубль технологии «electrocardiography» → neg_37a3ab6f211d350c
+neg_63bfbc6eb3960116,arseniy,0,электрокардиография для обнаружение ишемии,electrocardiography,дубль технологии «electrocardiography» → neg_37a3ab6f211d350c
+neg_6659e96b9dbfc950,arseniy,0,электрокардиография для диагностика сердечной недостаточности,electrocardiography,дубль технологии «electrocardiography» → neg_37a3ab6f211d350c
+neg_6d0dc3f20f69d749,arseniy,0,электрокардиография для экстренная медицина,electrocardiography,дубль технологии «electrocardiography» → neg_37a3ab6f211d350c
+neg_f5dca9c3d8e0ced2,arseniy,0,электрокардиография для мониторинг спортсменов,electrocardiography,дубль технологии «electrocardiography» → neg_37a3ab6f211d350c
+pos_86ed7a2b565f916d,arseniy,1,электрохимический прямой захват углерода из воздуха для производства зелёного водорода,electrochemical direct air capture,дубль технологии «electrochemical direct air capture» → pos_020fc152ffab0059
+pos_9cbc7bbdbd2539fc,arseniy,1,электрохимический прямой захват углерода из воздуха для производства авиационного топлива,electrochemical direct air capture,дубль технологии «electrochemical direct air capture» → pos_020fc152ffab0059
+pos_db3d453bfc86ca53,arseniy,1,электрохимический прямой захват углерода из воздуха для утилизации промышленного сбросного тепла,electrochemical direct air capture,дубль технологии «electrochemical direct air capture» → pos_020fc152ffab0059
+pos_e0ff2f22b0d092cd,arseniy,1,электрохимический прямой захват углерода из воздуха для производства зелёной стали,electrochemical direct air capture,дубль технологии «electrochemical direct air capture» → pos_020fc152ffab0059
+pos_e7c79cfbbccd06c4,arseniy,1,электрохимический прямой захват углерода из воздуха для безуглеродного судоходства,electrochemical direct air capture,дубль технологии «electrochemical direct air capture» → pos_020fc152ffab0059
+pos_2d8057b187ab4177,arseniy,1,электрохимический синтез аммиака для утилизации промышленного сбросного тепла,electrochemical ammonia synthesis,дубль технологии «electrochemical fertilizer production» → pos_0e6276d46ff4c8ec
+pos_c6ff562e8f1a62aa,arseniy,1,электрохимический синтез аммиака для сезонного хранения энергии,electrochemical ammonia synthesis,дубль технологии «electrochemical fertilizer production» → pos_0e6276d46ff4c8ec
+pos_cf762c3259d9c662,arseniy,1,электрохимический синтез аммиака для производства зелёной стали,electrochemical ammonia synthesis,дубль технологии «electrochemical fertilizer production» → pos_0e6276d46ff4c8ec
+pos_e02c93bae10b3801,arseniy,1,электрохимический синтез аммиака для производства зелёного водорода,electrochemical ammonia synthesis,дубль технологии «electrochemical fertilizer production» → pos_0e6276d46ff4c8ec
+pos_f33a9f1e30ac025a,arseniy,1,электрохимический синтез аммиака для углеродно-нейтрального производства химикатов,electrochemical ammonia synthesis,дубль технологии «electrochemical fertilizer production» → pos_0e6276d46ff4c8ec
+pos_f5f6f70f0d8aeb23,arseniy,1,электрохимическое производство удобрений для мониторинга здоровья почв,electrochemical fertilizer synthesis,дубль технологии «electrochemical fertilizer production» → pos_0e6276d46ff4c8ec
+pos_d887b360e5510567,arseniy,1,электрохимическое производство удобрений для альтернативного производства молочных продуктов,electrochemical fertilizer production,дубль технологии «electrochemical fertilizer synthesi» → pos_ab014ea22814cd75
+pos_848297ee06106d9e,arseniy,1,электрогидравлические мягкие приводы для сбора урожая,electrohydraulic soft actuators,дубль технологии «electrohydraulic soft actuator» → pos_748853559b5fba9f
+pos_98cd289c70b93b8e,arseniy,1,электрогидравлические мягкие приводы для гибкого производства,electrohydraulic soft actuator,дубль технологии «electrohydraulic soft actuator» → pos_748853559b5fba9f
+pos_abf309f669c458fb,arseniy,1,электрогидравлические мягкие приводы для физической реабилитации,electrohydraulic soft actuator,дубль технологии «electrohydraulic soft actuator» → pos_748853559b5fba9f
+pos_2075ee676bfc5d0f,arseniy,1,инженерные микробные биостимуляторы для мониторинга здоровья почв,engineered microbial biostimulants,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_2c20a252b2aea254,arseniy,1,инженерные микробные биостимуляторы для вертикального земледелия,engineered microbial biostimulants,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_37415a7eca5b20f7,arseniy,1,инженерные микробные биостимуляторы для низкоуглеродного производства белка,engineered microbial biostimulants,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_59914c21e776780a,arseniy,1,прецизионная ферментация для малых фермерских хозяйств,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_59ba8dc1b19222dc,arseniy,1,прецизионная ферментация для низкоуглеродного производства белка,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_66a3b91ade633090,arseniy,1,прецизионная ферментация для земледелия в контролируемой среде,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_815b60b241c95177,arseniy,1,инженерные микробные биостимуляторы для малых фермерских хозяйств,engineered microbial biostimulants,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_8c4dfaa00aa8b741,arseniy,1,прецизионная ферментация для альтернативного производства молочных продуктов,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_8ece9504eb01b8c9,arseniy,1,прецизионная ферментация для вертикального земледелия,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_9f136bcc1c242bce,arseniy,1,прецизионная ферментация для устойчивой аквакультуры,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_a33b43043d038718,arseniy,1,прецизионная ферментация для мониторинга здоровья сельскохозяйственных животных,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_c313626f59e3d9aa,arseniy,1,прецизионная ферментация для раннего выявления болезней растений,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_d79623156ecf17fa,arseniy,1,прецизионная ферментация для альтернативных белков,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_dcc83ddd352b1e77,arseniy,1,прецизионная ферментация для измерения углерода в сельском хозяйстве,precision fermentation,дубль технологии «engineered microbial biostimulant» → pos_12599d8432f5482b
+pos_544a56e9df749981,arseniy,1,программируемое редактирование эпигенома для точной диагностики,programmable epigenome editing,дубль технологии «epigenome editing» → pos_00b97160d77e457d
+pos_823ac7252bdaec2c,arseniy,1,программируемое редактирование эпигенома для антимикробной терапии,programmable epigenome editing,дубль технологии «epigenome editing» → pos_00b97160d77e457d
+pos_db5ac86f8bfd5563,arseniy,1,программируемое редактирование эпигенома для доставки генотерапевтических препаратов,programmable epigenome editing,дубль технологии «epigenome editing» → pos_00b97160d77e457d
+pos_39df305bebbc3317,arseniy,1,событийные сенсоры машинного зрения для точного земледелия,event camera,дубль технологии «event camera» → pos_2f83762821cab3f0
+pos_bf30d6dbc2cdc33a,arseniy,1,событийные сенсоры машинного зрения для автономного транспорта,event camera,дубль технологии «event camera» → pos_2f83762821cab3f0
+pos_c43c160d4d0be50a,arseniy,1,событийные сенсоры машинного зрения для навигации беспилотников,event camera,дубль технологии «event camera» → pos_2f83762821cab3f0
+pos_e7e42e1ef93fc4b3,arseniy,1,событийные сенсоры машинного зрения для мониторинга промышленного оборудования,event camera,дубль технологии «event camera» → pos_2f83762821cab3f0
+neg_f685f7ca7e2d3a2c,arseniy,0,Farming-App (программный продукт),farm management software,дубль технологии «farm management software» → neg_9146dd7ff78bde62
+pos_1d0030a117a3be37,arseniy,1,федеративное обучение между клиническими учреждениями для лечения редких заболеваний,federated learning,термин совпадает с золотой валидацией
+pos_f40220f5b59b0cd8,arseniy,1,федеративное обучение для выявления финансовых преступлений для противодействия отмыванию денег,federated learning,термин совпадает с золотой валидацией
+pos_e63d89832955c1d9,arseniy,1,федеративное обучение для выявления финансовых преступлений для трансграничных расчётов,Federated Learning,термин совпадает с золотой валидацией
+pos_8462935dde487333,arseniy,1,федеративное обучение для выявления финансовых преступлений для финансовой доступности на развивающихся рынках,Federated Learning,термин совпадает с золотой валидацией
+pos_cbcf10889633ebe9,arseniy,1,федеративное обучение между клиническими учреждениями для цифровой патологии,federated learning,термин совпадает с золотой валидацией
+pos_c47f57ce09827bc5,arseniy,1,федеративное обучение для выявления финансовых преступлений для торгового финансирования,federated learning,термин совпадает с золотой валидацией
+pos_baf6f0b631fb1806,arseniy,1,федеративное обучение для выявления финансовых преступлений для цифровых валют центральных банков,federated learning,термин совпадает с золотой валидацией
+pos_dbbfb0e5fc9dfaae,arseniy,1,федеративное обучение для выявления финансовых преступлений для офлайн-розничных платежей,federated learning,термин совпадает с золотой валидацией
+pos_857e78e19c20a8b1,arseniy,1,федеративное обучение между клиническими учреждениями для регенерации тканей,federated learning,термин совпадает с золотой валидацией
+pos_acc1de3184870bd6,arseniy,1,федеративное обучение между клиническими учреждениями для скрининга лекарств,federated learning,термин совпадает с золотой валидацией
+pos_4d583195d6404bef,arseniy,1,федеративное обучение между клиническими учреждениями для точной диагностики,federated learning,термин совпадает с золотой валидацией
+pos_ea9e620066508c57,arseniy,1,федеративное обучение для выявления финансовых преступлений для страхового андеррайтинга,federated learning,термин совпадает с золотой валидацией
+pos-0411531,ours,1,Единый B2B-шлюз агрегации открытых финансовых данных для учетных систем предприятий,financial data aggregation,противоречие меток в группе «financial data aggregation»
+neg-c2245343,ours,0,Агрегация финансовой информации для рыночной аналитики и ценообразования,financial data aggregation,противоречие меток в группе «financial data aggregation»
+pos-2193823,ours,1,Сертифицируемая система полного автономного управления полетом для различных типов самолетов,autonomous flight control,противоречие меток в группе «flight management system»
+neg-c6117901,ours,0,Бортовая система управления полетом для автоматизации навигационных задач,flight management system,противоречие меток в группе «flight management system»
+neg_dbb3a659ffdc97d5,arseniy,0,freecodecamp.cn (программный продукт),freeCodeCamp,дубль технологии «freecodecamp» → neg_30e302f845805a1e
+pos-4921379,ours,1,Параллельная генерация и тестирование вариантов конструкции с помощью искусственного интеллекта для сложных систем,generative design,дубль технологии «generative design» → pos-0023889
+neg_2e72955b39f3e698,arseniy,0,спутниковое отслеживание GPS для управление автопарком,GPS tracking,дубль технологии «gps tracking» → neg_28993b8c2637a07e
+neg_386e3ff433f4fcab,arseniy,0,спутниковое отслеживание GPS для строительная техника,GPS tracking,дубль технологии «gps tracking» → neg_28993b8c2637a07e
+neg_5bcc8834b76b28f0,arseniy,0,спутниковое отслеживание GPS для доставка посылок,GPS tracking,дубль технологии «gps tracking» → neg_28993b8c2637a07e
+neg_70e1e24d26149845,arseniy,0,спутниковое отслеживание GPS для точное земледелие,GPS tracking,дубль технологии «gps tracking» → neg_28993b8c2637a07e
+neg_9d40e3fe7ac0dffd,arseniy,0,спутниковое отслеживание GPS для мониторинг животных,GPS tracking,дубль технологии «gps tracking» → neg_28993b8c2637a07e
+neg_bf495559de006284,arseniy,0,спутниковое отслеживание GPS для навигация транспорта,GPS tracking,дубль технологии «gps tracking» → neg_28993b8c2637a07e
+neg_db7d7d18aa77410a,arseniy,0,спутниковое отслеживание GPS для морская навигация,GPS tracking,дубль технологии «gps tracking» → neg_28993b8c2637a07e
+neg-c7404513,ours,0,Предоставление сотрудникам выбора медицинских льгот в рамках необлагаемых бюджетов,health reimbursement arrangement,дубль технологии «health reimbursement arrangement» → neg-c0657400
+neg_425f04b3dd2b4857,arseniy,0,тепловой насос для отопление гостиниц,heat pump,дубль технологии «heat pump» → neg_13cb1e946a3bee2a
+neg_5d30c94115fecd47,arseniy,0,тепловой насос для отопление жилья,heat pump,дубль технологии «heat pump» → neg_13cb1e946a3bee2a
+neg_6386fe7fda36662f,arseniy,0,тепловой насос для сельскохозяйственные теплицы,heat pump,дубль технологии «heat pump» → neg_13cb1e946a3bee2a
+neg_8747031cd5314ce1,arseniy,0,тепловой насос для коммерческие здания,heat pump,дубль технологии «heat pump» → neg_13cb1e946a3bee2a
+pos-623492,ours,1,Распределённое кэширование тензорных состояний внимания для ускорения инференса языковых моделей на периферии,distributed KV cache,дубль технологии «hierarchical kv cache» → pos-550995
+neg_d3983a294c5d00cb,arseniy,0,ветровая турбина для гибридные энергосистемы,hybrid wind turbine,дубль технологии «hybrid wind turbine» → neg_1e3c39ad9f986b67
+neg_fc1b0cae029e3d44,arseniy,0,ветровая турбина для электроснабжение островов,wind turbine,дубль технологии «hybrid wind turbine» → neg_1e3c39ad9f986b67
+neg_cdc6475847954210,arseniy,0,immich (программный продукт),Immich,дубль технологии «immich» → neg_8f5dae6b83d3c0b5
+pos-3476428,ours,1,Неизменяемая легковесная операционная система для распределенных периферийных кластеров Kubernetes,immutable operating system,противоречие меток в группе «immutable operating system»
+neg-c3748994,ours,0,Container Linux: атомарное обновление неизменяемой системы для контейнерных кластеров,immutable operating system,противоречие меток в группе «immutable operating system»
+pos_33547b586230f516,arseniy,1,вычисления внутри сенсора для носимого мониторинга здоровья,in-sensor computing,термин совпадает с золотой валидацией
+pos_0c780410871d0167,arseniy,1,вычисления внутри сенсора для мониторинга дикой природы,in-sensor computing,термин совпадает с золотой валидацией
+pos_81cf8262e5c8ffe8,arseniy,1,вычисления внутри сенсора для IoT-устройств с батарейным питанием,in-sensor computing,термин совпадает с золотой валидацией
+pos_1590000d1b27a43f,arseniy,1,роботизированное производство в космосе для строительства на Луне,in-space manufacturing,дубль технологии «in space manufacturing» → pos_04265fe376b6d0ef
+pos_6468fa818357425a,arseniy,1,роботизированное производство в космосе для полярных исследований,in-space manufacturing,дубль технологии «in space manufacturing» → pos_04265fe376b6d0ef
+pos_e9702b815f60e29d,arseniy,1,роботизированное производство в космосе для устойчивой связи,in-space manufacturing,дубль технологии «in space manufacturing» → pos_04265fe376b6d0ef
+pos_f24977a5e0056ee9,arseniy,1,роботизированное производство в космосе для точного земледелия,in-space manufacturing,дубль технологии «in space manufacturing» → pos_04265fe376b6d0ef
+pos-3723102,ours,1,Автоматизация процедур потребительского кредитования специализированными ИИ-агентами поверх унаследованных систем,intelligent process automation,противоречие меток в группе «intelligent process automation»
+pos-2527277,ours,1,ИИ-слой принятия решений для оркестрации сквозных рабочих процессов финансовых компаний,intelligent process automation,противоречие меток в группе «intelligent process automation»
+neg_4a3753bc681fd412,arseniy,0,Заявление: автоматизация с помощью ИИ для автоматизация корпоративных рабочих процессов,intelligent process automation,противоречие меток в группе «intelligent process automation»
+pos-1090059,ours,1,Интерактивное обучение роботов рабочим операциям через демонстрацию и оперативное исправление ошибок,interactive imitation learning,дубль технологии «interactive imitation learning» → pos-1012905
+pos_66d0974347065b77,arseniy,1,платформы телеоперационных данных для обучения роботов для физической реабилитации,learning from teleoperation,дубль технологии «interactive imitation learning» → pos-1012905
+pos_6f85aa7f17d91535,arseniy,1,платформы телеоперационных данных для обучения роботов для автоматизации строительства,learning from teleoperation,дубль технологии «interactive imitation learning» → pos-1012905
+neg-c8698609,ours,0,Автономное распознавание речи: обработка аудиокоманд на микроконтроллерах без интернета,keyword spotting,дубль технологии «keyword spotting» → neg-c6157877
+neg_4b4157da824b88d1,arseniy,0,лапароскопия для детская хирургия,laparoscopy,дубль технологии «laparoscopic surgery» → neg_04ae8b2db645f92e
+neg_cc07c043d0b7dd79,arseniy,0,лапароскопия для абдоминальная хирургия,laparoscopy,дубль технологии «laparoscopic surgery» → neg_04ae8b2db645f92e
+neg_e5611514b0a67b7c,arseniy,0,лапароскопия для гинекологическая хирургия,laparoscopy,дубль технологии «laparoscopic surgery» → neg_04ae8b2db645f92e
+neg_00f4afa8dac3f260,arseniy,0,лазерная резка для судостроение,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_422bc98a67f328f9,arseniy,0,лазерная резка для детали автомобилей,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_6c19b87318dec8ee,arseniy,0,лазерная резка для производство электроники,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_72bbddb61a1bc3a8,arseniy,0,лазерная резка для изготовление листового металла,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_904221cbe7beca88,arseniy,0,лазерная резка для медицинские устройства,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_a71bc84c7e15f54d,arseniy,0,лазерная резка для производство упаковки,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_bb2e2b58271c9b4f,arseniy,0,лазерная резка для производство текстиля,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_f86e5bc0d22d7969,arseniy,0,лазерная резка для детали авиации,laser cutting,дубль технологии «laser cutting» → neg_002a693a7b792b90
+neg_2110d8af320033c4,arseniy,0,светодиодное освещение для домашнее освещение,LED lighting,дубль технологии «led lighting» → neg_161a333d399cc558
+neg_35ff2c6374a3e529,arseniy,0,светодиодное освещение для освещение больниц,LED lighting,дубль технологии «led lighting» → neg_161a333d399cc558
+neg_6d979525d5fa4fcd,arseniy,0,светодиодное освещение для витрины магазинов,LED lighting,дубль технологии «led lighting» → neg_161a333d399cc558
+neg_8366f06a6bc06ba8,arseniy,0,светодиодное освещение для освещение самолётов,LED lighting,дубль технологии «led lighting» → neg_161a333d399cc558
+neg_87500fa427e197da,arseniy,0,светодиодное освещение для коммерческие здания,LED lighting,дубль технологии «led lighting» → neg_161a333d399cc558
+pos-6889583,ours,1,Интеграция жидкостного охлаждения вычислительных узлов для энергоэффективного граничного инференса,liquid cooling,противоречие меток в группе «liquid cooling»
+neg-c5880036,ours,0,Охлаждение жидкого теплоносителя для отвода тепла серверных помещений,liquid cooling,противоречие меток в группе «liquid cooling»
+neg_22f9f128c124507a,arseniy,0,литий-ионный аккумулятор для домашние накопители,lithium-ion battery,дубль технологии «lithium ion battery» → neg_0826f4df7d901d10
+neg_c29fc859324485d5,arseniy,0,литий-ионный аккумулятор для сетевое хранение энергии,lithium-ion battery,дубль технологии «lithium ion battery» → neg_0826f4df7d901d10
+neg_ef13196009a5669f,arseniy,0,литий-ионный аккумулятор для электробусы,lithium-ion battery,дубль технологии «lithium ion battery» → neg_0826f4df7d901d10
+neg_eabd55dfa084a7f1,arseniy,0,мобильная связь 4G LTE для видеотрансляция,4G LTE,дубль технологии «long term evolution» → neg_a9dbac34d10d858c
+pos-1983304,ours,1,Низколатентная архитектура клиринга и биржевой торговли контрактами на события,low-latency matching engine,противоречие меток в группе «low latency matching engine»
+neg-c3050393,ours,0,Автоматизированное сведение клиентских ордеров для прямой институциональной торговли,order matching engine,противоречие меток в группе «low latency matching engine»
+neg-c2841171,ours,0,Высокоскоростное сопоставление встречных биржевых заявок для мгновенного заключения сделок,order matching engine,противоречие меток в группе «low latency matching engine»
+pos_2b06eb9ea011a069,arseniy,1,машинное разобучение для оборонных систем,machine unlearning,термин совпадает с золотой валидацией
+pos_c6e84c7710eb9b83,arseniy,1,машинное разобучение для автономных цепочек поставок,machine unlearning,термин совпадает с золотой валидацией
+pos_1664fbef829ce1ea,arseniy,1,машинное разобучение для медицинских копилотов,machine unlearning,термин совпадает с золотой валидацией
+pos_412f5aa4d837a297,arseniy,1,магнитоуправляемые медицинские микророботы для доставки генотерапевтических препаратов,magnetic microrobots,дубль технологии «magnetic microrobot» → pos_075075b934d71c3e
+pos_4d6baba22d93c161,arseniy,1,магнитоуправляемые медицинские микророботы для скрининга лекарств,magnetic microrobots,дубль технологии «magnetic microrobot» → pos_075075b934d71c3e
+pos_66b678e4d41bc8f5,arseniy,1,магнитоуправляемые медицинские микророботы для интерфейсов мозг–компьютер,magnetic microrobots,дубль технологии «magnetic microrobot» → pos_075075b934d71c3e
+pos_681bca3de78ad03e,arseniy,1,магнитоуправляемые медицинские микророботы для адресной доставки лекарств,magnetic microrobots,дубль технологии «magnetic microrobot» → pos_075075b934d71c3e
+pos_8a5e26c11d6b2100,arseniy,1,магнитоуправляемые медицинские микророботы для персонализированной терапии рака,magnetic microrobots,дубль технологии «magnetic microrobot» → pos_075075b934d71c3e
+pos_d7dd2d522f6eec19,arseniy,1,магнитоуправляемые медицинские микророботы для антимикробной терапии,magnetic microrobots,дубль технологии «magnetic microrobot» → pos_075075b934d71c3e
+neg_1eebd9a768e7924d,arseniy,0,магнитно-резонансная томография для визуализация мозга,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+neg_4d3ee1116fc7de30,arseniy,0,магнитно-резонансная томография для диагностика мозга,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+neg_5c5345d73d04b6dd,arseniy,0,магнитно-резонансная томография для детская визуализация,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+neg_95e52290205a4a4c,arseniy,0,магнитно-резонансная томография для диагностика рака,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+neg_ab3b75848a8cffd6,arseniy,0,магнитно-резонансная томография для визуализация суставов,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+neg_c00e1e2fe42ef1dc,arseniy,0,магнитно-резонансная томография для визуализация печени,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+neg_cc114bf79b2dc75e,arseniy,0,магнитно-резонансная томография для визуализация позвоночника,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+neg_eaa28209a67cdd30,arseniy,0,магнитно-резонансная томография для диагностика инсульта,magnetic resonance imaging,дубль технологии «magnetic resonance imaging» → neg_11a7efe5ea94871d
+pos_3ae595cc72f7abc5,arseniy,1,защита памяти ИИ-агентов от отравления для агентов государственных сервисов,agent memory poisoning defense,дубль технологии «memory poisoning defense» → pos_23027251eedeef85
+pos_a318639ea994a511,arseniy,1,защита памяти ИИ-агентов от отравления для эксплуатации критической инфраструктуры,agent memory poisoning defense,дубль технологии «memory poisoning defense» → pos_23027251eedeef85
+pos_e1dad4bd7ca12053,arseniy,1,защита памяти ИИ-агентов от отравления для автономной разработки программного обеспечения,agent memory poisoning defense,дубль технологии «memory poisoning defense» → pos_23027251eedeef85
+neg_3890f6e24d17c10d,arseniy,0,Заявление: анализ изображений со смартфона для выявление меланомы,mobile dermoscopy,дубль технологии «mobile dermoscopy» → neg_1fed692a8ed4c726
+neg-c2438491,ours,0,Генерация низкоуровневого кода из визуальных моделей для микроконтроллеров,model-based code generation,дубль технологии «model based code generation» → neg-c1148742
+pos-614072,ours,1,Развёртывание распределённых периферийных микроЦОД с использованием резервных энергомощностей коммерческих зданий для инференса,micro data center,противоречие меток в группе «modular data center»
+neg-c7470623,ours,0,Модульный ЦОД: установка компактных серверных блоков для локальных вычислений,modular data center,противоречие меток в группе «modular data center»
+neg-w6760476,ours,0,модульный мобильный дата-центр для быстрого развертывания вычислительной инфраструктуры,modular data center,противоречие меток в группе «modular data center»
+pos-6041290,ours,1,Модульная открытая архитектура полноразмерного человекоподобного робота для отладки алгоритмов воплощенного ИИ,modular humanoid robot,дубль технологии «modular humanoid robot» → pos-3698793
+pos-5238571,ours,1,Модульная колесная робототехническая платформа для автоматизации сельскохозяйственных работ и полевых испытаний,modular wheeled robot,противоречие меток в группе «modular wheeled robot»
+neg-c6757199,ours,0,Стандартизированная колесная аппаратная база для разработки алгоритмов автономной навигации,wheeled mobile robot,противоречие меток в группе «modular wheeled robot»
+pos_1d1ff6080b4a9b51,arseniy,1,генерация кода ПЛК языковыми моделями с проверкой компилятором для фармацевтического производства,PLC code generation,дубль технологии «natural language to plc» → pos-7306319
+pos_7ed6a6bde7ede790,arseniy,1,генерация кода ПЛК языковыми моделями с проверкой компилятором для обогащения полезных ископаемых,PLC code generation,дубль технологии «natural language to plc» → pos-7306319
+neg_518612b0eebe2947,arseniy,0,бесконтактная связь NFC для программы лояльности,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_51d1df46aff16d6d,arseniy,0,бесконтактная связь NFC для идентификация пациентов,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_59b25a48c1c9e48f,arseniy,0,бесконтактная связь NFC для оплата транспорта,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_5f0599706241884a,arseniy,0,бесконтактная связь NFC для доступ в гостиницу,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_9a43665f91f0cf18,arseniy,0,бесконтактная связь NFC для мобильные кошельки,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_a0d49eba86ca871d,arseniy,0,бесконтактная связь NFC для контроль доступа,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_a519143b854086a9,arseniy,0,бесконтактная связь NFC для кассовая продажа,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_c287913f5ab0512e,arseniy,0,бесконтактная связь NFC для бесконтактные платежи,Near Field Communication,дубль технологии «near field communication» → neg-c9032458
+neg_5fa5f97e672c368b,arseniy,0,межсетевой экран для университетские сети,network firewall,дубль технологии «network firewall» → neg_3371cdd83f1789ed
+neg_fe05ed2a1366ff2b,arseniy,0,межсетевой экран для больничные сети,network firewall,дубль технологии «network firewall» → neg_3371cdd83f1789ed
+pos-6084307,ours,1,Нейроморфные процессоры для локального исполнения моделей генеративного ИИ,neuromorphic processor,термин совпадает с золотой валидацией
+pos_45b68a2915b7ac0a,arseniy,1,нейроморфные процессоры для крупномасштабных рекомендательных систем,neuromorphic processor,термин совпадает с золотой валидацией
+pos_782153c5d45c6221,arseniy,1,нейроморфные процессоры для энергоэффективного edge-инференса,neuromorphic processor,термин совпадает с золотой валидацией
+pos_10bbb51f5301fdeb,arseniy,1,нейроморфные процессоры для высокопроизводительных научных вычислений,neuromorphic processor,термин совпадает с золотой валидацией
+pos_80198e9a4bca9003,arseniy,1,нейроморфные процессоры для научных фундаментальных моделей,neuromorphic processor,термин совпадает с золотой валидацией
+pos_1221259598dcdf0c,arseniy,1,нейроморфные процессоры для конфиденциального инференса,neuromorphic processor,термин совпадает с золотой валидацией
+pos_8b9b40f04c0e794b,arseniy,1,нейроморфные процессоры для энергоэффективных центров обработки данных ИИ,neuromorphic processor,термин совпадает с золотой валидацией
+pos_e5efa2c960611b96,arseniy,1,нейроморфные процессоры для инференса языковых моделей с длинным контекстом,neuromorphic processor,термин совпадает с золотой валидацией
+pos_339f3c74df08a461,arseniy,1,квантовые процессоры на нейтральных атомах для оптимизации электрических сетей,neutral-atom quantum processor,дубль технологии «neutral atom quantum processor» → pos_30f69b1f90a2e802
+pos_3a742297f2884f6b,arseniy,1,квантовые процессоры на нейтральных атомах для квантовой химии,neutral atom quantum processor,дубль технологии «neutral atom quantum processor» → pos_30f69b1f90a2e802
+pos_5bd73ea2a1972a4d,arseniy,1,квантовые процессоры на нейтральных атомах для геофизической разведки,neutral-atom quantum processor,дубль технологии «neutral atom quantum processor» → pos_30f69b1f90a2e802
+pos_bb8af74ccbeaf828,arseniy,1,квантовые процессоры на нейтральных атомах для моделирования материалов аккумуляторов,neutral atom quantum processor,дубль технологии «neutral atom quantum processor» → pos_30f69b1f90a2e802
+neg-w5456971,ours,0,нелинейная фильтрация зашумленных измерений для точной оценки состояния робота,nonlinear filtering,дубль технологии «nonlinear image filtering» → neg-c3797415
+neg-w5377490,ours,0,Оценка траектории и положения робота по показаниям одометрических датчиков,odometry,дубль технологии «odometry» → neg-c1410190
+pos-0489457,ours,1,Объединение фрагментированных цифровых и наличных каналов оплаты для бизнеса,omnichannel payment processing,противоречие меток в группе «omnichannel payment processing»
+neg-c4994327,ours,0,Провайдер платежных услуг: интеграция разнородных способов оплаты для мерчантов,payment orchestration,противоречие меток в группе «omnichannel payment processing»
+pos_3eb3607d44812a39,arseniy,1,бортовой ИИ для гиперспектральных спутников для мониторинга рыболовства,on-board hyperspectral processing,дубль технологии «on board artificial intelligence» → pos_05aadfa9bf85c5b2
+pos_4b6691c06a8d2138,arseniy,1,бортовой ИИ для гиперспектральных спутников для точного земледелия,on-board artificial intelligence,дубль технологии «on board artificial intelligence» → pos_05aadfa9bf85c5b2
+pos_92fd776255fb305e,arseniy,1,бортовой ИИ для гиперспектральных спутников для мониторинга углерода в океане,on-board artificial intelligence,дубль технологии «on board artificial intelligence» → pos_05aadfa9bf85c5b2
+pos-5855822,ours,1,Накристальная оптическая коммутация каналов для гибкого пулинга вычислительных ресурсов и памяти,on-chip optical circuit switching,противоречие меток в группе «on chip optical circuit switching»
+neg-c7837184,ours,0,Оптическая кросс-коммутация каналов для аппаратной маршрутизации трафика дата-центров,optical circuit switching,противоречие меток в группе «on chip optical circuit switching»
+pos_30c7f63121f55e58,arseniy,1,оптическая коммутация каналов для распределённого обслуживания моделей,optical circuit switching,противоречие меток в группе «on chip optical circuit switching»
+pos_0161cd4c535c7399,arseniy,1,оптическая коммутация каналов для энергоэффективных центров обработки данных ИИ,optical circuit switching,противоречие меток в группе «on chip optical circuit switching»
+pos_650d21e55649cebe,arseniy,1,оптическая коммутация каналов для инференса языковых моделей с длинным контекстом,optical circuit switching,противоречие меток в группе «on chip optical circuit switching»
+pos_91c72faf2ed2d2ed,arseniy,1,оптическая коммутация каналов для конфиденциального инференса,optical circuit switching,противоречие меток в группе «on chip optical circuit switching»
+pos_c5c6f7f62a011d89,arseniy,1,дообучение моделей на устройстве для персонализированных мобильных ассистентов,on-device fine-tuning,термин совпадает с золотой валидацией
+pos_5ad355da7f0d25f6,arseniy,1,дообучение моделей на устройстве для мониторинга промышленного оборудования,on-device fine-tuning,термин совпадает с золотой валидацией
+pos_9d1d213b8d0eb36e,arseniy,1,дообучение моделей на устройстве для мониторинга удалённой инфраструктуры,on-device fine-tuning,термин совпадает с золотой валидацией
+pos_2cc105d0be7073e4,arseniy,1,дообучение моделей на устройстве для IoT-устройств с батарейным питанием,on-device fine-tuning,термин совпадает с золотой валидацией
+pos_f03a326526562f5b,arseniy,1,дообучение моделей на устройстве для автономного транспорта,On-device fine-tuning,термин совпадает с золотой валидацией
+pos_6a6b7f08bd5d1771,arseniy,1,дообучение моделей на устройстве для точного земледелия,On-device fine-tuning,термин совпадает с золотой валидацией
+pos_71c7d60e5f732dbb,arseniy,1,дообучение моделей на устройстве для мониторинга дикой природы,On-device fine-tuning,термин совпадает с золотой валидацией
+pos_8163ea2c1e19b895,arseniy,1,дообучение моделей на устройстве для навигации беспилотников,on-device fine-tuning,термин совпадает с золотой валидацией
+pos-7556763,ours,1,Электрооптические физические интерфейсы межчиплетной связи для устранения ограничений пропускной способности,optical chiplet interconnect,дубль технологии «optical chiplet interconnect» → pos-7245766
+neg_4079cb9f7499e018,arseniy,0,волоконно-оптическая связь для нефтепроводы,fiber-optic communication,дубль технологии «optical fiber communication» → neg_3bd06b762569f39d
+neg_af2c956068985a9f,arseniy,0,волоконно-оптическая связь для телекоммуникационные сети,fiber-optic communication,дубль технологии «optical fiber communication» → neg_3bd06b762569f39d
+neg_bc9825ab3083a854,arseniy,0,волоконно-оптическая связь для центры обработки данных,fiber-optic communication,дубль технологии «optical fiber communication» → neg_3bd06b762569f39d
+neg_cfb7cbd0e1a1e54e,arseniy,0,волоконно-оптическая связь для промышленные сети,fiber-optic communication,дубль технологии «optical fiber communication» → neg_3bd06b762569f39d
+pos-8809106,ours,1,Развертывание орбитальных центров обработки данных для обучения моделей искусственного интеллекта,orbital data center,термин совпадает с золотой валидацией
+pos_0701bf9908258243,arseniy,1,органоидный интеллект для трансплантации органов,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_1c569e3c474e2071,arseniy,1,органоидный интеллект для персонализированной терапии рака,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_2080153e412f0715,arseniy,1,органоидный интеллект для доставки генотерапевтических препаратов,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_58e82d472f555273,arseniy,1,органоидный интеллект для скрининга лекарств,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_6f143cd498e3e248,arseniy,1,органоидный интеллект для антимикробной терапии,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_bb99418222e99100,arseniy,1,органоидный интеллект для цифровой патологии,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_e5d1574fbdafd8c8,arseniy,1,органоидный интеллект для регенерации тканей,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_eb94d74b946fff84,arseniy,1,органоидный интеллект для точной диагностики,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_f30a3273a57581d2,arseniy,1,органоидный интеллект для адресной доставки лекарств,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+pos_f87f14d569b92f97,arseniy,1,органоидный интеллект для лечения редких заболеваний,organoid intelligence,дубль технологии «organoid intelligence» → pos_0510c9491f696b2a
+neg_f02d9e856cb3852b,arseniy,0,промышленный робот для укладка паллет,palletizing robot,дубль технологии «palletizing robot» → neg-c5863799
+neg-w5176215,ours,0,Авторизация и маршрутизация транзакций электронной коммерции между покупателем и продавцом,payment routing,дубль технологии «payment routing» → neg-c5054447
+neg_da997f0cb14a0a63,arseniy,0,personal-management-system (программный продукт),personal financial management,дубль технологии «personal finance software» → neg_59cb2f85428a7e9d
+neg_aef44970e5d96e80,arseniy,0,sossoldi (программный продукт),personal finance management,дубль технологии «personal financial management» → neg_0f010ac790991818
+pos_5092f44835f13e13,arseniy,1,фотонные нейросетевые ускорители для инференса языковых моделей с длинным контекстом,photonic neural network accelerator,дубль технологии «photonic neural network accelerator» → pos_44627ce842b82651
+pos_69c34cb498137106,arseniy,1,фотонные нейросетевые ускорители для высокопроизводительных научных вычислений,photonic neural network accelerator,дубль технологии «photonic neural network accelerator» → pos_44627ce842b82651
+pos_783b879226b67c00,arseniy,1,фотонные нейросетевые ускорители для распределённого обслуживания моделей,photonic neural network accelerator,дубль технологии «photonic neural network accelerator» → pos_44627ce842b82651
+pos_7c7a34639c1c3467,arseniy,1,фотонные нейросетевые ускорители для энергоэффективного edge-инференса,photonic neural network accelerator,дубль технологии «photonic neural network accelerator» → pos_44627ce842b82651
+pos_9f77bd7becc86d94,arseniy,1,фотонные нейросетевые ускорители для обслуживания генеративного ИИ,photonic neural network accelerator,дубль технологии «photonic neural network accelerator» → pos_44627ce842b82651
+pos_e26fe19a248821d3,arseniy,1,фотонные нейросетевые ускорители для энергоэффективных центров обработки данных ИИ,photonic neural network accelerator,дубль технологии «photonic neural network accelerator» → pos_44627ce842b82651
+pos_7856559e5040e6ff,arseniy,1,интегральные фотонные квантовые процессоры для медицинской визуализации,integrated photonic quantum processor,дубль технологии «photonic quantum processor» → pos_3f077d20e4e7aeba
+pos_a891cc3388210d60,arseniy,1,биоэлектронные интерфейсы растений для мониторинга здоровья почв,plant bioelectronic interfaces,дубль технологии «plant bioelectronic interface» → pos_9c12cd952790dc3a
+pos_d21366435d483efb,arseniy,1,биоэлектронные интерфейсы растений для устойчивой аквакультуры,plant bioelectronic interfaces,дубль технологии «plant bioelectronic interface» → pos_9c12cd952790dc3a
+pos_de89eb861f86b0dd,arseniy,1,генерация кода ПЛК языковыми моделями с проверкой компилятором для химических производств,LLM-based PLC code generation,дубль технологии «plc code generation» → pos_0e4759ba8371d6cc
+neg_416067648ac9c57d,arseniy,0,полимеразная цепная реакция для диагностика инфекций,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_4345afb94456d4e6,arseniy,0,полимеразная цепная реакция для скрининг крови,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_601e61a5991fce8e,arseniy,0,полимеразная цепная реакция для качество воды,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_67e8f39cd2581213,arseniy,0,полимеразная цепная реакция для криминалистический анализ,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_9b9ed71cd74712a9,arseniy,0,полимеразная цепная реакция для безопасность пищевых продуктов,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_a71805a7d530f7a7,arseniy,0,полимеразная цепная реакция для ветеринарная диагностика,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_ad2b9bd3a6b9cfaf,arseniy,0,полимеразная цепная реакция для генетическое тестирование,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_cf2213bf304753a4,arseniy,0,полимеразная цепная реакция для экологический мониторинг,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_de03e53976df40e1,arseniy,0,полимеразная цепная реакция для обнаружение патогенов,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+neg_fa0a8eed304d29e8,arseniy,0,полимеразная цепная реакция для диагностика рака,polymerase chain reaction,дубль технологии «polymerase chain reaction» → neg_3376401b2ec8133f
+pos-4155427,ours,1,Межбанковский платежный хаб с квантово-устойчивым шифрованием для защиты транзакций,post-quantum cryptography,термин совпадает с золотой валидацией
+pos_78e3fb84b0960d75,arseniy,1,программируемое редактирование эпигенома для лечения редких заболеваний,epigenome editing,дубль технологии «programmable epigenome editing» → pos_1e1da1fcc1ecca9f
+pos_562745c359ef9d02,arseniy,1,программируемые механические метаматериалы для мягких робототехнических систем,programmable mechanical metamaterials,дубль технологии «programmable mechanical metamaterial» → pos_53d434b37cd33111
+pos_89bc9366d5e8f58b,arseniy,1,программируемые механические метаматериалы для гибких медицинских устройств,programmable mechanical metamaterials,дубль технологии «programmable mechanical metamaterial» → pos_53d434b37cd33111
+pos_c2e823673050562a,arseniy,1,программируемые механические метаматериалы для аэрокосмических конструкций,programmable mechanical metamaterials,дубль технологии «programmable mechanical metamaterial» → pos_53d434b37cd33111
+pos_ce3751cfccd950a1,arseniy,1,программируемые механические метаматериалы для малопотребляющих сенсоров,programmable mechanical metamaterials,дубль технологии «programmable mechanical metamaterial» → pos_53d434b37cd33111
+pos_dcfa91b95ba9aa35,arseniy,1,программируемые механические метаматериалы для хранения водорода,programmable mechanical metamaterials,дубль технологии «programmable mechanical metamaterial» → pos_53d434b37cd33111
+pos_df4a0e072b24b594,arseniy,1,программируемые механические метаматериалы для защиты от коррозии,programmable mechanical metamaterials,дубль технологии «programmable mechanical metamaterial» → pos_53d434b37cd33111
+pos_ffc11604fd3c400b,arseniy,1,программируемые механические метаматериалы для циклического производства,programmable mechanical metamaterials,дубль технологии «programmable mechanical metamaterial» → pos_53d434b37cd33111
+pos_b4661cc6144e3db8,arseniy,1,программируемые деньги с целевыми ограничениями для финансовой доступности на развивающихся рынках,purpose-bound money,термин совпадает с золотой валидацией
+pos_e89d006b4c53f91e,arseniy,1,программируемые деньги с целевыми ограничениями для программируемых расчётов,purpose-bound money,термин совпадает с золотой валидацией
+pos_b62cd976a1f61fe3,arseniy,1,программируемые деньги с целевыми ограничениями для трансграничных расчётов,purpose-bound money,термин совпадает с золотой валидацией
+pos_36e92dfe37f516b6,arseniy,1,программируемые деньги с целевыми ограничениями для цифровых валют центральных банков,purpose-bound money,термин совпадает с золотой валидацией
+pos_79cd7eaeb3d60bc6,arseniy,1,программируемые деньги с целевыми ограничениями для хранения цифровых активов,purpose-bound money,термин совпадает с золотой валидацией
+pos_72d19b22a31475e8,arseniy,1,программируемые деньги с целевыми ограничениями для торгового финансирования,purpose-bound money,термин совпадает с золотой валидацией
+neg_fc64db5d81624c3f,arseniy,0,QR-код для маркетинговые кампании,QR code,дубль технологии «qr code» → neg_6389beaeb72fbd8c
+neg_6ee5c92c79fa1d4b,arseniy,0,QR-код для кассовая продажа,QR code payment,дубль технологии «qr code payment» → neg_3ae8a3925d388576
+neg_9ea5103f351260be,arseniy,0,QR-код для мобильные платежи,QR code payment,дубль технологии «qr code payment» → neg_3ae8a3925d388576
+neg_f0d986aeeb87f796,arseniy,0,QR-код для билеты на мероприятия,QR code ticketing,дубль технологии «qr code payment» → neg_3ae8a3925d388576
+pos_22d1728d9011cebb,arseniy,1,квантово-инспирированная тензорная оптимизация для моделирования финансовых рисков,quantum-inspired tensor optimization,дубль технологии «quantum inspired tensor optimization» → pos_13591ad73c8cc66b
+pos_907cf939c48de28c,arseniy,1,квантово-инспирированная тензорная оптимизация для медицинской визуализации,quantum-inspired tensor optimization,дубль технологии «quantum inspired tensor optimization» → pos_13591ad73c8cc66b
+pos_d085c7ff2c79c6c2,arseniy,1,квантово-инспирированная тензорная оптимизация для квантовой химии,quantum-inspired tensor optimization,дубль технологии «quantum inspired tensor optimization» → pos_13591ad73c8cc66b
+pos_db3e42c522e3813e,arseniy,1,квантово-инспирированная тензорная оптимизация для оптимизации электрических сетей,quantum-inspired tensor optimization,дубль технологии «quantum inspired tensor optimization» → pos_13591ad73c8cc66b
+pos_ee7ef96deac19ce3,arseniy,1,квантово-инспирированная тензорная оптимизация для поиска новых материалов,quantum-inspired tensor optimization,дубль технологии «quantum inspired tensor optimization» → pos_13591ad73c8cc66b
+pos_f18e6b488a442796,arseniy,1,квантово-инспирированная тензорная оптимизация для моделирования материалов аккумуляторов,quantum-inspired tensor optimization,дубль технологии «quantum inspired tensor optimization» → pos_13591ad73c8cc66b
+pos_fe1fba3c8689b37f,arseniy,1,квантово-инспирированная тензорная оптимизация для геофизической разведки,quantum-inspired tensor optimization,дубль технологии «quantum inspired tensor optimization» → pos_13591ad73c8cc66b
+pos_b543288bd5e393c4,arseniy,1,сети квантовых повторителей для высокоточной синхронизации времени,quantum repeater networks,дубль технологии «quantum repeater network» → pos_3c83c6caf83b4b0a
+pos_ce8585f3213db463,arseniy,1,сети квантовых повторителей для защищённой телекоммуникации,quantum repeater networks,дубль технологии «quantum repeater network» → pos_3c83c6caf83b4b0a
+pos_18fcc66eb8bcdef3,arseniy,1,орбитальные периферийные вычисления для морской безопасности,orbital edge computing,дубль технологии «radiation aware on board processing» → pos-6827881
+pos_303824c5803597fb,arseniy,1,орбитальные периферийные вычисления для выявления лесных пожаров,orbital edge computing,дубль технологии «radiation aware on board processing» → pos-6827881
+pos_75327aa0e80f3046,arseniy,1,орбитальные периферийные вычисления для полярных исследований,orbital edge computing,дубль технологии «radiation aware on board processing» → pos-6827881
+pos_7eb6f7d004e7dfb9,arseniy,1,орбитальные периферийные вычисления для устойчивой связи,orbital edge computing,дубль технологии «radiation aware on board processing» → pos-6827881
+pos_7f2e46e94baf78ac,arseniy,1,орбитальные периферийные вычисления для мониторинга климата,orbital edge computing,дубль технологии «radiation aware on board processing» → pos-6827881
+pos_824246bc766718e5,arseniy,1,орбитальные периферийные вычисления для мониторинга рыболовства,orbital edge computing,дубль технологии «radiation aware on board processing» → pos-6827881
+neg_2f8d1a5643e8007c,arseniy,0,радиочастотная идентификация для отслеживание скота,radio-frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg_4129144c966881ec,arseniy,0,радиочастотная идентификация для складская логистика,radio-frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg_8f8f8f95b66c5c19,arseniy,0,радиочастотная идентификация для отслеживание поставок,radio frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg_9b2e1e8ccc4a3255,arseniy,0,радиочастотная идентификация для учёт активов,radio-frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg_b1a4a999db77100e,arseniy,0,радиочастотная идентификация для прослеживаемость производства,radio-frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg_b3021475ef8c1388,arseniy,0,радиочастотная идентификация для розничные магазины,radio-frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg_c3cac491c64834db,arseniy,0,радиочастотная идентификация для управление запасами,radio frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg_ead76f5162702e47,arseniy,0,радиочастотная идентификация для управление библиотекой,radio-frequency identification,дубль технологии «radio frequency identification» → neg_13ea32ac21ac883f
+neg-w7685180,ours,0,Метод мгновенного межбанковского перевода и клиринга денежных средств,real-time gross settlement,дубль технологии «real time gross settlement» → neg-c5771720
+neg_ac5b4b87855dcb7b,arseniy,0,потоковое видео для дистанционный мониторинг,real-time video streaming,дубль технологии «real time video streaming» → neg_185e024ca2f13e4e
+neg_ffb35c0d73dfedf3,arseniy,0,потоковое видео для видеоконференции,real-time video streaming,дубль технологии «real time video streaming» → neg_185e024ca2f13e4e
+pos-1054316,ours,1,Гибридная колесно-шагающая локомоция четвероногих роботов для преодоления сложного рельефа,wheeled-legged locomotion,дубль технологии «reconfigurable locomotion» → pos-0123176
+pos-1699133,ours,1,Гибридное колесно-шагающее шасси полугуманоидных роботов для автосборочных и компонентных производств,wheeled-legged locomotion,дубль технологии «reconfigurable locomotion» → pos-0123176
+pos_0f1f7673c9194e3d,arseniy,1,обучение с подкреплением на промышленных контроллерах для промышленных микросетей,embedded reinforcement learning,дубль технологии «reinforcement learning control» → pos-619394
+pos-509330,ours,1,Разрыв состязательных цепочек представлений для защиты языковых моделей от джейлбрейков,representation circuit breaking,дубль технологии «representation circuit breaking» → pos-001538
+neg_25a1bebfca1f5454,arseniy,0,обратный осмос для опреснение морской воды,reverse osmosis,дубль технологии «reverse osmosi» → neg_159285172b8913de
+neg_4eb31dbfa307c7d8,arseniy,0,обратный осмос для переработка молока,reverse osmosis,дубль технологии «reverse osmosi» → neg_159285172b8913de
+neg_5f30f77a25a0af21,arseniy,0,обратный осмос для вода для фармацевтики,reverse osmosis,дубль технологии «reverse osmosi» → neg_159285172b8913de
+neg_650d7e68625d4218,arseniy,0,обратный осмос для промышленные сточные воды,reverse osmosis,дубль технологии «reverse osmosi» → neg_159285172b8913de
+neg_8b5776edaf19b313,arseniy,0,обратный осмос для очистка питьевой воды,reverse osmosis,дубль технологии «reverse osmosi» → neg_159285172b8913de
+neg_b8d27b4186a15222,arseniy,0,обратный осмос для городские сточные воды,reverse osmosis,дубль технологии «reverse osmosi» → neg_159285172b8913de
+pos-1264401,ours,1,Сетчатая комплектация складских заказов с использованием автономных мобильных роботов-манипуляторов,robotic order picking,дубль технологии «robotic piece picking» → pos-1026370
+pos_42fe01b4bcf87f6e,arseniy,1,роботизированная прополка с машинным зрением для малых фермерских хозяйств,robotic weeding,дубль технологии «robotic weed control» → pos_059798122d602cdb
+pos_b8b5ad4b48d3bda3,arseniy,1,роботизированная прополка с машинным зрением для земледелия в контролируемой среде,robotic weeding,дубль технологии «robotic weed control» → pos_059798122d602cdb
+pos_d2fee21d118f54db,arseniy,1,роботизированная прополка с машинным зрением для устойчивой аквакультуры,robotic weeding,дубль технологии «robotic weed control» → pos_059798122d602cdb
+pos_e08c90464bec4851,arseniy,1,роботизированная прополка с машинным зрением для раннего выявления болезней растений,robotic weeding,дубль технологии «robotic weed control» → pos_059798122d602cdb
+pos-8455860,ours,1,Динамическая верификация и ограничение полномочий автономных ИИ-агентов в корпоративных системах,Runtime policy enforcement,дубль технологии «runtime guardrail» → pos-4197114
+pos-9138919,ours,1,Динамический контроль действий ИИ-агентов в среде выполнения для предотвращения несанкционированных операций,runtime policy enforcement,дубль технологии «runtime guardrail» → pos-4197114
+pos-2742369,ours,1,Динамические барьеры времени выполнения для защиты генеративного ИИ от джейлбрейков,runtime guardrails,дубль технологии «runtime policy enforcement» → pos-0896149
+pos-7670828,ours,1,Предотвращение несанкционированных действий и компрометации ИИ-агентов во время выполнения,runtime guardrails,дубль технологии «runtime policy enforcement» → pos-0896149
+pos_b004fd6bfd51f427,arseniy,1,самовосстанавливающаяся электронная кожа для мягких робототехнических систем,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_969497c64330414d,arseniy,1,самовосстанавливающаяся электронная кожа для гибких медицинских устройств,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_93d6909e9aa39bd6,arseniy,1,самовосстанавливающаяся электронная кожа для сетевых накопителей энергии,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_4613a29870d0a83f,arseniy,1,самовосстанавливающаяся электронная кожа для малопотребляющих сенсоров,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_e3649a7e67902ced,arseniy,1,самовосстанавливающаяся электронная кожа для аэрокосмических конструкций,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_d42fea09da2c3fbb,arseniy,1,самовосстанавливающаяся электронная кожа для биоразлагаемой электроники,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_a9cc766e7a0daf60,arseniy,1,самовосстанавливающаяся электронная кожа для носимой электроники,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_650233ebf1f3308f,arseniy,1,самовосстанавливающаяся электронная кожа для защиты от коррозии,self-healing electronic skin,термин совпадает с золотой валидацией
+pos_53020f689a60e8e0,arseniy,1,самовосстанавливающаяся электронная кожа для хранения водорода,self-healing electronic skin,термин совпадает с золотой валидацией
+pos-6158901,ours,1,Сканирование корпоративных рабочих пространств для выявления неавторизованных инструментов и агентов ИИ,Shadow AI detection,дубль технологии «shadow ai detection» → pos-0123907
+pos-3205763,ours,1,Оптические межсоединения на кремниевой фотонике для замены медных кабелей,Silicon photonic interconnects,дубль технологии «silicon photonic interconnect» → pos-2665575
+pos_0b11a5fc4d46b3f7,arseniy,1,натрий-ионные аккумуляторы для сезонного хранения энергии,sodium-ion battery,дубль технологии «sodium ion battery» → pos_044a29d06af0e36f
+pos_1ae17e5008aac12e,arseniy,1,натрий-ионные аккумуляторы для накопления энергии,sodium-ion battery,дубль технологии «sodium ion battery» → pos_044a29d06af0e36f
+pos_eff41379de054c3d,arseniy,1,натрий-ионные аккумуляторы для производства зелёной стали,sodium-ion battery,дубль технологии «sodium ion battery» → pos_044a29d06af0e36f
+neg_813c2875a2f3a8d6,arseniy,0,солнечная фотоэлектрика для производство электроэнергии,solar photovoltaics,дубль технологии «solar photovoltaic» → neg_6501b27ba33424be
+neg_b0df025539070bb5,arseniy,0,солнечная фотоэлектрика для уличное освещение,solar photovoltaics,дубль технологии «solar photovoltaic» → neg_6501b27ba33424be
+neg_bd7d7d0b746419e2,arseniy,0,солнечная фотоэлектрика для производство электроэнергии,solar photovoltaics,дубль технологии «solar photovoltaic» → neg_6501b27ba33424be
+pos_92c59bb1ac9a0e1d,arseniy,1,твердотельные электролиты для аккумуляторов для аэрокосмических конструкций,solid-state electrolyte,дубль технологии «solid state electrolyte» → pos_1c10c8622b3579fc
+pos_2da1a3d595b3902c,arseniy,1,космическая солнечная энергетика для строительства на Луне,space-based solar power,дубль технологии «space based solar power» → pos_18497312a1dda025
+pos_3b4deffb9a59fb29,arseniy,1,космическая солнечная энергетика для морской безопасности,space-based solar power,дубль технологии «space based solar power» → pos_18497312a1dda025
+pos_4948e95de7569459,arseniy,1,космическая солнечная энергетика для полярных исследований,space-based solar power,дубль технологии «space based solar power» → pos_18497312a1dda025
+pos_61dc9338312ad8e9,arseniy,1,космическая солнечная энергетика для реагирования на стихийные бедствия,space-based solar power,дубль технологии «space based solar power» → pos_18497312a1dda025
+pos_bea0bfb45af6e400,arseniy,1,космическая солнечная энергетика для разведки полезных ископаемых,space-based solar power,дубль технологии «space based solar power» → pos_18497312a1dda025
+pos-2361568,ours,1,Токенизированные расчеты на базе стейблкоинов для мгновенных трансграничных денежных переводов,stablecoin settlement,дубль технологии «stablecoin settlement» → pos-0863494
+pos-9574600,ours,1,Интеграция стейблкоин-инфраструктуры в трансграничные потоки частного кредитования малого бизнеса,stablecoin settlement,дубль технологии «stablecoin settlement» → pos-0863494
+pos_17f9b2f5282b675e,arseniy,1,нейропроцессоры tinyML для IoT-устройств с батарейным питанием,ultra-low-power NPU,дубль технологии «sub watt neural processing unit» → pos-2435438
+pos_ce092438dc18b648,arseniy,1,децентрализованные рои роботов для гибкого производства,swarm robotics,термин совпадает с золотой валидацией
+pos_993530dbe8e99d9d,arseniy,1,децентрализованные рои роботов для автоматизации лабораторий,swarm robotics,термин совпадает с золотой валидацией
+pos_961fd5b7b39ec13a,arseniy,1,децентрализованные рои роботов для складской комплектации,swarm robotics,термин совпадает с золотой валидацией
+pos_3dcd1e6aad04ec03,arseniy,1,децентрализованные рои роботов для автоматизации строительства,swarm robotics,термин совпадает с золотой валидацией
+pos_5053dbfe11b4c95e,arseniy,1,децентрализованные рои роботов для физической реабилитации,swarm robotics,термин совпадает с золотой валидацией
+pos_d50eade6eae14f36,arseniy,1,децентрализованные рои роботов для доставки последней мили,decentralized swarm robotics,термин совпадает с золотой валидацией
+pos-3388531,ours,1,Тактильное детектирование силы сдвига и проскальзывания на роботизированных пальцах при захвате,tactile slip detection,дубль технологии «tactile slip detection» → pos-1606358
+pos_0405cb15164c8af4,arseniy,1,тактильные vision-language-action модели для автоматизации строительства,tactile vision-language-action models,термин совпадает с золотой валидацией
+pos_03f72a4caba4a0f7,arseniy,1,тактильные vision-language-action модели для гибкого производства,tactile vision-language-action models,термин совпадает с золотой валидацией
+pos_d143970ebd83a197,arseniy,1,тактильные vision-language-action модели для физической реабилитации,tactile vision-language-action models,термин совпадает с золотой валидацией
+pos_3e07fe98464c105b,arseniy,1,тактильные vision-language-action модели для автоматизации лабораторий,tactile vision-language-action model,термин совпадает с золотой валидацией
+pos_5e0eabbd98e3b931,arseniy,1,термохимические тепловые аккумуляторы для производства зелёной стали,thermochemical energy storage,дубль технологии «thermochemical energy storage» → pos_4f3680446e8fa0c8
+pos_6aabb53d04560693,arseniy,1,термохимические тепловые аккумуляторы для утилизации промышленного сбросного тепла,thermochemical energy storage,дубль технологии «thermochemical energy storage» → pos_4f3680446e8fa0c8
+pos_b6baaf3acdd8fe9a,arseniy,1,термохимические тепловые аккумуляторы для центров обработки данных ИИ,thermochemical energy storage,дубль технологии «thermochemical energy storage» → pos_4f3680446e8fa0c8
+pos_e3e89d39fab4678c,arseniy,1,термохимические тепловые аккумуляторы для управления теплом в зданиях,thermochemical energy storage,дубль технологии «thermochemical energy storage» → pos_4f3680446e8fa0c8
+pos_e7fda177c5528a7e,arseniy,1,термохимические тепловые аккумуляторы для сезонного хранения энергии,thermochemical energy storage,дубль технологии «thermochemical energy storage» → pos_4f3680446e8fa0c8
+pos_e92a15010fb0e187,arseniy,1,фундаментальные модели промышленных временных рядов для нефтегазовых операций,Time series foundation models,термин совпадает с золотой валидацией
+pos_ee92509e6b6993a4,arseniy,1,фундаментальные модели промышленных временных рядов для промышленных микросетей,time series foundation models,термин совпадает с золотой валидацией
+pos_c2534739b12ebd1e,arseniy,1,фундаментальные модели промышленных временных рядов для обогащения полезных ископаемых,time series foundation models,термин совпадает с золотой валидацией
+pos_13c1889ff7e36c62,arseniy,1,фундаментальные модели промышленных временных рядов для пищевого производства,time series foundation models,термин совпадает с золотой валидацией
+pos_d6b323f01b4a0516,arseniy,1,фундаментальные модели промышленных временных рядов для фармацевтического производства,time series foundation models,термин совпадает с золотой валидацией
+pos_aa5080b7f2dc50a0,arseniy,1,фундаментальные модели промышленных временных рядов для производства стали,time series foundation models,термин совпадает с золотой валидацией
+pos_6c6847db17000aa3,arseniy,1,фундаментальные модели промышленных временных рядов для производства цемента,time series foundation models,термин совпадает с золотой валидацией
+pos_ac7987e56e929725,arseniy,1,нейропроцессоры tinyML для мониторинга промышленного оборудования,TinyML accelerator,дубль технологии «tinyml processor» → pos_58d3195c66a03626
+pos_d9112add5a129519,arseniy,1,нейропроцессоры tinyML для автономного транспорта,TinyML accelerator,дубль технологии «tinyml processor» → pos_58d3195c66a03626
+pos_f84173048549a872,arseniy,1,нейропроцессоры tinyML для точного земледелия,TinyML accelerator,дубль технологии «tinyml processor» → pos_58d3195c66a03626
+pos_200a9c8bb24a2344,arseniy,1,токенизированные депозиты коммерческих банков для офлайн-розничных платежей,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_2887150655bef402,arseniy,1,токенизированные депозиты коммерческих банков для страхового андеррайтинга,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_700a66c455d8c9a4,arseniy,1,токенизированные депозиты коммерческих банков для программируемых расчётов,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_75e6fb0ea2c1ca06,arseniy,1,токенизированные депозиты коммерческих банков для цифровых валют центральных банков,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_ad93ca708142df27,arseniy,1,токенизированные депозиты коммерческих банков для хранения цифровых активов,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_c833f96d2dda5bf5,arseniy,1,токенизированные депозиты коммерческих банков для финансовой доступности на развивающихся рынках,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_e5cb2b5f66e20a0b,arseniy,1,токенизированные депозиты коммерческих банков для кредитования малого и среднего бизнеса,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_f1dde8647b489a68,arseniy,1,токенизированные депозиты коммерческих банков для трансграничных расчётов,tokenized deposits,дубль технологии «tokenized deposit» → pos_1bde775c4d465e6c
+pos_2a49a349728f7854,arseniy,1,автономные подводные сенсорные сети для выявления лесных пожаров,underwater wireless sensor networks,дубль технологии «underwater sensor network» → pos_07fd5bfb79ef5e0a
+pos_519f008b7511eb29,arseniy,1,автономные подводные сенсорные сети для морской безопасности,underwater wireless sensor networks,дубль технологии «underwater sensor network» → pos_07fd5bfb79ef5e0a
+pos_deaf088964289ac1,arseniy,1,автономные подводные сенсорные сети для полярных исследований,underwater wireless sensor networks,дубль технологии «underwater sensor network» → pos_07fd5bfb79ef5e0a
+pos_fb112e9d063b8179,arseniy,1,автономные подводные сенсорные сети для мониторинга климата,underwater wireless sensor networks,дубль технологии «underwater sensor network» → pos_07fd5bfb79ef5e0a
+pos_fb1f49de4616c3a0,arseniy,1,автономные подводные сенсорные сети для разведки полезных ископаемых,underwater wireless sensor networks,дубль технологии «underwater sensor network» → pos_07fd5bfb79ef5e0a
+pos_408a34a2208f520f,arseniy,1,автономные подводные сенсорные сети для точного земледелия,underwater sensor networks,дубль технологии «underwater wireless sensor network» → pos_28a3ebf61fc85639
+pos_6f918726422b9d2e,arseniy,1,автономные подводные сенсорные сети для инспекции морской энергетической инфраструктуры,underwater sensor networks,дубль технологии «underwater wireless sensor network» → pos_28a3ebf61fc85639
+pos_dae3ff2a3c20ece9,arseniy,1,автономные подводные сенсорные сети для мониторинга углерода в океане,underwater sensor networks,дубль технологии «underwater wireless sensor network» → pos_28a3ebf61fc85639
+pos_f00517528b605d77,arseniy,1,автономные подводные сенсорные сети для мониторинга рыболовства,underwater sensor networks,дубль технологии «underwater wireless sensor network» → pos_28a3ebf61fc85639
+neg-w9569439,ours,0,Аутентификация пользователя путем проверки ответов на секретные контрольные вопросы,knowledge-based authentication,дубль технологии «verbal authentication» → neg-c8415045
+pos-3626709,ours,1,Использование виртуальных IBAN для сквозного отслеживания и возвратов в межбанковских платежах,virtual IBAN,дубль технологии «virtual account management» → pos-3401243
+pos_76b5f28162f2d3c5,arseniy,1,адаптивная роботизированная сварка с машинным зрением для целлюлозно-бумажного производства,adaptive robotic welding,дубль технологии «vision guided robotic welding» → pos_4a56a53cbea90bc8
+pos_825983bce1752fa9,arseniy,1,адаптивная роботизированная сварка с машинным зрением для обогащения полезных ископаемых,adaptive robotic welding,дубль технологии «vision guided robotic welding» → pos_4a56a53cbea90bc8
+pos_87cb5387eb5e9031,arseniy,1,адаптивная роботизированная сварка с машинным зрением для промышленных микросетей,adaptive robotic welding,дубль технологии «vision guided robotic welding» → pos_4a56a53cbea90bc8
+pos-6041862,ours,1,Автономные морские вычислительные узлы с питанием от энергии океанских волн,wave-powered edge computing,противоречие меток в группе «wave powered edge computing»
+neg-c6656000,ours,0,Метеорологический буй: автономная обработка и передача данных в океане,ocean edge computing,противоречие меток в группе «wave powered edge computing»
+neg_4feb138f2a217929,arseniy,0,Wi-Fi для домашние сети,Wi-Fi,дубль технологии «wi fi» → neg_33243306c9733867
+neg_80ad69b0c00a5433,arseniy,0,Wi-Fi для больничные сети,Wi-Fi,дубль технологии «wi fi» → neg_33243306c9733867
+neg_a5ae6f0ac19a163b,arseniy,0,Wi-Fi для складская связь,Wi-Fi,дубль технологии «wi fi» → neg_33243306c9733867
+neg_b67e12e0f83b958e,arseniy,0,Wi-Fi для беспроводные датчики,Wi-Fi HaLow,дубль технологии «wi fi halow» → neg_813b74b55c078cd0
+pos-940120,ours,1,Доказательства с нулевым разглашением для криптографической верификации целостности вывода нейросетей,zero-knowledge machine learning,дубль технологии «zero knowledge machine learning» → pos-547762
+pos_48b1f907b8b65ca1,arseniy,1,переиспользуемые идентификационные данные с доказательствами с нулевым разглашением для хранения цифровых активов,zero-knowledge verifiable credentials,дубль технологии «zero knowledge verifiable credential» → pos_3b3459f51ed00323
+pos_af055af5956ea41f,arseniy,1,переиспользуемые идентификационные данные с доказательствами с нулевым разглашением для финансовой доступности на развивающихся рынках,zero-knowledge verifiable credentials,дубль технологии «zero knowledge verifiable credential» → pos_3b3459f51ed00323
+pos_f7ae914c5d49bb7b,arseniy,1,переиспользуемые идентификационные данные с доказательствами с нулевым разглашением для торгового финансирования,zero-knowledge verifiable credentials,дубль технологии «zero knowledge verifiable credential» → pos_3b3459f51ed00323
+pos-5684245,ours,1,Физически достоверная симуляция промышленных пространств для предварительного обучения роботов,sim-to-real transfer,термин совпадает с золотой валидацией
+pos-1754821,ours,1,Перенос выработанных в симуляторе методом обучения с подкреплением локомоторных навыков гуманоидных роботов,sim-to-real transfer,термин совпадает с золотой валидацией
+pos_528bdca8193664ff,arseniy,1,zero-shot перенос из симуляции в реальность для гибкого производства,zero-shot sim-to-real transfer,термин совпадает с золотой валидацией
+pos_d5e148b0b0172457,arseniy,1,zero-shot перенос из симуляции в реальность для подводной инспекции,zero-shot sim-to-real transfer,термин совпадает с золотой валидацией
+pos_2f9f75e1dde2833b,arseniy,1,zero-shot перенос из симуляции в реальность для физической реабилитации,zero-shot sim-to-real transfer,термин совпадает с золотой валидацией

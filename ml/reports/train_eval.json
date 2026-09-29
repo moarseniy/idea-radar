@@ -1,0 +1,482 @@
+{
+  "merged": {
+    "variant": "merged",
+    "train_rows": 1357,
+    "train_labels": {
+      "1": 398,
+      "0": 959
+    },
+    "features": 48,
+    "C": 0.03,
+    "cv_auc_by_C": {
+      "0.01": 0.9452,
+      "0.03": 0.9472,
+      "0.1": 0.9473,
+      "0.3": 0.947,
+      "1.0": 0.9466,
+      "3.0": 0.9464
+    },
+    "cv": {
+      "at_0.5": {
+        "precision": 0.775,
+        "recall": 0.902,
+        "f1": 0.834,
+        "roc_auc": 0.947,
+        "pr_auc": 0.853,
+        "threshold": 0.5
+      },
+      "at_cv_threshold": {
+        "precision": 0.825,
+        "recall": 0.887,
+        "f1": 0.855,
+        "roc_auc": 0.947,
+        "pr_auc": 0.853,
+        "threshold": 0.6
+      }
+    },
+    "validation": {
+      "at_0.5": {
+        "precision": 0.855,
+        "recall": 0.94,
+        "f1": 0.895,
+        "roc_auc": 0.926,
+        "pr_auc": 0.905,
+        "threshold": 0.5
+      },
+      "at_cv_threshold": {
+        "precision": 0.876,
+        "recall": 0.92,
+        "f1": 0.898,
+        "roc_auc": 0.926,
+        "pr_auc": 0.905,
+        "threshold": 0.6
+      }
+    },
+    "validation_by_domain": {
+      "Edge": {
+        "pos_total": 16,
+        "pos_ok": 16,
+        "neg_total": 16,
+        "neg_ok": 12
+      },
+      "Защита ИИ": {
+        "pos_total": 16,
+        "pos_ok": 16,
+        "neg_total": 8,
+        "neg_ok": 7
+      },
+      "Индустриальный ИИ": {
+        "pos_total": 17,
+        "pos_ok": 17,
+        "neg_total": 17,
+        "neg_ok": 15
+      },
+      "Инфраструктура ИИ": {
+        "pos_total": 17,
+        "pos_ok": 16,
+        "neg_total": 17,
+        "neg_ok": 17
+      },
+      "Роботы": {
+        "pos_total": 17,
+        "pos_ok": 13,
+        "neg_total": 17,
+        "neg_ok": 12
+      },
+      "Финтех": {
+        "pos_total": 17,
+        "pos_ok": 14,
+        "neg_total": 17,
+        "neg_ok": 16
+      }
+    },
+    "validation_negatives_by_source": {
+      "пары к золоту_total": 55,
+      "пары к золоту_ok": 45,
+      "резерв_total": 37,
+      "резерв_ok": 34
+    },
+    "top_weights": [
+      [
+        "is_technology_flag",
+        1.386
+      ],
+      [
+        "stage_scaling_or_mature",
+        -0.69
+      ],
+      [
+        "rebranding_similarity_to_mature",
+        0.586
+      ],
+      [
+        "mass_market_flag",
+        -0.501
+      ],
+      [
+        "stage_research",
+        0.458
+      ],
+      [
+        "paper_growth_2y",
+        0.353
+      ],
+      [
+        "stage_pilot",
+        0.281
+      ],
+      [
+        "first_evidence_age_years",
+        -0.257
+      ],
+      [
+        "paper_acceleration",
+        -0.24
+      ],
+      [
+        "stage_poc",
+        0.234
+      ],
+      [
+        "technical_term_density",
+        0.202
+      ],
+      [
+        "strategic_investor_count",
+        0.196
+      ],
+      [
+        "production_deployments_log",
+        -0.162
+      ],
+      [
+        "commercial_vendor_count_log",
+        0.158
+      ],
+      [
+        "paper_volume_percentile_domain",
+        -0.126
+      ]
+    ]
+  },
+  "ours": {
+    "variant": "ours",
+    "train_rows": 707,
+    "train_labels": {
+      "1": 342,
+      "0": 365
+    },
+    "features": 48,
+    "C": 0.03,
+    "cv_auc_by_C": {
+      "0.01": 0.9239,
+      "0.03": 0.9265,
+      "0.1": 0.9261,
+      "0.3": 0.9238,
+      "1.0": 0.9203,
+      "3.0": 0.9165
+    },
+    "cv": {
+      "at_0.5": {
+        "precision": 0.856,
+        "recall": 0.886,
+        "f1": 0.871,
+        "roc_auc": 0.926,
+        "pr_auc": 0.902,
+        "threshold": 0.5
+      },
+      "at_cv_threshold": {
+        "precision": 0.863,
+        "recall": 0.883,
+        "f1": 0.873,
+        "roc_auc": 0.926,
+        "pr_auc": 0.902,
+        "threshold": 0.51
+      }
+    },
+    "validation": {
+      "at_0.5": {
+        "precision": 0.87,
+        "recall": 0.94,
+        "f1": 0.904,
+        "roc_auc": 0.946,
+        "pr_auc": 0.92,
+        "threshold": 0.5
+      },
+      "at_cv_threshold": {
+        "precision": 0.869,
+        "recall": 0.93,
+        "f1": 0.899,
+        "roc_auc": 0.946,
+        "pr_auc": 0.92,
+        "threshold": 0.51
+      }
+    },
+    "validation_by_domain": {
+      "Edge": {
+        "pos_total": 16,
+        "pos_ok": 15,
+        "neg_total": 16,
+        "neg_ok": 12
+      },
+      "Защита ИИ": {
+        "pos_total": 16,
+        "pos_ok": 15,
+        "neg_total": 8,
+        "neg_ok": 7
+      },
+      "Индустриальный ИИ": {
+        "pos_total": 17,
+        "pos_ok": 17,
+        "neg_total": 17,
+        "neg_ok": 15
+      },
+      "Инфраструктура ИИ": {
+        "pos_total": 17,
+        "pos_ok": 16,
+        "neg_total": 17,
+        "neg_ok": 17
+      },
+      "Роботы": {
+        "pos_total": 17,
+        "pos_ok": 15,
+        "neg_total": 17,
+        "neg_ok": 12
+      },
+      "Финтех": {
+        "pos_total": 17,
+        "pos_ok": 15,
+        "neg_total": 17,
+        "neg_ok": 15
+      }
+    },
+    "validation_negatives_by_source": {
+      "пары к золоту_total": 55,
+      "пары к золоту_ok": 45,
+      "резерв_total": 37,
+      "резерв_ok": 33
+    },
+    "top_weights": [
+      [
+        "stage_scaling_or_mature",
+        -0.707
+      ],
+      [
+        "stage_research",
+        0.506
+      ],
+      [
+        "mass_market_flag",
+        -0.438
+      ],
+      [
+        "rebranding_similarity_to_mature",
+        0.432
+      ],
+      [
+        "first_evidence_age_years",
+        -0.373
+      ],
+      [
+        "paper_growth_2y",
+        0.325
+      ],
+      [
+        "stage_pilot",
+        0.282
+      ],
+      [
+        "missing_science",
+        0.196
+      ],
+      [
+        "commercial_vendor_count_log",
+        0.176
+      ],
+      [
+        "paper_acceleration",
+        -0.174
+      ],
+      [
+        "stage_poc",
+        0.169
+      ],
+      [
+        "stage_early_adoption",
+        0.138
+      ],
+      [
+        "missing_funding",
+        -0.133
+      ],
+      [
+        "unverifiable_source_share",
+        0.115
+      ],
+      [
+        "technical_term_density",
+        0.103
+      ]
+    ]
+  },
+  "arseniy": {
+    "variant": "arseniy",
+    "train_rows": 650,
+    "train_labels": {
+      "1": 56,
+      "0": 594
+    },
+    "features": 48,
+    "C": 1.0,
+    "cv_auc_by_C": {
+      "0.01": 0.9811,
+      "0.03": 0.9864,
+      "0.1": 0.9877,
+      "0.3": 0.9892,
+      "1.0": 0.9895,
+      "3.0": 0.9879
+    },
+    "cv": {
+      "at_0.5": {
+        "precision": 0.735,
+        "recall": 0.893,
+        "f1": 0.806,
+        "roc_auc": 0.99,
+        "pr_auc": 0.878,
+        "threshold": 0.5
+      },
+      "at_cv_threshold": {
+        "precision": 0.82,
+        "recall": 0.893,
+        "f1": 0.855,
+        "roc_auc": 0.99,
+        "pr_auc": 0.878,
+        "threshold": 0.77
+      }
+    },
+    "validation": {
+      "at_0.5": {
+        "precision": 0.881,
+        "recall": 0.74,
+        "f1": 0.804,
+        "roc_auc": 0.889,
+        "pr_auc": 0.895,
+        "threshold": 0.5
+      },
+      "at_cv_threshold": {
+        "precision": 0.91,
+        "recall": 0.71,
+        "f1": 0.798,
+        "roc_auc": 0.889,
+        "pr_auc": 0.895,
+        "threshold": 0.77
+      }
+    },
+    "validation_by_domain": {
+      "Edge": {
+        "pos_total": 16,
+        "pos_ok": 14,
+        "neg_total": 16,
+        "neg_ok": 12
+      },
+      "Защита ИИ": {
+        "pos_total": 16,
+        "pos_ok": 10,
+        "neg_total": 8,
+        "neg_ok": 8
+      },
+      "Индустриальный ИИ": {
+        "pos_total": 17,
+        "pos_ok": 14,
+        "neg_total": 17,
+        "neg_ok": 17
+      },
+      "Инфраструктура ИИ": {
+        "pos_total": 17,
+        "pos_ok": 9,
+        "neg_total": 17,
+        "neg_ok": 17
+      },
+      "Роботы": {
+        "pos_total": 17,
+        "pos_ok": 13,
+        "neg_total": 17,
+        "neg_ok": 14
+      },
+      "Финтех": {
+        "pos_total": 17,
+        "pos_ok": 11,
+        "neg_total": 17,
+        "neg_ok": 17
+      }
+    },
+    "validation_negatives_by_source": {
+      "пары к золоту_total": 55,
+      "пары к золоту_ok": 50,
+      "резерв_total": 37,
+      "резерв_ok": 35
+    },
+    "top_weights": [
+      [
+        "is_technology_flag",
+        3.925
+      ],
+      [
+        "mass_market_flag",
+        -1.782
+      ],
+      [
+        "stage_scaling_or_mature",
+        -1.291
+      ],
+      [
+        "stage_poc",
+        0.919
+      ],
+      [
+        "paper_growth_2y",
+        0.908
+      ],
+      [
+        "rebranding_similarity_to_mature",
+        -0.907
+      ],
+      [
+        "production_deployments_log",
+        -0.905
+      ],
+      [
+        "paper_acceleration",
+        -0.833
+      ],
+      [
+        "stage_research",
+        0.812
+      ],
+      [
+        "marketing_claim_density",
+        0.682
+      ],
+      [
+        "media_growth_6m",
+        0.6
+      ],
+      [
+        "final_standard_flag",
+        -0.597
+      ],
+      [
+        "procurement_presence",
+        0.585
+      ],
+      [
+        "named_customer_count_log",
+        -0.573
+      ],
+      [
+        "verified_pilots_log_24m",
+        0.46
+      ]
+    ]
+  }
+}

@@ -1,0 +1,224 @@
+services:
+  postgres:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: radar
+      POSTGRES_USER: radar
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-radar-local-development}
+    volumes:
+      - radar-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U radar -d radar"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+  hypothesis-lab:
+    build: .
+    ports:
+      - "${RADAR_HOST:-127.0.0.1}:${RADAR_PORT:-8080}:8080"
+    depends_on:
+      postgres:
+        condition: service_healthy
+      search:
+        condition: service_started
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8080", "--log-level", "${UVICORN_LOG_LEVEL:-info}"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"  # локальная LLM на хосте (RADAR_PROVIDER=local), нужно на Linux
+    environment:
+      APP_NAME: ${APP_NAME:-IDEA Radar}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      OPENROUTER_MODEL: ${OPENROUTER_MODEL:-openai/gpt-4.1}
+      OPENROUTER_RESEARCH_MODEL: ${OPENROUTER_RESEARCH_MODEL:-openai/gpt-4.1}
+      OPENROUTER_GRAPH_EXTRACTION: ${OPENROUTER_GRAPH_EXTRACTION:-true}
+      OPENROUTER_RESEARCH_MAX_SOURCES: ${OPENROUTER_RESEARCH_MAX_SOURCES:-8}
+      OPENROUTER_VISION_DETAIL: ${OPENROUTER_VISION_DETAIL:-high}
+      OPENROUTER_MAX_RETRIES: ${OPENROUTER_MAX_RETRIES:-1}
+      OPENROUTER_TIMEOUT: ${OPENROUTER_TIMEOUT:-90}
+      RADAR_DATABASE_URL: postgresql://radar:${POSTGRES_PASSWORD:-radar-local-development}@postgres:5432/radar
+      RADAR_SEARCH_BRANCHES: ${RADAR_SEARCH_BRANCHES:-4}
+      RADAR_MAX_SOURCES: ${RADAR_MAX_SOURCES:-110}
+      RADAR_MAX_CANDIDATES: ${RADAR_MAX_CANDIDATES:-60}
+      RADAR_SEARCH_WORKERS: ${RADAR_SEARCH_WORKERS:-3}
+      RADAR_MAX_ACTIVE_RUNS: ${RADAR_MAX_ACTIVE_RUNS:-1}
+      RADAR_DEADLINE_SECONDS: ${RADAR_DEADLINE_SECONDS:-1080}
+      RADAR_FETCH_TIMEOUT: ${RADAR_FETCH_TIMEOUT:-12}
+      RADAR_CACHE_HOURS: ${RADAR_CACHE_HOURS:-24}
+      RADAR_AUDIO_TRANSCRIPTION_URL: ${RADAR_AUDIO_TRANSCRIPTION_URL:-}
+      RADAR_AUDIO_TRANSCRIPTION_TOKEN: ${RADAR_AUDIO_TRANSCRIPTION_TOKEN:-}
+      RADAR_AUDIO_TRANSCRIPTION_MODEL: ${RADAR_AUDIO_TRANSCRIPTION_MODEL:-whisper-1}
+      RADAR_AUDIO_TRANSCRIPTION_ALLOWLIST: ${RADAR_AUDIO_TRANSCRIPTION_ALLOWLIST:-}
+      RADAR_AUDIO_TRANSCRIPTION_TIMEOUT: ${RADAR_AUDIO_TRANSCRIPTION_TIMEOUT:-180}
+      RADAR_AUDIO_TRANSCRIPTION_MAX_MB: ${RADAR_AUDIO_TRANSCRIPTION_MAX_MB:-20}
+      # Провайдер LLM: openrouter — облако; local — свой OpenAI-совместимый сервер
+      RADAR_PROVIDER: ${RADAR_PROVIDER:-openrouter}
+      # local: сервер на хосте — host.docker.internal; из профилей ниже — http://ollama:11434/v1,
+      # http://vllm:8000/v1, http://sglang:30000/v1
+      LOCAL_LLM_URL: ${LOCAL_LLM_URL:-http://host.docker.internal:11434/v1}
+      LOCAL_LLM_BACKEND: ${LOCAL_LLM_BACKEND:-ollama}
+      LOCAL_MODEL: ${LOCAL_MODEL:-qwen3.6:35b-a3b}
+      LOCAL_LLM_KEY: ${LOCAL_LLM_KEY:-}
+      LOCAL_LLM_EXTRA: ${LOCAL_LLM_EXTRA:-}
+      LOCAL_TIMEOUT: ${LOCAL_TIMEOUT:-600}
+      # Веб-поиск: service — контейнер search (провайдеры и ключи — там); llm — плагин OpenRouter; off
+      RADAR_WEB_SEARCH: ${RADAR_WEB_SEARCH:-service}
+      SEARCH_URL: http://search:8090
+      SEARCH_SERVICE_TOKEN: ${SEARCH_SERVICE_TOKEN:-}
+      # Скоринг обученной моделью и признаки (app/ml): модель разметки, кэш ответов источников
+      RADAR_USE_MODEL: ${RADAR_USE_MODEL:-1}
+      RADAR_OPEN_SOURCES: ${RADAR_OPEN_SOURCES:-1}
+      FEATURE_MODEL: ${FEATURE_MODEL:-}
+      FEATURE_LLM_URL: ${FEATURE_LLM_URL:-}
+      FEATURE_LLM_TIMEOUT: ${FEATURE_LLM_TIMEOUT:-60}
+      FEATURE_LLM_TRIES: ${FEATURE_LLM_TRIES:-1}
+      FEATURE_FETCH_TIMEOUT: ${FEATURE_FETCH_TIMEOUT:-20}
+      FEATURE_FETCH_TRIES: ${FEATURE_FETCH_TRIES:-2}
+      SIGNAL_MODEL_PATH: ${SIGNAL_MODEL_PATH:-}
+      FEATURE_CACHE_DIR: /app/storage/feature_cache
+      OPENALEX_ENABLED: ${OPENALEX_ENABLED:-0}
+      OPENALEX_MAILTO: ${OPENALEX_MAILTO:-}
+      VISION_MAX_WORKERS: ${VISION_MAX_WORKERS:-4}
+      STORAGE_DIR: /app/storage
+      DATABASE_PATH: /app/storage/hypothesis_lab.db
+      UPLOADS_DIR: /app/storage/uploads
+      SAMPLE_DATA_DIR: /app/data
+      FEATURE_PATENTS: ${FEATURE_PATENTS:-1}
+      FEATURE_STRUCTURED_SOURCES: ${FEATURE_STRUCTURED_SOURCES:-1}
+      OPENALEX_API_KEY: ${OPENALEX_API_KEY:-}
+      GITHUB_TOKEN: ${GITHUB_TOKEN:-}
+      HF_TOKEN: ${HF_TOKEN:-}
+      OPENFDA_API_KEY: ${OPENFDA_API_KEY:-}
+      MAX_DOCUMENT_CHARS: ${MAX_DOCUMENT_CHARS:-120000}
+      MAX_CONTEXT_CHARS: ${MAX_CONTEXT_CHARS:-28000}
+      MAX_UPLOAD_BYTES: ${MAX_UPLOAD_BYTES:-167772160}
+      PDF_OCR_ENABLED: ${PDF_OCR_ENABLED:-true}
+      PDF_OCR_LANGUAGES: ${PDF_OCR_LANGUAGES:-ru,en,ch_sim}
+      PDF_OCR_MODEL_DIR: /app/storage/easyocr
+      PDF_FAST_MODE: ${PDF_FAST_MODE:-true}
+      PDF_MAX_PAGES: ${PDF_MAX_PAGES:-80}
+      PDF_IMAGE_MAX_PAGES: ${PDF_IMAGE_MAX_PAGES:-8}
+      PDF_OCR_MIN_CHARS: ${PDF_OCR_MIN_CHARS:-12}
+      PDF_TEXT_LAYER_MIN_CHARS: ${PDF_TEXT_LAYER_MIN_CHARS:-16}
+      PDF_RENDER_DPI: ${PDF_RENDER_DPI:-120}
+      PDF_VISION_MAX_PAGES: ${PDF_VISION_MAX_PAGES:-2}
+    volumes:
+      - ./storage:/app/storage
+      - ./data:/app/data:ro
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8080/api/health').read()"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 15s
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+  # Сервис веб-поиска: один интерфейс над провайдерами; ключи провайдеров живут только здесь.
+  search:
+    build: .
+    command: ["uvicorn", "app.search.server:app", "--host", "0.0.0.0", "--port", "8090"]
+    depends_on:
+      - searxng
+    environment:
+      SEARCH_PROVIDERS: ${SEARCH_PROVIDERS:-searxng}
+      SEARCH_MODE: ${SEARCH_MODE:-fallback}
+      SEARCH_TIMEOUT: ${SEARCH_TIMEOUT:-20}
+      SEARCH_CACHE_HOURS: ${SEARCH_CACHE_HOURS:-24}
+      SEARCH_CACHE_DIR: /app/storage/search_cache
+      SEARCH_SERVICE_TOKEN: ${SEARCH_SERVICE_TOKEN:-}
+      SEARXNG_URL: ${SEARXNG_URL:-http://searxng:8080}
+      SEARXNG_ENGINES: ${SEARXNG_ENGINES:-yahoo,bing news,google news,brave,google cse,duckduckgo}
+      SEARCH_MAX_QUERIES: ${SEARCH_MAX_QUERIES:-3}
+      SEARCH_MIN_INTERVAL: ${SEARCH_MIN_INTERVAL:-1.0}
+      TAVILY_API_KEY: ${TAVILY_API_KEY:-}
+      EXA_API_KEY: ${EXA_API_KEY:-}
+      BRAVE_API_KEY: ${BRAVE_API_KEY:-}
+      YANDEX_SEARCH_API_KEY: ${YANDEX_SEARCH_API_KEY:-}
+      YANDEX_FOLDER_ID: ${YANDEX_FOLDER_ID:-}
+      OPENSERP_URL: ${OPENSERP_URL:-http://openserp:7000}
+      OPENSERP_ENGINES: ${OPENSERP_ENGINES:-bing,duckduckgo,yandex}
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY:-}
+      SEARCH_OPENROUTER_MODEL: ${SEARCH_OPENROUTER_MODEL:-openai/gpt-4.1}
+    volumes:
+      - ./storage:/app/storage
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://127.0.0.1:8090/health').read()"]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  # Метапоиск без ключей — провайдер по умолчанию. JSON API включён в deploy/searxng/settings.yml.
+  searxng:
+    image: searxng/searxng:latest
+    environment:
+      SEARXNG_SECRET: ${SEARXNG_SECRET:-change-me-radar-searxng}
+      SEARXNG_BASE_URL: http://searxng:8080/
+    volumes:
+      - ./deploy/searxng/settings.yml:/etc/searxng/settings.yml:ro
+    ports:
+      - "127.0.0.1:${SEARXNG_PORT:-8888}:8080"  # для отладки с хоста; сервис ходит по сети compose
+
+  # Необязательные провайдеры и локальные LLM — включаются профилями:
+  #   docker compose --profile openserp up        OpenSERP (скрейпер Bing/DuckDuckGo/Яндекс)
+  #   docker compose --profile ollama up          LOCAL_LLM_URL=http://ollama:11434/v1
+  #   docker compose --profile vllm up            LOCAL_LLM_URL=http://vllm:8000/v1, LOCAL_LLM_BACKEND=vllm (NVIDIA GPU)
+  #   docker compose --profile sglang up          LOCAL_LLM_URL=http://sglang:30000/v1, LOCAL_LLM_BACKEND=sglang (NVIDIA GPU)
+  openserp:
+    image: karust/openserp:latest
+    command: ["serve", "-a", "0.0.0.0", "-p", "7000"]
+    profiles: ["openserp"]
+
+  ollama:
+    image: ollama/ollama:latest
+    profiles: ["ollama"]
+    volumes:
+      - ollama-models:/root/.ollama
+    ports:
+      - "127.0.0.1:11434:11434"
+
+  vllm:
+    image: vllm/vllm-openai:latest
+    profiles: ["vllm"]
+    # Модель — HF-id (Qwen/Qwen3.6-35B-A3B); LOCAL_MODEL должен совпадать с --served-model-name.
+    command: ["--model", "${VLLM_MODEL:-Qwen/Qwen3.6-35B-A3B}", "--served-model-name", "${LOCAL_MODEL:-Qwen/Qwen3.6-35B-A3B}",
+              "--max-model-len", "32768", "--reasoning-parser", "qwen3"]
+    environment:
+      HF_TOKEN: ${HF_TOKEN:-}
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  sglang:
+    image: lmsysorg/sglang:latest
+    profiles: ["sglang"]
+    command: ["python3", "-m", "sglang.launch_server", "--model-path", "${SGLANG_MODEL:-Qwen/Qwen3.6-35B-A3B}",
+              "--served-model-name", "${LOCAL_MODEL:-Qwen/Qwen3.6-35B-A3B}", "--host", "0.0.0.0", "--port", "30000",
+              "--reasoning-parser", "qwen3"]
+    environment:
+      HF_TOKEN: ${HF_TOKEN:-}
+    volumes:
+      - hf-cache:/root/.cache/huggingface
+    ipc: host
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+volumes:
+  radar-postgres:
+  ollama-models:
+  hf-cache:

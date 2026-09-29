@@ -1,0 +1,74 @@
+@startuml context
+title Weak Signal Radar — контекст и компоненты
+skinparam componentStyle rectangle
+skinparam defaultFontName Arial
+
+actor "Аналитик / жюри" as user
+
+package "Frontend (React + TS)" {
+  [Поиск] as ui_search
+  [ТОП-15 и статистика] as ui_top
+  [Инсайт: документ-отчёт] as ui_insight
+  [Карточка модели и оценка на датасете] as ui_model
+}
+
+package "Backend (FastAPI)" {
+  package "api" {
+    [routes_search] as r_search
+    [routes_datasets] as r_ds
+    [routes_model] as r_model
+  }
+  package "pipeline" {
+    [Оркестратор S1..S12] as orch
+  }
+  package "ingest" {
+    [Коннекторы] as conn
+    [Нормализация и дедуп] as norm
+    [Парсер файлов PDF/DOCX/XLSX] as files
+  }
+  package "ml" {
+    [Признаки: 63 кандидата, 7 блоков] as feats
+    [Классификатор + калибровка] as clf
+    [Ворота исключения G1..G5] as gates
+    [Объяснения: вклады признаков] as expl
+  }
+  package "llm" {
+    [Роутер провайдеров] as llmr
+    [Валидатор цитат] as cit
+  }
+  package "services" {
+    [Реестр доверенности A/B/C/D] as trust
+    [Перевод и резюме] as tr
+    [Сборка отчёта] as rep
+  }
+}
+
+database "PostgreSQL" as pg
+
+cloud "Открытые источники:\nOpenAlex · arXiv · патенты ·\nрегуляторы · медиа · GitHub" as web
+
+cloud "LLM-провайдер\nGigaChat / YandexGPT / Qwen / gpt-4.1" as llm
+
+user --> ui_search
+user --> ui_model
+ui_search --> r_search : REST + SSE
+ui_model --> r_ds
+ui_model --> r_model
+r_search --> orch
+orch --> conn
+conn --> web
+conn --> norm
+norm --> trust
+orch --> feats
+feats --> clf
+clf --> gates
+gates --> expl
+orch --> llmr
+llmr --> llm
+llmr --> cit
+orch --> rep
+rep --> tr
+orch --> pg
+r_ds --> clf
+files --> norm
+@enduml

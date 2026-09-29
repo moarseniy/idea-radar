@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>IDEA — Технологический радар</title>
+  <link rel="stylesheet" href="/static/radar.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <a class="brand" href="/" aria-label="IDEA — главная"><span class="brand-mark">i<span>✦</span></span><span>IDEA<span class="brand-dot">.</span><small>Технологический радар</small></span></a>
+    <div class="nav-label">Рабочее пространство</div>
+    <nav><button class="nav-button active" id="navSearch"><span>⌕</span> Обзор сигналов</button><button class="nav-button" id="navCatalog"><span>▦</span> Каталог примеров <b>100</b></button><button class="nav-button" id="navMethod"><span>◎</span> Методология</button></nav>
+    <div class="history-heading"><span class="nav-label">История исследований</span><button id="refreshHistory" title="Обновить историю" aria-label="Обновить историю">↻</button></div>
+    <div id="history" class="history"><p class="sidebar-note">Здесь появятся ваши исследования.</p></div>
+    <div class="sidebar-bottom"><span class="status-dot" id="connectionDot"></span><span id="connectionText">Подключение…</span></div>
+  </aside>
+  <main>
+    <header class="topline"><div><span class="breadcrumb">Рабочее пространство</span><span class="slash">/</span><span id="pageTitle">Обзор сигналов</span></div><div class="top-actions"><span class="live-tag">Открытые источники</span><span id="today"></span></div></header>
+    <div class="content">
+      <section id="searchView">
+        <div class="intro"><div class="eyebrow"><span></span> Технологическая разведка</div><h1>Замечать изменения.<br><span>Раньше рынка.</span></h1><p>Ранние технологии, конкретные применения и факты,<br class="desktop-only"> на которых можно построить следующий шаг.</p></div>
+        <form id="searchForm" class="search-box">
+          <label for="queryInput">Какое направление исследуем?</label>
+          <div class="search-input-row"><span aria-hidden="true">⌕</span><input id="queryInput" name="query" required minlength="3" maxlength="1200" placeholder="Например, новые технологии в промышленной робототехнике" autocomplete="off"><button id="searchButton" type="submit">Найти сигналы <span>↗</span></button></div>
+          <div class="search-bottom"><div class="suggestions"><button type="button" data-query="Ранние технологии защиты ИИ-агентов">Защита ИИ</button><button type="button" data-query="Слабые сигналы в финансовых технологиях">Финтех</button><button type="button" data-query="Новые технологии промышленной робототехники">Робототехника</button></div><label class="date-label">На дату <input id="asOfInput" type="date" required aria-label="Дата оценки"></label></div>
+        </form>
+        <div id="configNotice" class="notice" hidden></div>
+        <section id="runPanel" hidden>
+          <div class="run-title-row"><div><div class="eyebrow">Исследование</div><h2 id="runQuery"></h2><p class="muted" id="runSubtitle"></p></div><div class="run-actions"><button class="subtle" id="cancelButton" hidden>Остановить</button><button class="subtle" id="exportButton">↓ Отчёт</button></div></div>
+          <div class="progress-panel" id="progressPanel"><div class="progress-heading"><span class="spinner" id="runSpinner"></span><strong id="runStage"></strong><span id="runTiming"></span></div><div id="stageSteps" class="stage-steps"></div><div id="latestEvent" class="muted"></div></div>
+          <div class="stats"><div><span>Найдено источников</span><strong id="statFound">0</strong><small>URL из поисковых ответов</small></div><div><span>Прочитано документов</span><strong id="statRead">0</strong><small id="statDuplicates">Без учёта недоступных страниц</small></div><div><span>Технологий-кандидатов</span><strong id="statCandidates">0</strong><small id="statAssessed">Ожидают проверки</small></div><div class="stat-signal"><span>Выбрано сигналов</span><strong id="statSignals">0<span>/ 15</span></strong><small>С проверенными фрагментами</small></div></div>
+          <div id="runWarnings" class="warnings" hidden></div>
+          <div class="results-toolbar"><div class="tabs" role="tablist"><button class="active" data-tab="signals" role="tab">Сигналы <b id="signalsCount">0</b></button><button data-tab="rejected" role="tab">Исключённые <b id="rejectedCount">0</b></button><button data-tab="sources" role="tab">Источники <b id="sourcesCount">0</b></button></div><span class="score-help" title="Фиксированная рубрика, не калиброванная вероятность">Оценка по критериям ⓘ</span></div>
+          <div id="results" aria-live="polite"></div>
+          <details class="audit"><summary>Как получен результат</summary><div id="auditContent"></div></details>
+        </section>
+        <section id="welcome" class="welcome"><div class="section-head"><h2>От наблюдения к решению</h2><span>Каждый вывод можно проверить</span></div><div class="principles"><article><span class="principle-icon">01 /</span><h3>Что изменилось</h3><p>Новые результаты, первые пилоты и применения за пределами привычных сценариев.</p></article><article><span class="principle-icon">02 /</span><h3>Почему это ранний сигнал</h3><p>Проверка стадии развития, признаков зрелости и аргументов против включения.</p></article><article><span class="principle-icon">03 /</span><h3>На чём основан вывод</h3><p>Источники, даты и исходные фрагменты рядом с каждым аналитическим заключением.</p></article></div></section>
+      </section>
+      <section id="catalogView" hidden><div class="eyebrow">Материалы организаторов</div><h1 class="compact-title">Каталог примеров</h1><p class="muted">100 технологических сигналов из исходной таблицы. Авторские оценки сохранены отдельно от результатов поиска.</p><div class="catalog-toolbar"><input id="catalogFilter" type="search" placeholder="Поиск по технологии, компании или области" aria-label="Поиск по каталогу"><select id="domainFilter" aria-label="Область"><option value="">Все области</option></select><span id="catalogCount"></span></div><div class="notice">Сведения из Excel ещё не проверены системой. Кнопка «Проверить» запускает новое исследование по названию технологии.</div><div id="catalogList"></div></section>
+    </div>
+    <footer>IDEA <span>Intelligent Discovery & Evaluation Assistant</span><span>Факты · Контекст · Решения</span></footer>
+  </main>
+  <dialog id="reportDialog" class="report-dialog"><button class="dialog-close" data-close="reportDialog" aria-label="Закрыть отчёт">×</button><div id="reportContent"></div></dialog>
+  <dialog id="sourceDialog" class="source-dialog"><button class="dialog-close" data-close="sourceDialog" aria-label="Закрыть источник">×</button><div id="sourceContent"></div></dialog>
+  <dialog id="methodDialog" class="method-dialog"><button class="dialog-close" data-close="methodDialog" aria-label="Закрыть методологию">×</button><div class="eyebrow">Методология IDEA</div><h2>Пять вопросов к каждой технологии</h2><p>Анализируем конкретное применение на выбранную дату. Сначала читаем источники, затем проверяем кандидатов и формируем отчёт.</p><div class="method-row"><b>30</b><div><h3>Ранняя стадия</h3><p>Исследование, прототип, пилот или ограниченное внедрение, подтверждённые источником.</p></div></div><div class="method-row"><b>25</b><div><h3>Конкретная новизна</h3><p>Отличие от существующего способа решения задачи.</p></div></div><div class="method-row"><b>20</b><div><h3>Значимое изменение</h3><p>Новое событие, результат или переход, который объясняет «почему сейчас».</p></div></div><div class="method-row"><b>25</b><div><h3>Доказательства</h3><p>Содержательные источники и проверяемые фрагменты. Перепечатки не считаются независимыми подтверждениями.</p></div></div><div class="method-row"><b>↘</b><div><h3>Зрелость</h3><p>Подтверждённое массовое применение исключает кандидата, независимо от остальных баллов.</p></div></div><p class="notice">Сильное подтверждение даёт полный вес критерия, частичное — половину. Нет данных — нет баллов. Итоговая оценка не является калиброванной вероятностью.</p></dialog>
+  <div class="toast" id="toast" role="alert" hidden></div>
+  <script src="/static/radar.js"></script>
+</body>
+</html>

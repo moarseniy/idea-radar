@@ -1,0 +1,218 @@
+{
+  "generated_at": "2026-09-29T17:54:00+00:00",
+  "model": "L2 logistic regression; median imputation, variance filtering, standard scaling",
+  "label_quality": "bronze_provisional_not_expert_adjudicated",
+  "feature_schema_version": "weak-signals-63-v2",
+  "input_feature_count": 58,
+  "active_feature_count": 16,
+  "active_features": [
+    "stage_research",
+    "stage_poc",
+    "stage_pilot",
+    "stage_early_adoption",
+    "stage_scaling_or_mature",
+    "first_evidence_age_years",
+    "papers_log_3y",
+    "paper_growth_2y",
+    "paper_acceleration",
+    "citation_velocity_median",
+    "preprint_share_2y",
+    "source_type_diversity",
+    "marketing_claim_density",
+    "technical_term_density",
+    "claim_specificity",
+    "cross_channel_confirmation_count"
+  ],
+  "standardized_coefficients": {
+    "stage_research": 1.8528413132688255,
+    "stage_poc": 0.78223830049965,
+    "stage_pilot": 0.47560443636127947,
+    "stage_early_adoption": 2.002651162904532,
+    "stage_scaling_or_mature": -0.07996066101672532,
+    "first_evidence_age_years": -1.2813607172125845,
+    "papers_log_3y": 0.07604500711344986,
+    "paper_growth_2y": 1.2581529422691478,
+    "paper_acceleration": -0.4856041996383675,
+    "citation_velocity_median": 1.0251326340712044,
+    "preprint_share_2y": -0.041734095092004556,
+    "source_type_diversity": -0.9663150343101482,
+    "marketing_claim_density": 0.3865710009269131,
+    "technical_term_density": 1.054286081070619,
+    "claim_specificity": 0.14070830619033253,
+    "cross_channel_confirmation_count": -0.1946709366886455
+  },
+  "missingness_flags_included": false,
+  "threshold": 0.5,
+  "best_C": 1.0,
+  "training_protocol": {
+    "seed": 42,
+    "c_grid": [
+      0.01,
+      0.1,
+      1.0,
+      10.0
+    ],
+    "outer_cv": "StratifiedGroupKFold: 5 folds, shuffle=True",
+    "outer_fold_selection_cv": "StratifiedGroupKFold: 3 folds, seed + outer_fold_number",
+    "final_selection_cv": "StratifiedGroupKFold: 5 folds, seed + 100",
+    "selection_metric": "balanced_accuracy",
+    "decision_threshold": 0.5,
+    "probability_calibration": "none",
+    "group_key": "technology_group_id",
+    "include_missingness_flags": false
+  },
+  "runtime": {
+    "python": "3.12.12",
+    "numpy": "2.2.6",
+    "scikit_learn": "1.7.2"
+  },
+  "training_script_sha256": "c53daa1c134aead31ce7745c4859335779bfc0dfe210c1d6b14fc25742657cc8",
+  "split": {
+    "train_positive": 350,
+    "train_negative": 350,
+    "validation_positive": 100,
+    "validation_negative": 100,
+    "negative_validation_rule": "last_100_selection_rule_prefix:github_sector_product_name_v1",
+    "seed": 42,
+    "group_key": "technology_group_id"
+  },
+  "nested_train_cv": {
+    "metrics": {
+      "count": 700,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "tn": 300,
+        "fp": 50,
+        "fn": 43,
+        "tp": 307
+      },
+      "precision": 0.8599439775910365,
+      "recall": 0.8771428571428571,
+      "specificity": 0.8571428571428571,
+      "f1": 0.8684582743988685,
+      "balanced_accuracy": 0.8671428571428571,
+      "roc_auc": 0.9341632653061225,
+      "pr_auc": 0.9357518552973176,
+      "brier": 0.10015138537804118
+    },
+    "folds": [
+      {
+        "fold": 1,
+        "train": 569,
+        "test": 131,
+        "best_C": 10.0,
+        "test_positives": 78,
+        "test_negatives": 53
+      },
+      {
+        "fold": 2,
+        "train": 537,
+        "test": 163,
+        "best_C": 10.0,
+        "test_positives": 79,
+        "test_negatives": 84
+      },
+      {
+        "fold": 3,
+        "train": 534,
+        "test": 166,
+        "best_C": 0.1,
+        "test_positives": 42,
+        "test_negatives": 124
+      },
+      {
+        "fold": 4,
+        "train": 571,
+        "test": 129,
+        "best_C": 1.0,
+        "test_positives": 86,
+        "test_negatives": 43
+      },
+      {
+        "fold": 5,
+        "train": 589,
+        "test": 111,
+        "best_C": 1.0,
+        "test_positives": 65,
+        "test_negatives": 46
+      }
+    ],
+    "negative_subtype_specificity": {
+      "N1": {
+        "count": 280,
+        "specificity": 0.85
+      },
+      "N2": {
+        "count": 10,
+        "specificity": 0.2
+      },
+      "N3b": {
+        "count": 60,
+        "specificity": 1.0
+      }
+    },
+    "note": "Diagnostic only: provisional labels and related corpus construction."
+  },
+  "validation": {
+    "negative_100": {
+      "count": 100,
+      "subtype": {
+        "N3b": 100
+      },
+      "specificity": 1.0,
+      "false_positive_rate": 0.0,
+      "mean_positive_score": 0.02920746951221931
+    },
+    "organizer_100": {
+      "status": "ready",
+      "covered": 100,
+      "required": 100,
+      "recall": 0.76,
+      "mean_positive_score": 0.7297412939904164,
+      "recall_by_crossref_match_scope": {
+        "full_title_overlap_fallback": {
+          "count": 43,
+          "recall": 0.6976744186046512,
+          "mean_positive_score": 0.6556472083890988
+        },
+        "technology_and_application_query": {
+          "count": 57,
+          "recall": 0.8070175438596491,
+          "mean_positive_score": 0.7856368322510598
+        }
+      }
+    },
+    "binary_200": {
+      "status": "computed",
+      "count": 200,
+      "threshold": 0.5,
+      "confusion_matrix": {
+        "tn": 100,
+        "fp": 0,
+        "fn": 24,
+        "tp": 76
+      },
+      "precision": 1.0,
+      "recall": 0.76,
+      "specificity": 1.0,
+      "f1": 0.8636363636363636,
+      "balanced_accuracy": 0.88,
+      "roc_auc": 0.97,
+      "pr_auc": 0.9849243693213543,
+      "brier": 0.07967422830305307
+    }
+  },
+  "dataset_sha256": {
+    "positive": "c184ee3996e4f5e14b88521afa5740ff740e7ef28cc0c8fd49f8f47178b27456",
+    "negative": "b89bfe9ee73987522412ad3b57c85e742ce22b459a462bdb6fc8f394ae31a9ff",
+    "organizer_manifest": "06f6725aa0c20e6a6c750d9c9f65332fb66fe2b1ff1240057c72c22c77ab8468",
+    "organizer_features": "b07e09fbe611aa518879e049819d5b59f8bbc603cc45116ca11d1d8e2932fd16",
+    "organizer_excel": "64ac92ece46a5f77e0a1414d7d5f6186733ca877f6b20a0e402e451982245469"
+  },
+  "limitations": [
+    "The organizer rows have no comparable feature vectors until independently enriched.",
+    "The 100 validation negatives are all N3b product-name cases; specificity does not generalize to N1/N2.",
+    "Bronze labels are unreviewed and train CV is not a trusted final benchmark.",
+    "The logistic scores are not calibrated probabilities."
+  ]
+}

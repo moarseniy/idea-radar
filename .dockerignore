@@ -1,0 +1,15 @@
+.git
+.venv
+.env
+.env.*
+__pycache__
+**/__pycache__
+.pytest_cache
+.ruff_cache
+storage
+output
+data
+docs
+tests
+frontend/node_modules
+app/static/app

@@ -1,0 +1,209 @@
+id,name,domain,seed_source,seed_note,assigned_to,status
+cand-727187,trajectory tracking,Роботы,openalex:titles,"rising_rare; свежих 9, базовых 0, рост x10.0",,new
+cand-859613,mathematical modeling,Роботы,openalex:titles,"rising_rare; свежих 6, базовых 0, рост x7.0",,new
+cand-583923,policy learning,Роботы,openalex:titles,"rising_rare; свежих 6, базовых 0, рост x7.0",,new
+cand-844623,adaptive control,Роботы,openalex:titles,"rising_rare; свежих 8, базовых 1, рост x4.5",,new
+cand-157985,robotic perception,Роботы,openalex:titles,"rising_rare; свежих 7, базовых 1, рост x4.0",,new
+cand-264576,sensor fusion,Роботы,openalex:titles,"rising_rare; свежих 7, базовых 1, рост x4.0",,new
+cand-051695,key technologies,Роботы,openalex:titles,"rising_rare; свежих 6, базовых 1, рост x3.5",,new
+cand-814516,dexterous hand,Роботы,openalex:titles,"rising_rare; свежих 6, базовых 1, рост x3.5",,new
+cand-072095,optimization algorithm,Роботы,openalex:titles,"rising_rare; свежих 6, базовых 1, рост x3.5",,new
+cand-871927,sliding mode control,Роботы,openalex:titles,"rising_rare; свежих 8, базовых 2, рост x3.0",,new
+cand-666486,locomotion control,Роботы,openalex:titles,"rising_rare; свежих 8, базовых 2, рост x3.0",,new
+cand-988024,autonomous mobile,Роботы,openalex:titles,"rising_rare; свежих 7, базовых 2, рост x2.7",,new
+cand-938001,trajectory planning,Роботы,openalex:titles,"rising_rare; свежих 9, базовых 3, рост x2.5",,new
+cand-527812,object manipulation,Роботы,openalex:titles,"rising_rare; свежих 9, базовых 3, рост x2.5",,new
+cand-362965,experimental validation,Роботы,openalex:titles,"rising_rare; свежих 6, базовых 2, рост x2.3",,new
+cand-995503,humanoid locomotion,Роботы,openalex:titles,"high_volume_rising; свежих 16, базовых 0, рост x17.0",,new
+cand-743856,embodied intelligence,Роботы,openalex:titles,"high_volume_rising; свежих 11, базовых 1, рост x6.0",,new
+cand-622080,control strategies,Роботы,openalex:titles,"high_volume_rising; свежих 17, базовых 4, рост x3.6",,new
+cand-283618,robotic manipulators,Роботы,openalex:titles,"high_volume_rising; свежих 14, базовых 4, рост x3.0",,new
+cand-312588,predictive control,Роботы,openalex:titles,"high_volume_rising; свежих 31, базовых 12, рост x2.5",,new
+cand-355855,bipedal locomotion,Роботы,openalex:titles,"high_volume_rising; свежих 11, базовых 4, рост x2.4",,new
+cand-978236,robotic manipulation,Роботы,openalex:titles,"high_volume_rising; свежих 20, базовых 8, рост x2.3",,new
+cand-216910,liquid crystal elastomer,Роботы,openalex:titles,"high_volume_rising; свежих 19, базовых 8, рост x2.2",,new
+cand-061078,humanoid robots,Роботы,openalex:titles,"high_volume_rising; свежих 43, базовых 20, рост x2.1",,new
+cand-021488,liquid crystal,Роботы,openalex:titles,"high_volume_rising; свежих 42, базовых 20, рост x2.0",,new
+cand-311193,soft robotics,Роботы,openalex:titles,"established_flat; свежих 74, базовых 49, рост x1.5",,new
+cand-025743,reinforcement learning,Роботы,openalex:titles,"established_flat; свежих 65, базовых 60, рост x1.1",,new
+cand-097802,soft robots,Роботы,openalex:titles,"established_flat; свежих 54, базовых 86, рост x0.6",,new
+cand-984320,soft actuators,Роботы,openalex:titles,"established_flat; свежих 38, базовых 53, рост x0.7",,new
+cand-253491,human robot,Роботы,openalex:titles,"established_flat; свежих 32, базовых 33, рост x1.0",,new
+cand-718271,digital twin,Роботы,openalex:titles,"established_flat; свежих 18, базовых 11, рост x1.6",,new
+cand-695399,magnetic soft,Роботы,openalex:titles,"established_flat; свежих 18, базовых 11, рост x1.6",,new
+cand-603617,robotic arm,Роботы,openalex:titles,"established_flat; свежих 16, базовых 18, рост x0.9",,new
+cand-533660,dielectric elastomer,Роботы,openalex:titles,"established_flat; свежих 16, базовых 20, рост x0.8",,new
+cand-521444,human robot interaction,Роботы,openalex:titles,"established_flat; свежих 15, базовых 12, рост x1.2",,new
+cand-770481,liquid crystal elastomers,Роботы,openalex:titles,"established_flat; свежих 15, базовых 9, рост x1.6",,new
+cand-045014,shape memory,Роботы,openalex:titles,"established_flat; свежих 15, базовых 21, рост x0.7",,new
+cand-743206,deep reinforcement learning,Роботы,openalex:titles,"established_flat; свежих 14, базовых 28, рост x0.5",,new
+cand-073869,mobile robots,Роботы,openalex:titles,"established_flat; свежих 14, базовых 10, рост x1.4",,new
+cand-753070,elastomer actuators,Роботы,openalex:titles,"established_flat; свежих 14, базовых 10, рост x1.4",,new
+cand-288365,legged robots,Роботы,openalex:titles,"stagnant; свежих 9, базовых 18, рост x0.5",,new
+cand-702313,human robot collaboration,Роботы,openalex:titles,"stagnant; свежих 8, базовых 11, рост x0.8",,new
+cand-140265,continuum robots,Роботы,openalex:titles,"stagnant; свежих 8, базовых 12, рост x0.7",,new
+cand-074529,magnetically actuated,Роботы,openalex:titles,"stagnant; свежих 8, базовых 8, рост x1.0",,new
+cand-183439,motion planning,Роботы,openalex:titles,"stagnant; свежих 8, базовых 10, рост x0.8",,new
+cand-843001,virtual reality,Роботы,openalex:titles,"stagnant; свежих 8, базовых 14, рост x0.6",,new
+cand-640157,robot arm,Роботы,openalex:titles,"stagnant; свежих 8, базовых 8, рост x1.0",,new
+cand-076161,soft robotic grippers,Роботы,openalex:titles,"stagnant; свежих 6, базовых 5, рост x1.2",,new
+cand-670316,magnetic soft robots,Роботы,openalex:titles,"stagnant; свежих 6, базовых 6, рост x1.0",,new
+cand-319276,robotic surgery,Роботы,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-420284,upper limb,Роботы,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-825146,variable stiffness,Роботы,openalex:titles,"stagnant; свежих 6, базовых 12, рост x0.5",,new
+cand-959188,soft gripper,Роботы,openalex:titles,"stagnant; свежих 6, базовых 6, рост x1.0",,new
+cand-719663,robot manipulators,Роботы,openalex:titles,"stagnant; свежих 6, базовых 6, рост x1.0",,new
+cand-486791,pneumatic soft,Роботы,openalex:titles,"stagnant; свежих 6, базовых 6, рост x1.0",,new
+cand-764122,federated learning,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 61, базовых 40, рост x1.5",,new
+cand-981961,intrusion detection,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 28, базовых 16, рост x1.7",,new
+cand-306380,edge computing,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 22, базовых 29, рост x0.8",,new
+cand-699088,anomaly detection,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 19, базовых 12, рост x1.5",,new
+cand-604884,deep reinforcement learning,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 13, базовых 12, рост x1.1",,new
+cand-393804,resource allocation,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 13, базовых 11, рост x1.2",,new
+cand-833263,internet of things,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 12, базовых 24, рост x0.5",,new
+cand-499334,cloud computing,Инфраструктура ИИ,openalex:titles,"established_flat; свежих 9, базовых 14, рост x0.7",,new
+cand-569120,multimodal large language,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 8, базовых 0, рост x9.0",,new
+cand-706125,retrieval-augmented generation,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 7, базовых 0, рост x8.0",,new
+cand-954817,llm inference,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 6, базовых 0, рост x7.0",,new
+cand-553641,cloud edge,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 6, базовых 0, рост x7.0",,new
+cand-631898,llm serving,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 6, базовых 0, рост x7.0",,new
+cand-434325,edge devices,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 7, базовых 2, рост x2.7",,new
+cand-963081,task scheduling,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 8, базовых 4, рост x1.8",,new
+cand-541248,smart grid,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 6, базовых 3, рост x1.8",,new
+cand-639530,industrial iot,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 7, базовых 5, рост x1.3",,new
+cand-926303,edge intelligence,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 7, базовых 5, рост x1.3",,new
+cand-227782,big data,Инфраструктура ИИ,openalex:titles,"rising_rare; свежих 8, базовых 6, рост x1.3",,new
+cand-374615,deep neural,Инфраструктура ИИ,openalex:titles,"stagnant; свежих 8, базовых 16, рост x0.5",,new
+cand-436307,wireless sensor networks,Инфраструктура ИИ,openalex:titles,"stagnant; свежих 7, базовых 11, рост x0.7",,new
+cand-356708,higher education,Инфраструктура ИИ,openalex:titles,"stagnant; свежих 7, базовых 10, рост x0.7",,new
+cand-178302,hybrid deep learning,Инфраструктура ИИ,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-082407,explainable ai,Инфраструктура ИИ,openalex:titles,"stagnant; свежих 6, базовых 5, рост x1.2",,new
+cand-269301,english language,Инфраструктура ИИ,openalex:titles,"stagnant; свежих 6, базовых 6, рост x1.0",,new
+cand-140572,learning algorithms,Инфраструктура ИИ,openalex:titles,"stagnant; свежих 6, базовых 10, рост x0.6",,new
+cand-397500,predictive maintenance,Инфраструктура ИИ,openalex:titles,"high_volume_rising; свежих 10, базовых 0, рост x11.0",,new
+cand-534580,data centers,Инфраструктура ИИ,openalex:titles,"high_volume_rising; свежих 17, базовых 5, рост x3.0",,new
+cand-593437,edge ai,Инфраструктура ИИ,openalex:titles,"high_volume_rising; свежих 11, базовых 3, рост x3.0",,new
+cand-949703,iot networks,Инфраструктура ИИ,openalex:titles,"high_volume_rising; свежих 12, базовых 4, рост x2.6",,new
+cand-677653,reinforcement learning,Инфраструктура ИИ,openalex:titles,"high_volume_rising; свежих 32, базовых 14, рост x2.2",,new
+cand-733232,fault diagnosis,Инфраструктура ИИ,openalex:titles,"high_volume_rising; свежих 10, базовых 4, рост x2.2",,new
+cand-438994,digital twins,Инфраструктура ИИ,openalex:titles,"high_volume_rising; свежих 11, базовых 5, рост x2.0",,new
+cand-465288,credit risk,Финтех,openalex:titles,"established_flat; свежих 70, базовых 42, рост x1.7",,new
+cand-311502,financial inclusion,Финтех,openalex:titles,"established_flat; свежих 45, базовых 42, рост x1.1",,new
+cand-094820,central bank digital,Финтех,openalex:titles,"established_flat; свежих 37, базовых 70, рост x0.5",,new
+cand-047773,blockchain technology,Финтех,openalex:titles,"established_flat; свежих 36, базовых 82, рост x0.4",,new
+cand-275472,supply chain,Финтех,openalex:titles,"established_flat; свежих 29, базовых 30, рост x1.0",,new
+cand-817061,digital currency,Финтех,openalex:titles,"established_flat; свежих 29, базовых 60, рост x0.5",,new
+cand-753379,digital financial,Финтех,openalex:titles,"established_flat; свежих 27, базовых 24, рост x1.1",,new
+cand-217646,financial technology,Финтех,openalex:titles,"established_flat; свежих 25, базовых 34, рост x0.7",,new
+cand-145602,central bank digital currencies,Финтех,openalex:titles,"established_flat; свежих 21, базовых 35, рост x0.6",,new
+cand-713532,big data,Финтех,openalex:titles,"established_flat; свежих 21, базовых 21, рост x1.0",,new
+cand-795771,credit scoring,Финтех,openalex:titles,"established_flat; свежих 21, базовых 13, рост x1.6",,new
+cand-608513,economic growth,Финтех,openalex:titles,"established_flat; свежих 20, базовых 15, рост x1.3",,new
+cand-201743,financial market,Финтех,openalex:titles,"established_flat; свежих 18, базовых 20, рост x0.9",,new
+cand-905953,central bank digital currency,Финтех,openalex:titles,"established_flat; свежих 16, базовых 35, рост x0.5",,new
+cand-328392,financial services,Финтех,openalex:titles,"established_flat; свежих 16, базовых 17, рост x0.9",,new
+cand-111569,digital euro,Финтех,openalex:titles,"high_volume_rising; свежих 13, базовых 0, рост x14.0",,new
+cand-655068,payment infrastructure,Финтех,openalex:titles,"high_volume_rising; свежих 15, базовых 1, рост x8.0",,new
+cand-927241,fintech adoption,Финтех,openalex:titles,"high_volume_rising; свежих 14, базовых 1, рост x7.5",,new
+cand-552472,global financial,Финтех,openalex:titles,"high_volume_rising; свежих 20, базовых 3, рост x5.2",,new
+cand-150866,financial innovation,Финтех,openalex:titles,"high_volume_rising; свежих 12, базовых 2, рост x4.3",,new
+cand-918449,fraud detection,Финтех,openalex:titles,"high_volume_rising; свежих 31, базовых 8, рост x3.6",,new
+cand-771295,digital finance,Финтех,openalex:titles,"high_volume_rising; свежих 22, базовых 7, рост x2.9",,new
+cand-351982,credit card fraud detection,Финтех,openalex:titles,"high_volume_rising; свежих 15, базовых 5, рост x2.7",,new
+cand-658732,digital payments,Финтех,openalex:titles,"high_volume_rising; свежих 33, базовых 12, рост x2.6",,new
+cand-961549,credit risk assessment,Финтех,openalex:titles,"high_volume_rising; свежих 14, базовых 5, рост x2.5",,new
+cand-605986,risk prediction,Финтех,openalex:titles,"high_volume_rising; свежих 18, базовых 7, рост x2.4",,new
+cand-825500,risk assessment,Финтех,openalex:titles,"high_volume_rising; свежих 48, базовых 20, рост x2.3",,new
+cand-213792,digital payment,Финтех,openalex:titles,"high_volume_rising; свежих 38, базовых 16, рост x2.3",,new
+cand-085577,financial architecture,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 0, рост x8.0",,new
+cand-415521,global economic,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 0, рост x8.0",,new
+cand-536576,how digital,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 0, рост x8.0",,new
+cand-254427,time series,Финтех,openalex:titles,"rising_rare; свежих 6, базовых 0, рост x7.0",,new
+cand-342617,default prediction,Финтех,openalex:titles,"rising_rare; свежих 10, базовых 1, рост x5.5",,new
+cand-989597,public services,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 1, рост x4.0",,new
+cand-491845,market integration,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 1, рост x4.0",,new
+cand-273049,financial data,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 1, рост x4.0",,new
+cand-882667,sustainable urban,Финтех,openalex:titles,"rising_rare; свежих 6, базовых 1, рост x3.5",,new
+cand-148238,credit risk prediction,Финтех,openalex:titles,"rising_rare; свежих 9, базовых 2, рост x3.3",,new
+cand-180934,credit risk management,Финтех,openalex:titles,"rising_rare; свежих 10, базовых 3, рост x2.8",,new
+cand-162214,emerging economy,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 2, рост x2.7",,new
+cand-179906,ensemble learning,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 2, рост x2.7",,new
+cand-587797,alternative data,Финтех,openalex:titles,"rising_rare; свежих 7, базовых 2, рост x2.7",,new
+cand-570636,cross-border payment,Финтех,openalex:titles,"rising_rare; свежих 9, базовых 3, рост x2.5",,new
+cand-276133,technology adoption,Финтех,openalex:titles,"stagnant; свежих 11, базовых 9, рост x1.2",,new
+cand-994052,banking sector,Финтех,openalex:titles,"stagnant; свежих 11, базовых 14, рост x0.8",,new
+cand-972400,informal settlements,Финтех,openalex:titles,"stagnant; свежих 10, базовых 15, рост x0.7",,new
+cand-325719,digital financial inclusion,Финтех,openalex:titles,"stagnant; свежих 7, базовых 14, рост x0.5",,new
+cand-759088,financial sector,Финтех,openalex:titles,"stagnant; свежих 7, базовых 11, рост x0.7",,new
+cand-963254,renewable energy,Финтех,openalex:titles,"stagnant; свежих 7, базовых 12, рост x0.6",,new
+cand-318753,risk evidence,Финтех,openalex:titles,"stagnant; свежих 7, базовых 6, рост x1.1",,new
+cand-398368,distributed ledger technology,Финтех,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-156055,supply chains,Финтех,openalex:titles,"stagnant; свежих 6, базовых 9, рост x0.7",,new
+cand-124610,digital banking,Финтех,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-685094,cross-border payments,Финтех,openalex:titles,"stagnant; свежих 6, базовых 6, рост x1.0",,new
+cand-775597,risk factors,Финтех,openalex:titles,"stagnant; свежих 6, базовых 5, рост x1.2",,new
+cand-533611,federated learning,Защита ИИ,openalex:titles,"established_flat; свежих 97, базовых 59, рост x1.6",,new
+cand-271922,intrusion detection,Защита ИИ,openalex:titles,"established_flat; свежих 82, базовых 93, рост x0.9",,new
+cand-955154,attack detection,Защита ИИ,openalex:titles,"established_flat; свежих 29, базовых 41, рост x0.7",,new
+cand-420620,internet of things,Защита ИИ,openalex:titles,"established_flat; свежих 23, базовых 48, рост x0.5",,new
+cand-803170,adversarial attacks,Защита ИИ,openalex:titles,"established_flat; свежих 23, базовых 23, рост x1.0",,new
+cand-554795,anomaly detection,Защита ИИ,openalex:titles,"established_flat; свежих 20, базовых 12, рост x1.6",,new
+cand-074711,reinforcement learning,Защита ИИ,openalex:titles,"established_flat; свежих 18, базовых 15, рост x1.2",,new
+cand-928011,poisoning attacks,Защита ИИ,openalex:titles,"established_flat; свежих 15, базовых 9, рост x1.6",,new
+cand-348030,iot networks,Защита ИИ,openalex:titles,"established_flat; свежих 14, базовых 17, рост x0.8",,new
+cand-871813,network intrusion detection,Защита ИИ,openalex:titles,"established_flat; свежих 13, базовых 19, рост x0.7",,new
+cand-575360,hybrid deep learning,Защита ИИ,openalex:titles,"established_flat; свежих 12, базовых 10, рост x1.2",,new
+cand-818499,malware detection,Защита ИИ,openalex:titles,"established_flat; свежих 11, базовых 15, рост x0.8",,new
+cand-671753,adversarial machine learning,Защита ИИ,openalex:titles,"established_flat; свежих 10, базовых 14, рост x0.7",,new
+cand-563429,iot security,Защита ИИ,openalex:titles,"established_flat; свежих 10, базовых 5, рост x1.8",,new
+cand-680817,learning techniques,Защита ИИ,openalex:titles,"established_flat; свежих 10, базовых 27, рост x0.4",,new
+cand-762616,ai literacy,Защита ИИ,openalex:titles,"rising_rare; свежих 7, базовых 1, рост x4.0",,new
+cand-258806,ai governance,Защита ИИ,openalex:titles,"rising_rare; свежих 8, базовых 2, рост x3.0",,new
+cand-149343,hybrid machine learning,Защита ИИ,openalex:titles,"rising_rare; свежих 6, базовых 2, рост x2.3",,new
+cand-368880,adversarial defense,Защита ИИ,openalex:titles,"rising_rare; свежих 6, базовых 2, рост x2.3",,new
+cand-941025,higher education,Защита ИИ,openalex:titles,"rising_rare; свежих 8, базовых 3, рост x2.2",,new
+cand-217609,cyber threats,Защита ИИ,openalex:titles,"rising_rare; свежих 7, базовых 3, рост x2.0",,new
+cand-991791,fraud detection,Защита ИИ,openalex:titles,"rising_rare; свежих 9, базовых 5, рост x1.7",,new
+cand-970608,feature selection,Защита ИИ,openalex:titles,"rising_rare; свежих 9, базовых 5, рост x1.7",,new
+cand-095392,learning-based intrusion detection,Защита ИИ,openalex:titles,"rising_rare; свежих 8, базовых 5, рост x1.5",,new
+cand-673361,human ai,Защита ИИ,openalex:titles,"rising_rare; свежих 6, базовых 4, рост x1.4",,new
+cand-195606,differential privacy,Защита ИИ,openalex:titles,"rising_rare; свежих 6, базовых 4, рост x1.4",,new
+cand-947503,edge computing,Защита ИИ,openalex:titles,"stagnant; свежих 8, базовых 12, рост x0.7",,new
+cand-421783,artificial intelligence ai,Защита ИИ,openalex:titles,"stagnant; свежих 7, базовых 9, рост x0.8",,new
+cand-936794,ddos attack detection,Защита ИИ,openalex:titles,"stagnant; свежих 7, базовых 10, рост x0.7",,new
+cand-191154,machine learning approaches,Защита ИИ,openalex:titles,"stagnant; свежих 7, базовых 6, рост x1.1",,new
+cand-902617,deep reinforcement learning,Защита ИИ,openalex:titles,"stagnant; свежих 7, базовых 6, рост x1.1",,new
+cand-960603,cyber threat,Защита ИИ,openalex:titles,"stagnant; свежих 7, базовых 6, рост x1.1",,new
+cand-825018,defense mechanisms,Защита ИИ,openalex:titles,"stagnant; свежих 7, базовых 6, рост x1.1",,new
+cand-366093,smart grids,Защита ИИ,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-729222,ai ethics,Защита ИИ,openalex:titles,"stagnant; свежих 6, базовых 8, рост x0.8",,new
+cand-069951,big data,Защита ИИ,openalex:titles,"stagnant; свежих 6, базовых 6, рост x1.0",,new
+cand-253248,ensemble learning,Защита ИИ,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-967153,cyber attacks,Защита ИИ,openalex:titles,"stagnant; свежих 6, базовых 7, рост x0.9",,new
+cand-654289,ddos attacks,Защита ИИ,openalex:titles,"stagnant; свежих 6, базовых 21, рост x0.3",,new
+cand-736727,digital twins,Защита ИИ,openalex:titles,"high_volume_rising; свежих 10, базовых 1, рост x5.5",,new
+cand-568007,cyber defense,Защита ИИ,openalex:titles,"high_volume_rising; свежих 19, базовых 4, рост x4.0",,new
+cand-250516,defense strategies,Защита ИИ,openalex:titles,"high_volume_rising; свежих 11, базовых 2, рост x4.0",,new
+cand-171476,explainable ai,Защита ИИ,openalex:titles,"high_volume_rising; свежих 16, базовых 6, рост x2.4",,new
+cand-762399,zero trust,Защита ИИ,openalex:titles,"high_volume_rising; свежих 10, базовых 4, рост x2.2",,new
+cand-277604,wire arc additive manufacturing,Индустриальный ИИ,openalex:titles,"high_volume_rising; свежих 10, базовых 2, рост x3.7",,new
+cand-329736,predictive maintenance,Индустриальный ИИ,openalex:titles,"high_volume_rising; свежих 20, базовых 6, рост x3.0",,new
+cand-583643,additive manufacturing,Индустриальный ИИ,openalex:titles,"high_volume_rising; свежих 72, базовых 32, рост x2.2",,new
+cand-388605,industrial iot,Индустриальный ИИ,openalex:titles,"stagnant; свежих 9, базовых 14, рост x0.7",,new
+cand-425889,artificial intelligence ai,Индустриальный ИИ,openalex:titles,"stagnant; свежих 8, базовых 12, рост x0.7",,new
+cand-542137,manufacturing industry,Индустриальный ИИ,openalex:titles,"stagnant; свежих 8, базовых 8, рост x1.0",,new
+cand-359013,manufacturing processes,Индустриальный ИИ,openalex:titles,"stagnant; свежих 8, базовых 7, рост x1.1",,new
+cand-233856,anomaly detection,Индустриальный ИИ,openalex:titles,"stagnant; свежих 8, базовых 11, рост x0.8",,new
+cand-919175,reinforcement learning,Индустриальный ИИ,openalex:titles,"stagnant; свежих 7, базовых 7, рост x1.0",,new
+cand-942664,control strategies,Индустриальный ИИ,openalex:titles,"rising_rare; свежих 9, базовых 0, рост x10.0",,new
+cand-209770,human ai,Индустриальный ИИ,openalex:titles,"rising_rare; свежих 7, базовых 0, рост x8.0",,new
+cand-307561,supply chain resilience,Индустриальный ИИ,openalex:titles,"rising_rare; свежих 6, базовых 1, рост x3.5",,new
+cand-973226,federated learning,Индустриальный ИИ,openalex:titles,"rising_rare; свежих 6, базовых 2, рост x2.3",,new
+cand-430040,sustainable manufacturing,Индустриальный ИИ,openalex:titles,"rising_rare; свежих 9, базовых 4, рост x2.0",,new
+cand-569806,process control,Индустриальный ИИ,openalex:titles,"rising_rare; свежих 7, базовых 5, рост x1.3",,new
+cand-246416,digital twin,Индустриальный ИИ,openalex:titles,"established_flat; свежих 20, базовых 23, рост x0.9",,new
+cand-779366,smart manufacturing,Индустриальный ИИ,openalex:titles,"established_flat; свежих 18, базовых 24, рост x0.8",,new
+cand-527771,digital twins,Индустриальный ИИ,openalex:titles,"established_flat; свежих 17, базовых 14, рост x1.2",,new
+cand-659990,quality control,Индустриальный ИИ,openalex:titles,"established_flat; свежих 11, базовых 6, рост x1.7",,new
+cand-556061,supply chain,Индустриальный ИИ,openalex:titles,"established_flat; свежих 11, базовых 10, рост x1.1",,new
+cand-332280,explainable ai,Индустриальный ИИ,openalex:titles,"established_flat; свежих 10, базовых 8, рост x1.2",,new

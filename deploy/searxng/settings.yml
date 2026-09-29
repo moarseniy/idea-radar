@@ -1,0 +1,19 @@
+# SearXNG для сервиса поиска радара (app/search, провайдер searxng).
+# Берём настройки по умолчанию и меняем только нужное: JSON API (по умолчанию выключен),
+# без лимитера (запросы идут из одного контейнера), без прокси картинок.
+# secret_key задаётся переменной SEARXNG_SECRET в docker-compose.yml.
+# Движки выбирает сервис поиска параметром engines (SEARXNG_ENGINES): с одного IP Brave и
+# Google CSE быстро упираются в лимиты, DuckDuckGo и Qwant — в капчу; Yahoo, Bing News и
+# Google News держатся.
+use_default_settings: true
+
+server:
+  limiter: false
+  image_proxy: false
+  public_instance: false
+
+search:
+  safe_search: 0
+  formats:
+    - html
+    - json

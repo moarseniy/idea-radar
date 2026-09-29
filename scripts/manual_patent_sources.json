@@ -1,0 +1,22 @@
+[
+  {
+    "candidate_name_original": "optical circuit switching for low-energy AI data centers",
+    "patent_source_title_original": "Methods and techniques for optical circuit switching",
+    "patent_source_url": "https://patents.google.com/patent/US20260110848A1/en",
+    "patent_publication_number": "US20260110848A1",
+    "patent_publication_date": "2026-04-23",
+    "patent_assignee": "",
+    "patent_evidence_snippet_original": "The techniques described herein can be used to dynamically route and reroute a network, e.g., as in a data center.",
+    "match_scope": "optical switching for high-bandwidth AI data-center traffic; patent does not prove deployment"
+  },
+  {
+    "candidate_name_original": "neuromorphic processors for energy-efficient edge inference",
+    "patent_source_title_original": "Neuromorphic-Ternary Hybrid Architecture for Energy-Efficient AI Processing",
+    "patent_source_url": "https://patents.google.com/patent/US20250278619A1/en",
+    "patent_publication_number": "US20250278619A1",
+    "patent_publication_date": "2025-09-04",
+    "patent_assignee": "Individual",
+    "patent_evidence_snippet_original": "This system is especially well-suited for real-time AI on edge devices, robotics, and adaptive embedded systems.",
+    "match_scope": "edge AI processing; patent does not prove product maturity or commercial deployment"
+  }
+]

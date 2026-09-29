@@ -1,0 +1,131 @@
+@startuml data_model
+title Модель данных (PostgreSQL)
+skinparam defaultFontName Arial
+hide circle
+skinparam linetype ortho
+
+entity runs {
+  * id : uuid
+  --
+  query : text
+  params : jsonb
+  status : text
+  stats : jsonb
+}
+entity run_events {
+  * id : bigserial
+  --
+  run_id : uuid
+  stage, level, message
+}
+entity llm_calls {
+  * id : bigserial
+  --
+  run_id, stage
+  provider, model
+  tokens, latency_ms
+}
+entity source_domains {
+  * domain : text
+  --
+  name, type
+  trust_tier : A|B|C|D
+  trust_reason
+}
+entity raw_documents {
+  * id : uuid
+  --
+  run_id, connector
+  url, canonical_url
+  title, published_at
+  language, source_type
+  trust_tier
+  raw_text, meta
+}
+entity candidates {
+  * id : uuid
+  --
+  run_id
+  name_ru, name_en, aliases
+  domain, cluster_size
+}
+entity candidate_evidence {
+  * candidate_id
+  * document_id
+  --
+  relevance, quote, role
+}
+entity candidate_features {
+  * candidate_id
+  --
+  features : jsonb
+  timeseries : jsonb
+}
+entity predictions {
+  * candidate_id
+  --
+  probability, calibrated
+  raw_probability, calibrated_probability, threshold
+  contributions : jsonb
+  model_version
+}
+entity exclusions {
+  * candidate_id
+  --
+  gate : G1..G5
+  reason_ru, evidence
+}
+entity reports {
+  * candidate_id
+  --
+  description, advantage
+  case_example, explanation
+  validated : bool
+}
+entity translations {
+  * document_id
+  --
+  summary_ru, provider, model
+  is_auto : bool
+}
+entity datasets {
+  * id : uuid
+  --
+  name, kind
+}
+entity dataset_rows {
+  * id : uuid
+  --
+  dataset_id, payload
+  label, prediction
+  contributions
+}
+entity evaluations {
+  * id : uuid
+  --
+  dataset_id, model_version
+  metrics : jsonb
+}
+entity feedback {
+  * id : uuid
+  --
+  candidate_id, actor
+  verdict, comment
+}
+
+runs ||--o{ run_events
+runs ||--o{ llm_calls
+runs ||--o{ raw_documents
+runs ||--o{ candidates
+source_domains ||--o{ raw_documents
+candidates ||--o{ candidate_evidence
+raw_documents ||--o{ candidate_evidence
+candidates ||--|| candidate_features
+candidates ||--|| predictions
+candidates ||--o| exclusions
+candidates ||--o| reports
+raw_documents ||--o| translations
+candidates ||--o{ feedback
+datasets ||--o{ dataset_rows
+datasets ||--o{ evaluations
+@enduml

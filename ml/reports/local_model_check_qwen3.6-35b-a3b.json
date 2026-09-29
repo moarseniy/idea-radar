@@ -1,0 +1,40 @@
+{
+ "local": "qwen3.6:35b-a3b",
+ "cloud": "qwen/qwen3.6-35b-a3b#nothink",
+ "url": "http://localhost:11434/v1",
+ "extra": {
+  "reasoning_effort": "none"
+ },
+ "rows": 187,
+ "errors": 0,
+ "error_examples": [],
+ "threshold": 0.43000000000000005,
+ "validation_cloud_features": {
+  "precision": 0.728,
+  "recall": 0.929,
+  "f1": 0.816,
+  "roc_auc": 0.863,
+  "pr_auc": 0.875,
+  "brier": 0.157
+ },
+ "validation_local_features": {
+  "precision": 0.781,
+  "recall": 0.908,
+  "f1": 0.84,
+  "roc_auc": 0.883,
+  "pr_auc": 0.885,
+  "brier": 0.137
+ },
+ "agreement": {
+  "decision": 0.92,
+  "stage": 0.727,
+  "is_technology": 1.0,
+  "mean_abs_probability_diff": 0.076
+ },
+ "seconds_per_row": {
+  "median": 26.3,
+  "p90": 63.7
+ },
+ "wall_seconds": 2976,
+ "workers": 2
+}
