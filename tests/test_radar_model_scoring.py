@@ -23,6 +23,25 @@ def test_model_decides_and_score_is_probability():
     assert out["verdict"] == "weak_signal" and out["score"] == 91 and out["score_kind"] == "model"
 
 
+def test_public_model_waterfall_shows_every_feature_and_preserves_total():
+    contributions = [
+        {"feature": f"f{i}", "label": f"Feature {i}", "display_value": str(i),
+         "relative": "выше типичного", "contribution": value, "imputed": False}
+        for i, value in enumerate([0.7, -0.4, 0.2, 0.1, -0.05, 0.03, 0.02, 0.01, 0.01, -0.02])
+    ]
+    source = {"probability": 0.525, "logit": 0.1, "baseline_logit": -0.5,
+              "is_signal": True, "threshold": 0.5, "confident": True, "top_for": [], "top_against": [],
+              "exclusion_reasons": [], "warnings": [], "search_term": "topic", "extraction_status": "ok",
+              "snapshot_date": "2026-10-17", "model": "logreg_v1", "contributions": contributions}
+
+    result = model_scoring.public_result(source)
+    waterfall = result["waterfall"]
+    summed = waterfall["baseline_logit"] + sum(step["contribution"] for step in waterfall["steps"])
+    assert abs(summed - waterfall["final_logit"]) < 1e-8
+    assert [step["feature"] for step in waterfall["steps"]] == [row["feature"] for row in contributions]
+    assert all(step["feature"] != "other" for step in waterfall["steps"])
+
+
 def test_low_probability_is_excluded_with_model_reasons():
     out = apply_model(item(), model(0.2, ["По публикациям в СМИ технология на стадии масштабирования или зрелости"]))
     assert out["verdict"] == "mature" and "20%" in out["reason"]
@@ -90,6 +109,20 @@ def test_pending_feature_score_is_not_reported_as_a_failure(monkeypatch):
     monkeypatch.setattr(model_scoring.logger, "warning", lambda *_args, **_kwargs: pytest.fail("unexpected warning"))
 
     assert scorer.result("candidate-1", 0.01) is None
+
+
+def test_feature_failure_records_safe_error_type_and_http_status():
+    class UpstreamError(Exception):
+        status_code = 429
+
+    future = Future()
+    future.set_exception(UpstreamError("provider response details are not exposed"))
+    scorer = ModelScorer.__new__(ModelScorer)
+    scorer.futures = {"candidate-1": future}
+    scorer.failures = {}
+
+    assert scorer.result("candidate-1", 0.1) is None
+    assert scorer.failures["candidate-1"] == "UpstreamError HTTP 429"
 
 
 def test_signal_needs_independent_source():

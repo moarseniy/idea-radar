@@ -80,21 +80,42 @@ def test_openalex_can_be_disabled_without_disabling_other_direct_sources(monkeyp
 
 
 def test_nih_grant_normalizes_official_award_to_structured_event(monkeypatch):
-    monkeypatch.setattr(api, "_json_request", lambda *_args, **_kwargs: {"results": [{
-        "ProjectTitle": "Novel diagnostic sensor", "ProjectNum": "R01-123", "CoreProjectNum": "R01-123",
-        "AbstractText": "Research grant abstract.", "AwardAmount": 2_500_000,
-        "AwardNoticeDate": "2026-04-05", "organization": {"OrgName": "University Lab"},
-    }]})
-    ref = api.search_nih_grants(["diagnostic sensor"], SNAPSHOT)[0]
+    requested = {}
+    monkeypatch.setattr(api, "_json_request", lambda *_args, **kwargs: (requested.update(body=kwargs["body"]) or {
+        "results": [{
+            "ProjectTitle": "Novel diagnostic sensor", "ProjectNum": "R01-123", "CoreProjectNum": "R01-123",
+            "AbstractText": "Research grant abstract.", "AwardAmount": 2_500_000,
+            "AwardNoticeDate": "2026-04-05", "organization": {"OrgName": "University Lab"},
+        }, {
+            "ProjectTitle": "Rural housing outreach", "CoreProjectNum": "R01-999",
+            "AbstractText": "Unrelated community program.", "AwardNoticeDate": "2026-04-05",
+        }]}))
+    refs = api.search_nih_grants(["diagnostic sensor"], SNAPSHOT)
+    assert [ref["structured_event"]["source_id"] for ref in refs] == ["R01-123"]  # нерелевантный отсеян
+    ref = refs[0]
     assert ref["url"].endswith("/project-details/R01-123")
-    assert ref["structured_event"] == {
-        "type": "grant", "date": "2026-04-05", "company": "University Lab",
-        "amount_usd_m": 2.5, "round": "grant", "strategic": False, "source_id": "R01-123",
-    }
+    event = ref["structured_event"]
+    assert (event["type"], event["kind"], event["date"], event["company"]) == (
+        "grant", "grant", "2026-04-05", "University Lab")
+    assert event["amount_usd_m"] == 2.5 and event["round"] == "grant" and event["strategic"] is False
     assert "Award amount (USD): 2500000" in ref["document"]["text"]
+    # слова фразы связаны AND, фразы — OR; дата оценки — конец диапазона
+    criteria = requested["body"]["criteria"]
+    assert criteria["advanced_text_search"]["search_text"] == "(diagnostic AND sensor)"
+    assert criteria["award_notice_date"]["to_date"] == "2026-09-28"
 
 
-def test_cordis_result_is_kept_in_eur_without_fabricating_usd(monkeypatch):
+def test_nih_long_title_is_searched_by_short_phrases(monkeypatch):
+    requested = {}
+    monkeypatch.setattr(api, "_json_request", lambda *_args, **kwargs: (
+        requested.update(body=kwargs["body"]) or {"results": []}))
+    assert api.search_nih_grants(["agent security posture management platform"], SNAPSHOT) == []
+    text = requested["body"]["criteria"]["advanced_text_search"]["search_text"]
+    assert text == "(agent AND security AND posture) OR (agent AND security) OR (security AND posture)"
+    assert '"' not in text
+
+
+def test_cordis_result_is_converted_from_eur_to_usd(monkeypatch):
     requested = {}
     monkeypatch.setattr(api, "_json_request", lambda provider, url, **kwargs: (
         requested.update(provider=provider, url=url, query=kwargs["params"]["query"]) or {
@@ -102,13 +123,68 @@ def test_cordis_result_is_kept_in_eur_without_fabricating_usd(monkeypatch):
                 "project_id": {"value": "101234"}, "title": {"value": "Photonics research grant"},
                 "abstract": {"value": "Researching new photonic interconnects."},
                 "start_date": {"value": "2024-02-01"}, "funding_amount": {"value": "1200000"},
+            }, {
+                "project_id": {"value": "101999"}, "title": {"value": "Medieval pottery"},
+                "abstract": {"value": "Ceramics of the Middle Ages."},
+                "start_date": {"value": "2024-03-01"}, "funding_amount": {"value": "50000"},
             }]}
         }))
-    ref = api.search_cordis_grants(["photonic interconnect"], SNAPSHOT)[0]
+    refs = api.search_cordis_grants(["photonic interconnect"], SNAPSHOT)
+    ref = refs[0]
+    assert [r["structured_event"]["source_id"] for r in refs] == ["101234"]
     assert "sparql" in requested["url"]
     assert "eurio:Project" in requested["query"]
-    assert ref["structured_event"]["currency"] == "EUR"
-    assert ref["structured_event"]["amount_usd_m"] is None
+    # слова фразы — через &&, без точной фразы в кавычках
+    assert 'CONTAINS(LCASE(CONCAT(STR(?title), " ", COALESCE(STR(?abstract), ""))), "photonic") && ' in requested["query"]
+    assert '"photonic interconnect"' not in requested["query"]
+    event = ref["structured_event"]
+    assert event["currency"] == "EUR" and event["amount_native"] == 1_200_000.0
+    assert event["amount_usd_m"] == pytest.approx(1.2 / 0.92, rel=1e-3)  # курс 2024 года
+
+
+def test_ted_query_has_upper_date_bound_and_short_phrases(monkeypatch):
+    requested = {}
+
+    def fake_request(provider, url, **kwargs):
+        requested.update(body=kwargs["body"])
+        return {"notices": [
+            {"publication-number": "1-2026", "notice-title": {"eng": "Sensor pilot tender"},
+             "publication-date": "2026-03-01+01:00", "buyer-name": {"eng": ["City"]}},
+            {"publication-number": "2-2026", "notice-title": {"eng": "Road repair works"},
+             "publication-date": "2026-03-02+01:00"},
+            {"publication-number": "3-2026", "notice-title": {"swe": "Sensorer"},
+             "publication-date": "2026-03-03+01:00"},
+        ]}
+
+    monkeypatch.setattr(api, "_json_request", fake_request)
+    refs = api.search_ted(["sensor pilot"], SNAPSHOT)
+    query = requested["body"]["query"]
+    assert "FT ~ (sensor pilot)" in query and "PD <= 20260928" in query and '"' not in query
+    # английский нерелевантный отсеян, неанглийский оставлен на доверии серверу
+    assert [r["structured_event"]["source_id"] for r in refs] == ["1-2026", "3-2026"]
+    assert refs[0]["structured_event"]["kind"] == "tender"
+    assert refs[0]["structured_event"]["customer"] == "City"
+    assert refs[0]["observed_at"] == "2026-03-01"
+
+
+def test_huggingface_skips_non_ml_topics_and_filters_irrelevant_models(monkeypatch):
+    calls = []
+
+    def fake_request(provider, url, **kwargs):
+        calls.append(kwargs["params"]["search"])
+        return [{"modelId": "lab/red-teaming-llm", "downloads": 10, "likes": 1,
+                 "lastModified": "2026-08-01T00:00:00Z", "pipeline_tag": "text-generation", "tags": []},
+                {"modelId": "lab/cat-classifier", "downloads": 99, "likes": 1,
+                 "lastModified": "2026-08-01T00:00:00Z", "pipeline_tag": "image-classification", "tags": []}]
+
+    monkeypatch.setattr(api, "_json_request", fake_request)
+    assert api.is_ml_topic(["automated red teaming of LLM"]) is True
+    assert api.is_ml_topic(["road construction logistics"]) is False
+    assert api.search_huggingface(["road construction logistics"], SNAPSHOT) == []
+    assert calls == []  # нетехническая тема: запрос не уходит
+    refs = api.search_huggingface(["red teaming llm"], SNAPSHOT)
+    assert [r["url"] for r in refs] == ["https://huggingface.co/lab/red-teaming-llm"]
+    assert calls == ["red teaming llm", "red teaming"]  # мало записей: пробуем и короткую фразу
 
 
 def test_github_and_huggingface_records_include_activity_metrics(monkeypatch):
@@ -124,7 +200,7 @@ def test_github_and_huggingface_records_include_activity_metrics(monkeypatch):
 
     monkeypatch.setattr(api, "_json_request", fake_request)
     github = api.search_github(["edge sensor"], SNAPSHOT)[0]
-    hf = api.search_huggingface(["edge sensor"], SNAPSHOT)[0]
+    hf = api.search_huggingface(["edge sensor model"], SNAPSHOT)[0]
     assert github["adoption_metrics"]["stars"] == 8
     assert "1250" in hf["document"]["text"]
     assert hf["url"] == "https://huggingface.co/lab/sensor-model"
@@ -174,3 +250,64 @@ def test_openfda_search_maps_510k_decision_without_requiring_a_key(monkeypatch):
     assert refs[0]["observed_at"] == "2026-01-02"
     assert requested[0][1]["search"] == "device_name:insulin OR device_name:pump"
     assert "api_key" not in requested[0][1]
+
+
+def _fixture_contract(monkeypatch, name, fixture_name, terms, *, money, as_of=SNAPSHOT):
+    from connector_testkit import assert_connector_contract, fake_json_request, fixture
+
+    from app.radar.connectors import registry
+
+    calls = fake_json_request(monkeypatch, api, fixture(fixture_name) if isinstance(fixture_name, str)
+                              else fixture_name)
+    connector = registry()[name]
+    refs = connector.run(terms, as_of, 5)
+    assert_connector_contract(connector, refs, as_of, money=money)
+    return refs, calls
+
+
+def test_nih_recorded_response_drops_grants_with_words_scattered_over_abstract(monkeypatch):
+    from connector_testkit import fake_json_request, fixture
+
+    from app.radar.connectors import registry
+
+    calls = fake_json_request(monkeypatch, api, fixture("nih_automated_red_teaming"))
+    # Записанный ответ — клеточная биология и микроскопия: "automated", "AI" и "models"
+    # разбросаны по аннотации, о red teaming в них нет ничего.
+    assert registry()["NIH RePORTER"].run(["automated red teaming of AI models"], SNAPSHOT, 5) == []
+    assert calls[0]["body"]["criteria"]["award_notice_date"]["to_date"] == "2026-09-28"
+
+
+def test_nih_recorded_grant_kept_when_phrase_words_stand_together(monkeypatch):
+    from connector_testkit import fixture
+
+    payload = fixture("nih_automated_red_teaming")
+    row = payload["results"][0]
+    row["abstract_text"] = "We build automated red teaming of clinical AI models. " + (row.get("abstract_text") or "")
+    refs, _ = _fixture_contract(monkeypatch, "NIH RePORTER", payload,
+                                ["automated red teaming of AI models"], money=True)
+    assert len(refs) == 1 and refs[0]["structured_event"]["kind"] == "grant"
+
+
+def test_cordis_recorded_response_gives_usd_amount_for_eur_grant(monkeypatch):
+    refs, _ = _fixture_contract(monkeypatch, "CORDIS grants", "cordis_neuromorphic",
+                                ["neuromorphic brain-inspired chips for AI workloads"], money=True)
+    events = [ref["structured_event"] for ref in refs]
+    assert all(e["currency"] == "EUR" for e in events)
+    assert any(e["amount_usd_m"] for e in events)  # раньше было None
+
+
+def test_ted_recorded_response_follows_strict_contract(monkeypatch):
+    refs, calls = _fixture_contract(monkeypatch, "TED procurement", "ted_automated_red_teaming",
+                                    ["laboratory optical precision equipment"], money=True)
+    # из трёх записанных уведомлений по теме одно: остальные (медтехника) отсеяны
+    assert len(refs) == 1 and refs[0]["structured_event"]["kind"] == "tender"
+    assert refs[0]["date_support"] == "strict"
+    assert calls[0]["body"]["query"].endswith("PD <= 20260928")
+
+
+def test_huggingface_recorded_response_filters_to_relevant_models(monkeypatch):
+    refs, calls = _fixture_contract(monkeypatch, "Hugging Face", "huggingface_red_teaming",
+                                    ["red teaming llm"], money=False, as_of=date(2026, 12, 31))
+    assert refs and all("red teaming" in r["url"].lower().replace("-", " ").replace("_", " ") or
+                        "redteaming" in r["url"].lower() for r in refs)
+    assert calls[0]["params"]["search"] == "red teaming llm"

@@ -74,17 +74,17 @@ def clear_llm_env(monkeypatch):
 def test_scorer_artifact_follows_feature_llm(monkeypatch):
     from app.ml import scorer
     clear_llm_env(monkeypatch)
-    assert scorer.model_path().name == "logreg_v1.json"                      # облако, luna
+    assert scorer.model_path().name == "logreg_v2.json"                      # облако, luna
     monkeypatch.setenv("RADAR_PROVIDER", "local")
     monkeypatch.setenv("LOCAL_MODEL", "qwen3.8:27b")
     assert scorer.model_path().name == "logreg_v1_qwen3.8-27b.json"          # всё локально
     monkeypatch.setenv("FEATURE_MODEL", "openai/gpt-5.6-luna")
     monkeypatch.setenv("FEATURE_LLM_URL", "https://openrouter.ai/api/v1")
-    assert scorer.model_path().name == "logreg_v1.json"                      # поиск локально, признаки в облаке
+    assert scorer.model_path().name == "logreg_v2.json"                      # поиск локально, признаки в облаке
     monkeypatch.setenv("LOCAL_MODEL", "unknown:7b")
     monkeypatch.setenv("FEATURE_MODEL", "")
     monkeypatch.setenv("FEATURE_LLM_URL", "")
-    assert scorer.model_path().name == "logreg_v1.json"                      # нет артефакта — основная
+    assert scorer.model_path().name == "logreg_v1.json"                      # нет артефакта, v2 на другой LLM
 
 
 def test_cloud_search_with_local_features(monkeypatch):

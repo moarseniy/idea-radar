@@ -1,0 +1,119 @@
+{
+ "rows": {
+  "training": 1327,
+  "gold": 98,
+  "validation": 89
+ },
+ "fill_before": {
+  "training": {
+   "funding_log_24m": 119,
+   "funding_round_count_24m": 140,
+   "public_grants_log_36m": 50,
+   "procurement_presence": 41,
+   "missing_funding": 1125,
+   "missing_adoption": 778,
+   "source_type_diversity": 1169
+  },
+  "gold": {
+   "funding_log_24m": 13,
+   "funding_round_count_24m": 14,
+   "public_grants_log_36m": 3,
+   "procurement_presence": 3,
+   "missing_funding": 78,
+   "missing_adoption": 58,
+   "source_type_diversity": 92
+  },
+  "validation": {
+   "funding_log_24m": 8,
+   "funding_round_count_24m": 12,
+   "public_grants_log_36m": 3,
+   "procurement_presence": 6,
+   "missing_funding": 75,
+   "missing_adoption": 33,
+   "source_type_diversity": 85
+  }
+ },
+ "fill_after": {
+  "training": {
+   "funding_log_24m": 131,
+   "funding_round_count_24m": 184,
+   "public_grants_log_36m": 720,
+   "procurement_presence": 143,
+   "missing_funding": 497,
+   "missing_adoption": 518,
+   "source_type_diversity": 1245
+  },
+  "gold": {
+   "funding_log_24m": 26,
+   "funding_round_count_24m": 34,
+   "public_grants_log_36m": 57,
+   "procurement_presence": 17,
+   "missing_funding": 25,
+   "missing_adoption": 33,
+   "source_type_diversity": 96
+  },
+  "validation": {
+   "funding_log_24m": 11,
+   "funding_round_count_24m": 18,
+   "public_grants_log_36m": 50,
+   "procurement_presence": 26,
+   "missing_funding": 28,
+   "missing_adoption": 25,
+   "source_type_diversity": 88
+  }
+ },
+ "status": {
+  "training": {
+   "ok": 1327
+  },
+  "gold": {
+   "ok": 98
+  },
+  "validation": {
+   "ok": 89
+  }
+ },
+ "changed_features": {
+  "paper_volume_percentile_domain": 1432,
+  "rebranding_similarity_to_mature": 1060,
+  "source_type_diversity": 907,
+  "public_grants_log_36m": 830,
+  "missing_funding": 736,
+  "paper_acceleration": 557,
+  "paper_growth_2y": 542,
+  "papers_log_3y": 528,
+  "media_to_technical_evidence_ratio": 528,
+  "preprint_share_2y": 496,
+  "technical_term_density": 496,
+  "commercial_vendor_count_log": 451,
+  "independent_high_trust_source_count_log": 372,
+  "missing_adoption": 351,
+  "first_commercial_event_age_years": 328,
+  "named_customer_count_log": 314,
+  "production_deployments_log": 253,
+  "stage_poc": 215,
+  "stage_research": 187,
+  "stage_early_adoption": 180,
+  "funding_round_count_24m": 159,
+  "procurement_presence": 156,
+  "mass_market_flag": 149,
+  "funding_company_hhi": 133,
+  "funding_growth_24m": 127,
+  "stage_scaling_or_mature": 115,
+  "regulatory_precursor_count": 113,
+  "cross_channel_confirmation_count": 107,
+  "funding_log_24m": 106,
+  "marketing_claim_density": 103,
+  "claim_specificity": 98,
+  "citation_velocity_median": 85,
+  "verified_pilots_log_24m": 57,
+  "stage_pilot": 47,
+  "strategic_investor_count": 31,
+  "early_stage_funding_share": 28,
+  "independent_media_domains_log_12m": 24,
+  "press_release_share_12m": 24,
+  "final_standard_flag": 14,
+  "first_evidence_age_years": 12,
+  "missing_science": 5
+ }
+}

@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
 import { radar, type Assessment, type Finding, type Source } from '../api'
-import { Confidence, Contributions, Empty, Modal, SourceCard, SourceTranscriptText, sourceTimestampUrl, TrustTag } from '../components/parts'
-import { dateText, LLM_AXES, LLM_VALUES, percent, safeUrl, VERDICT } from '../labels'
+import { Confidence, Empty, Modal, SourceCard, SourceTranscriptText, sourceTimestampUrl, TrustTag } from '../components/parts'
+import { EvidenceTimeline, ModelImpactChart } from '../components/SignalVisuals'
+import { SignalRelationshipGraph } from '../components/SignalRelationshipGraph'
+import { dateText, LLM_AXES, LLM_VALUES, MONEY_KIND, percent, safeUrl, usd, VERDICT } from '../labels'
 import { useApp, useResource } from '../state'
 
 const BLOCKS: [keyof Assessment, string][] = [
@@ -23,8 +25,6 @@ export function SignalPage() {
   const m = s.model
   const runId = signalId.split('_cand_')[0]
   const sources = new Map(data.sources.map((x) => [x.id, x]))
-  const scale = m ? Math.max(0.5, ...[...m.top_for, ...m.top_against].map((c) => Math.abs(c.contribution))) : 1
-
   async function openSource(id: string) {
     try {
       setOpened(await radar.source(runId, id))
@@ -73,6 +73,7 @@ export function SignalPage() {
           <div className="report-meta">
             <span>{s.stage || 'Стадия не установлена'}</span>
             <span>На дату {dateText(data.as_of)}</span>
+            {data.as_of < new Date().toISOString().slice(0, 10) && <span>Исторический прогон</span>}
             {m && <span>Поисковый термин: {m.search_term}</span>}
           </div>
         </div>
@@ -144,24 +145,48 @@ export function SignalPage() {
         </div>
 
         <aside>
+          {m?.money_events && (
+            <section className="panel">
+              <h3>Деньги</h3>
+              <p className="muted small">
+                Гранты, госконтракты, тендеры и раунды до {dateText(m.snapshot_date)} из прямых источников.
+              </p>
+              {m.money_events.length ? (
+                <ul className="money-events">
+                  {m.money_events.map((e) => (
+                    <li key={`${e.url}-${e.date}`}>
+                      <div className="money-head">
+                        <b>{MONEY_KIND[e.kind] ?? e.kind}</b>
+                        {e.amount_usd_m != null && <span>{usd(e.amount_usd_m)}</span>}
+                        <small>{dateText(e.date)}</small>
+                      </div>
+                      <a href={safeUrl(e.url)} target="_blank" rel="noreferrer">
+                        {e.title}
+                      </a>
+                      <small className="block muted">
+                        {[e.company, e.funder || e.customer].filter(Boolean).join(' · ')}
+                        {e.connector ? ` · ${e.connector}` : ''}
+                      </small>
+                    </li>
+                  ))}
+                </ul>
+              ) : (
+                <p className="muted small">Денежных событий по кандидату не найдено.</p>
+              )}
+            </section>
+          )}
           {m && (
             <section className="panel">
-              <h3>Почему модель так решила</h3>
-              <p className="muted small">
-                Вклад признака в логит: знак — направление, длина — сила. Вклады складываются в итоговую оценку точно.
-              </p>
-              {m.patent_source && (
+              <h3>Как модель оценивает кандидата</h3>
+              <p className="muted small">Модель учитывает найденные признаки вместе. На графике ниже видно, какие факторы усилили оценку, а какие снизили.</p>
+              {m.patent_source && m.patent_source !== 'not_used_by_active_model' && (
                 <p className="muted small">
                   Патентный канал: {m.patent_source}{m.patent_warning ? ` · ${m.patent_warning}` : ''}
                 </p>
               )}
-              <h4>За слабый сигнал</h4>
-              {m.top_for.length ? <Contributions items={m.top_for} scale={scale} /> : <p className="muted small">Нет</p>}
-              <h4>Против</h4>
-              {m.top_against.length ? <Contributions items={m.top_against} scale={scale} /> : <p className="muted small">Нет</p>}
               {m.exclusion_reasons.length > 0 && (
                 <>
-                  <h4>Причины исключения</h4>
+                  <h4>Почему кандидат исключён</h4>
                   <ul className="reasons">
                     {m.exclusion_reasons.map((r) => (
                       <li key={r}>{r}</li>
@@ -195,17 +220,20 @@ export function SignalPage() {
         </aside>
       </div>
 
+      <div className="signal-visual-grid">
+        <SignalRelationshipGraph key={s.id} assessment={s} sources={data.sources}
+          onOpenSource={(id) => void openSource(id)} />
+        <EvidenceTimeline data={m?.visualization?.evidence_timeline}
+          legacyScienceCounts={m?.visualization?.publication_year_counts} />
+        {m?.waterfall && <ModelImpactChart model={m} />}
+      </div>
+
       <section className="report-section">
-        <h3>Источники ({data.sources.length})</h3>
+        <h3>Проверенные источники ({data.sources.length})</h3>
         {data.sources.map((src) => (
           <SourceCard key={src.id} s={src} onOpen={(x) => void openSource(x.id)} />
         ))}
       </section>
-      <p className="muted small">
-        Русское резюме и интерпретация сформированы ИИ, оригинальные цитаты сохранены.{' '}
-        {m ? 'Уверенность — калиброванная вероятность обученной модели.' : 'Оценка не является калиброванной вероятностью.'}
-      </p>
-
       {opened && (
         <Modal onClose={() => setOpened(null)} wide>
           <div className="eyebrow">Прочитанный источник</div>

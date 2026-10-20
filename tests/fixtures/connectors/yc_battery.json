@@ -1,0 +1,127 @@
+{
+  "companies": [
+    {
+      "id": 639,
+      "name": "GBatteries",
+      "slug": "gbatteries",
+      "website": "https://www.gbatteries.com",
+      "smallLogoUrl": "https://bookface-images.s3.amazonaws.com/small_logos/79847364e215c69a3ff37ac2ae702dfa827a647b.png",
+      "oneLiner": "Enabling li-ion batteries to charge ultra fast without compromising…",
+      "longDescription": "Our technology enables li-ion batteries to charge extremely fast while retaining long cycle life using smart control algorithms.",
+      "teamSize": 25,
+      "url": "https://www.ycombinator.com/companies/gbatteries",
+      "batch": "W14",
+      "tags": [
+        "Energy Storage",
+        "Hard Tech",
+        "Climate"
+      ],
+      "status": "Active",
+      "industries": [
+        "Industrials",
+        "Climate"
+      ],
+      "regions": [
+        "Canada",
+        "America / Canada",
+        "Remote",
+        "Partly Remote"
+      ],
+      "locations": [
+        "Ottawa, ON, Canada"
+      ],
+      "badges": []
+    },
+    {
+      "id": 11971,
+      "name": "Portal Entryways",
+      "slug": "portal-entryways",
+      "website": "https://www.portalentryways.com/",
+      "smallLogoUrl": "https://bookface-images.s3.amazonaws.com/small_logos/c735eed246c242c9fbfe29b77a02d9d80c1db30d.png",
+      "oneLiner": "Portal Entryways upgrades disabled-accessible doors so they can be…",
+      "longDescription": "",
+      "teamSize": 4,
+      "url": "https://www.ycombinator.com/companies/portal-entryways",
+      "batch": "W19",
+      "tags": [
+        "Batteryless IoT Sensors",
+        "Hardware"
+      ],
+      "status": "Inactive",
+      "industries": [
+        "B2B",
+        "Office Management"
+      ],
+      "regions": [
+        "United States of America",
+        "America / Canada",
+        "Remote",
+        "Fully Remote"
+      ],
+      "locations": [
+        "Provo, UT, USA"
+      ],
+      "badges": []
+    },
+    {
+      "id": 21788,
+      "name": "Zitara Technologies, Inc.",
+      "slug": "zitara-technologies-inc",
+      "website": "https://zitara.com",
+      "smallLogoUrl": "https://bookface-images.s3.amazonaws.com/small_logos/8705f34089ca7162f6ec3c2a67b6c69a4de6adad.png",
+      "oneLiner": "Predictive battery management software for electrified fleets",
+      "longDescription": "Batteries have a big role to play in tackling the climate crisis, and it’s essential to make sure that they’re safe and reliable to operate.\r\n\r\nAt Zitara, we build cutting-edge software solutions that empower companies to deeply understand their batteries, both in design and deployment. It’s all part of our work to enable a renewable energy revolution, powered by safer batteries, at a lower cost, with less waste.",
+      "teamSize": 33,
+      "url": "https://www.ycombinator.com/companies/zitara-technologies-inc",
+      "batch": "S20",
+      "tags": [
+        "Climate",
+        "Electric Vehicles"
+      ],
+      "status": "Active",
+      "industries": [
+        "Industrials",
+        "Energy"
+      ],
+      "regions": [
+        "United States of America",
+        "America / Canada",
+        "Remote",
+        "Partly Remote"
+      ],
+      "locations": [
+        "San Francisco"
+      ],
+      "badges": []
+    },
+    {
+      "id": 31120,
+      "name": "Kyten Technologies",
+      "slug": "kyten-technologies",
+      "website": "https://kytentech.com",
+      "smallLogoUrl": "https://bookface-images.s3.amazonaws.com/small_logos/966b1340bdeb6a7d80ba3f1c34c89a62f57a4bff.png",
+      "oneLiner": "Custom Aerospace-Grade Battery Packs",
+      "longDescription": "Kyten Technologies is building a factory to manufacture custom aerospace-grade battery packs. \r\n100,000+ drones, submarines, and satellites are being built in the US, but the legacy supply chain can't keep up. \r\nDuring our six years at Starlink, we put 5,000+ battery packs into space. Now, we're bringing rapid development and volume production of aerospace-grade battery packs to the entire industry.",
+      "teamSize": 2,
+      "url": "https://www.ycombinator.com/companies/kyten-technologies",
+      "batch": "W26",
+      "tags": [],
+      "status": "Inactive",
+      "industries": [
+        "Industrials",
+        "Manufacturing and Robotics"
+      ],
+      "regions": [
+        "United States of America",
+        "America / Canada"
+      ],
+      "locations": [
+        "Seattle"
+      ],
+      "badges": []
+    }
+  ],
+  "nextPage": null,
+  "page": 1,
+  "totalPages": 1
+}

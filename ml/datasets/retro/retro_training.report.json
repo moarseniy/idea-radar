@@ -1,0 +1,124 @@
+{
+ "rows": 684,
+ "removed_overlap": [
+  "Face Liveness Detection (0)",
+  "Rule-based expert systems (0)",
+  "Rule-based fraud detection (0)",
+  "Neural Network Robustness Verification (1)",
+  "Output Guardrails (1)",
+  "SplitFed Learning (1)",
+  "digital watermarking (0)",
+  "Data anonymization (0)",
+  "Robot middleware (0)",
+  "Edge-cloud sensor fusion (1)",
+  "Edge AI (0)",
+  "OPC Unified Architecture (0)",
+  "Condition Monitoring (0)",
+  "Wireless LAN (0)",
+  "Remote center compliance (0)",
+  "Pneumatic grippers (0)",
+  "Heterogeneous Robot Swarms (0)",
+  "Robotic Pipeline Inspection (0)",
+  "Direct debit (0)",
+  "offline electronic cash (0)",
+  "KYC automation (1)",
+  "Remote identity verification (1)",
+  "Video identification (0)",
+  "Remote Biometric Identification (0)",
+  "Electronic Identity Verification (0)",
+  "Graph-based transaction analysis (0)",
+  "Business Process Management (0)",
+  "Graph-based Fraud Detection (0)",
+  "NFT tokenization (1)",
+  "Lightweight machine learning (1)",
+  "Asynchronous spiking processor (0)",
+  "Photonic Sensor Fusion (1)",
+  "Energy-efficient digital signal processing (0)",
+  "in-sensor processing (0)",
+  "Object tracking (0)",
+  "Multi-access Edge Computing (1)",
+  "Industrial Wireless LAN (0)",
+  "Dedicated Short-Range Communications (0)",
+  "Automatic Number Plate Recognition (0)",
+  "Passive RFID (0)",
+  "Battery-free RFID (0)",
+  "Confidential AI (1)",
+  "Distributed Remote Attestation (0)",
+  "Trusted Computing (0)",
+  "Confidential GPU Computing (1)",
+  "Hardware Attestation (0)",
+  "Privacy-Preserving Data Masking (0)",
+  "Intrusion Detection System (0)",
+  "Differentially Private Data Synthesis (1)",
+  "Face pixelation (0)",
+  "Statistical Disclosure Control (0)",
+  "Kalman filtering (0)",
+  "Motion capture (0)",
+  "Hardware-in-the-loop (0)",
+  "In-line inspection (1)",
+  "Automated Optical Inspection (0)",
+  "Model-Based Control (0)",
+  "Deep Generative Models (0)",
+  "Deep Generative Design (1)",
+  "Topology Optimization (0)",
+  "Edge inference serving (1)",
+  "Application Lifecycle Management (0)",
+  "Application Performance Monitoring (0)",
+  "Application Performance Management (0)",
+  "AI accelerator (1)",
+  "Multi-GPU inference (1)",
+  "Reconfigurable Dataflow Architecture (1)",
+  "GPU acceleration (0)",
+  "GPU-accelerated deep learning (0)",
+  "Optical Processing Unit (1)",
+  "Photonic computing (1)",
+  "Silicon photonic neural network (1)",
+  "Silicon Photonic Accelerator (1)",
+  "Coherent photonic neural networks (1)",
+  "Multidimensional Silicon Photonics (1)",
+  "GPU-accelerated computing (0)",
+  "Optical Transceiver (0)",
+  "FPGA-based acceleration (0)"
+ ],
+ "labels": {
+  "0": 346,
+  "1": 338
+ },
+ "tiers": {
+  "0:silver": 346,
+  "1:silver": 109,
+  "1:bronze": 229
+ },
+ "negative_types": {
+  "N1_mature_at_T": 162,
+  "N1_parent_at_T": 184
+ },
+ "by_domain": {
+  "Edge": {
+   "1": 97,
+   "0": 78
+  },
+  "Защита ИИ": {
+   "1": 64,
+   "0": 28
+  },
+  "Индустриальный ИИ": {
+   "0": 42,
+   "1": 33
+  },
+  "Инфраструктура ИИ": {
+   "0": 51,
+   "1": 61
+  },
+  "Роботы": {
+   "0": 73,
+   "1": 47
+  },
+  "Финтех": {
+   "0": 74,
+   "1": 36
+  }
+ },
+ "topics": 35,
+ "groups": 648
+}

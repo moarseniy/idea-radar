@@ -92,3 +92,41 @@ def test_consolidation_retries_in_chunks_then_merges_compacted_list():
     assert [call[3] for call in calls] == [9000, 4000, 4000, 9000]
     assert len(result.candidates) == 1 and result.candidates[0].id == "cand_merged"
     assert provider.consolidation_chunked is False
+
+
+def test_call_retries_connection_failures_but_not_read_timeouts():
+    import time
+
+    import pytest
+
+    class ConnectTimeout(Exception):
+        pass
+
+    class APITimeoutError(Exception):
+        pass
+
+    provider = ResearchProvider.__new__(ResearchProvider)
+    provider.settings = type("Settings", (), {"retries": 1})()
+    provider.deadline = time.monotonic() + 600
+    provider.call_timeout = 90
+    provider.calls = []
+    provider.lock = __import__("threading").Lock()
+    timeouts = []
+
+    def flaky(timeout):
+        timeouts.append(timeout)
+        if len(timeouts) < 3:
+            raise APITimeoutError() from ConnectTimeout()
+        return type("Response", (), {"id": "r1", "usage": None})()
+
+    assert provider._call("plan", "m", flaky).id == "r1"
+    assert len(timeouts) == 3 and timeouts[0].connect == 15 and timeouts[0].read == 90
+
+    def slow(timeout):
+        timeouts.append(timeout)
+        raise APITimeoutError()
+
+    timeouts.clear()
+    with pytest.raises(APITimeoutError):
+        provider._call("plan", "m", slow)
+    assert len(timeouts) == 1

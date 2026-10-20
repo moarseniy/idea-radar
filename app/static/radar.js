@@ -118,14 +118,15 @@ async function openSource(id){
 async function catalog(){
   view("catalog");
   if(!state.catalog){state.catalog=await api("/api/catalog"); $("#domainFilter").innerHTML='<option value="">Все области</option>'+Object.keys(state.catalog.domains).map(d=>`<option>${esc(d)}</option>`).join("");}
+  $("#catalogNotice").textContent=state.catalog.note||"Примеры из набора валидации; они не являются готовыми ответами поиска.";
   renderCatalog();
 }
 function renderCatalog(){
   if(!state.catalog)return;
   const q=$("#catalogFilter").value.toLowerCase(),domain=$("#domainFilter").value;
-  const records=state.catalog.records.filter(r=>(!domain||r.domain===domain)&&`${r.title} ${r.companies} ${r.domain}`.toLowerCase().includes(q));
+  const records=state.catalog.records.filter(r=>(!domain||r.domain===domain)&&`${r.title} ${r.application||""} ${r.companies||""} ${r.domain} ${(r.sources||[]).map(s=>s.title).join(" ")}`.toLowerCase().includes(q));
   $("#catalogCount").textContent=`${records.length} из ${state.catalog.count}`;
-  $("#catalogList").innerHTML=records.map(r=>`<article class="catalog-card"><span class="signal-domain">${esc(r.domain)}</span><h3>${r.id}. ${esc(r.title)}</h3><p>${esc(r.companies)}</p><span class="tag">${esc(r.stage)}</span><span class="tag">Авторский балл: ${r.reference_score}</span><details><summary>Объяснение и источники из Excel</summary><p>${esc(r.reference_explanation)}</p><p>${esc(r.mention_trend)}</p>${r.sources.map(s=>`<a href="${esc(url(s.url))}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>`).join("")}</details><button class="subtle" data-check-example="${r.id}">Проверить по открытым источникам ↗</button></article>`).join("")||empty("Ничего не найдено","Измените поисковый запрос или область.");
+  $("#catalogList").innerHTML=records.map(r=>`<article class="catalog-card"><span class="signal-domain">${esc(r.domain)}</span><h3>${r.id}. ${esc(r.title)}</h3><p>${esc(r.application?`Применение: ${r.application}`:r.companies||"Компании в наборе не указаны.")}</p><span class="tag">${esc(r.stage)}</span>${r.reference_score!=null?`<span class="tag">Авторский балл: ${esc(r.reference_score)}</span>`:""}${r.reference_label?`<span class="tag">${esc(r.reference_label)}</span>`:""}<details><summary>Основание и источники из набора</summary><p>${esc(r.reference_explanation)}</p><p>${esc(r.mention_trend)}</p>${(r.sources||[]).map(s=>`<a href="${esc(url(s.url))}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>`).join("")}</details>${r.features?.length?`<details><summary>Признаки модели: ${r.measured_feature_count} из ${r.features.length} заполнены</summary><div class="catalog-feature-grid">${r.features.map(f=>`<span class="catalog-feature${f.value==null?" missing":""}" tabindex="0" title="${esc(f.description)}\nЗначение: ${esc(f.display_value)}"><span>${esc(f.label)}</span><strong>${esc(f.display_value)}</strong></span>`).join("")}</div></details>`:""}<button class="subtle" data-check-example="${r.id}">Искать эту тему ↗</button></article>`).join("")||empty("Ничего не найдено","Измените поисковый запрос или область.");
 }
 async function download(){
   const res=await fetch(`/api/searches/${state.runId}/export.md`);

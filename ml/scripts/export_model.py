@@ -54,55 +54,70 @@ EXCLUDED = {
 }
 
 
-def metrics(y, p, thr) -> dict:
+def metrics(y, p, thr, w=None) -> dict:
     pred = p >= thr
-    return {"precision": round(precision_score(y, pred, zero_division=0), 3),
-            "recall": round(recall_score(y, pred), 3), "f1": round(f1_score(y, pred), 3),
-            "roc_auc": round(roc_auc_score(y, p), 3), "pr_auc": round(average_precision_score(y, p), 3),
-            "brier": round(brier_score_loss(y, p), 3)}
+    return {"precision": round(precision_score(y, pred, zero_division=0, sample_weight=w), 3),
+            "recall": round(recall_score(y, pred, sample_weight=w), 3),
+            "f1": round(f1_score(y, pred, sample_weight=w), 3),
+            "roc_auc": round(roc_auc_score(y, p, sample_weight=w), 3),
+            "pr_auc": round(average_precision_score(y, p, sample_weight=w), 3),
+            "brier": round(brier_score_loss(y, p, sample_weight=w), 3)}
 
 
-def fit(training: list[dict], validation: list[dict], training_data: str) -> dict:
-    """Обучение, калибровка, порог и метрики валидации. Возвращает артефакт модели."""
-    features = [f for f in FEATURE_NAMES if f not in EXCLUDED and len({r[f] for r in training}) > 1]
+def fit(training: list[dict], validation: list[dict], training_data: str, *, name: str = "logreg_v1",
+        excluded: dict[str, str] | None = None, sample_weight: np.ndarray | None = None,
+        feature_connectors: list[str] | None = None) -> dict:
+    """Обучение, калибровка, порог и метрики валидации. Возвращает артефакт модели.
+
+    sample_weight — вес строки (ярус метки ретро-выборки); умножается на вес класса.
+    feature_connectors — источники признаков на обучении: сервис берёт признаки только из них.
+    """
+    excluded = EXCLUDED if excluded is None else excluded
+    features = [f for f in FEATURE_NAMES if f not in excluded and len({r[f] for r in training}) > 1]
     x = matrix(training, features)
     y = np.array([int(r["label"]) for r in training])
     groups = [r["technology_group_id"] for r in training]
     cv = StratifiedGroupKFold(5, shuffle=True, random_state=SEED)
+    rows_w = np.ones(len(y)) if sample_weight is None else np.asarray(sample_weight, dtype=float)
+    fit_params = {"logisticregression__sample_weight": rows_w}
 
     auc = {}
     for c in C_GRID:
-        auc[c] = roc_auc_score(y, cross_val_predict(model(c), x, y, groups=groups, cv=cv, method="predict_proba")[:, 1])
+        auc[c] = roc_auc_score(y, cross_val_predict(model(c), x, y, groups=groups, cv=cv, method="predict_proba",
+                                                    params=fit_params)[:, 1], sample_weight=rows_w)
     # Самый сильно регуляризованный C в пределах 0,005 AUC от лучшего: качество то же,
     # а веса коррелирующих признаков не расходятся в разные стороны и читаются по смыслу.
     best_c = min(c for c in C_GRID if auc[c] >= max(auc.values()) - 0.005)
 
     # Out-of-fold логиты → калибровка Платта (веса классов сбалансированы, как у модели).
-    logits = cross_val_predict(model(best_c), x, y, groups=groups, cv=cv, method="decision_function")
-    weights = np.where(y == 1, len(y) / (2 * y.sum()), len(y) / (2 * (len(y) - y.sum())))
+    logits = cross_val_predict(model(best_c), x, y, groups=groups, cv=cv, method="decision_function",
+                               params=fit_params)
+    weights = np.where(y == 1, rows_w.sum() / (2 * rows_w[y == 1].sum()),
+                       rows_w.sum() / (2 * rows_w[y == 0].sum())) * rows_w
     platt = LogisticRegression(C=1e6).fit(logits.reshape(-1, 1), y, sample_weight=weights)
     a, b = float(platt.coef_[0][0]), float(platt.intercept_[0])
     p_oof = 1 / (1 + np.exp(-(a * logits + b)))
     grid = np.linspace(0.2, 0.8, 61)
     threshold = float(grid[np.argmax([f1_score(y, p_oof >= t, sample_weight=weights) for t in grid])])
 
-    final = model(best_c).fit(x, y)
+    final = model(best_c).fit(x, y, **fit_params)
     imputer, scaler, logreg = final[0], final[1], final[2]
     artifact = {
-        "name": "logreg_v1", "trained_at": date.today().isoformat(),
+        "name": name, "trained_at": date.today().isoformat(),
         "feature_schema_version": FEATURE_SCHEMA_VERSION,
         "training_data": training_data,
         "training_rows": len(training), "training_labels": {"1": int(y.sum()), "0": int(len(y) - y.sum())},
         "git_commit": subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True,
                                      text=True, cwd=ROOT).stdout.strip(),
         "C": best_c, "class_weight": "balanced",
-        "features": features, "excluded_features": EXCLUDED,
+        "features": features, "excluded_features": excluded,
+        **({"feature_connectors": sorted(feature_connectors)} if feature_connectors is not None else {}),
         "median": [float(v) for v in imputer.statistics_],
         "mean": [float(v) for v in scaler.mean_], "scale": [float(v) for v in scaler.scale_],
         "coef": [float(v) for v in logreg.coef_[0]], "intercept": float(logreg.intercept_[0]),
         "calibration": {"method": "platt_oof", "a": a, "b": b},
         "threshold": threshold,
-        "cv": metrics(y, p_oof, threshold) | {"auc_by_C": {str(k): round(v, 4) for k, v in auc.items()}},
+        "cv": metrics(y, p_oof, threshold, rows_w) | {"auc_by_C": {str(k): round(v, 4) for k, v in auc.items()}},
     }
     # Валидация — через тот же Scorer, что в сервисе: проверяет и модель, и экспорт.
     scorer = Scorer(json.loads(json.dumps(artifact)))

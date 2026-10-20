@@ -68,6 +68,36 @@ def test_search_plan_fills_missing_priority_languages():
     assert provider.structured_calls == ["search_plan", "localized_original_query", "localized_search_queries"]
 
 
+def test_partial_subtopic_localization_falls_back_instead_of_raising_keyerror():
+    provider = ResearchProvider.__new__(ResearchProvider)
+    provider.settings = type("Settings", (), {"branches": 2})()
+
+    def structured(role, _prompt, schema, _tokens):
+        if schema is SearchPlan:
+            return SearchPlan(interpretation="topic", query_language="ru", branches=[Branch(
+                topic="AI security pilots", query_ru="пилоты защиты ИИ", query_en="AI security pilots",
+                localized_queries=[LocalizedQuery(language="en", query="AI security pilots"),
+                                    LocalizedQuery(language="ru", query="пилоты защиты ИИ")])])
+        assert schema is LocalizedQueryBatch
+        if role == "localized_original_query":
+            return LocalizedQueryBatch(queries=[
+                LocalizedQuery(language=code, query=f"native {code}") for code, _, _, _ in LANGUAGES
+            ])
+        assert role == "localized_search_queries"
+        return LocalizedQueryBatch(queries=[
+            LocalizedQuery(language=code, query=f"subtopic {code}")
+            for code, _, _, _ in LANGUAGES if code != "it"
+        ])
+
+    provider.structured = structured
+    plan = provider.plan("Технологии для защиты ИИ", "2026-09-30")
+
+    subtopic = plan.branches[1]
+    italian = next(item for item in subtopic.localized_queries if item.language == "it")
+    assert italian.query == "native it AI security pilots"
+    assert {item.language for item in subtopic.localized_queries} >= {code for code, _, _, _ in LANGUAGES}
+
+
 def test_original_query_localization_retries_in_smaller_groups_after_length_limit():
     provider = ResearchProvider.__new__(ResearchProvider)
     provider.settings = type("Settings", (), {"branches": 1})()

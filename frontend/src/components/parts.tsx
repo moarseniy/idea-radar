@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 import type { Assessment, Contribution, ModelResult, Source } from '../api'
 import { dateText, percent, safeUrl, SOURCE_STATE, TRUST, VERDICT } from '../labels'
+import { EvidenceSparkline } from './SignalVisuals'
 
 export function Empty({ title, text }: { title: string; text: string }) {
   return (
@@ -89,6 +90,7 @@ export function SignalCard({ s }: { s: Assessment }) {
             {s.verdict === 'weak_signal' ? s.why_now?.text || s.summary : s.reason || s.summary}
           </p>
           {s.verdict === 'weak_signal' && s.model && <KeyPredictors model={s.model} />}
+          <EvidenceSparkline model={s.model} />
           {s.related && s.related.length > 0 && (
             <p className="related">Ещё применений этой технологии: {s.related.length}</p>
           )}

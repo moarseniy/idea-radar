@@ -33,11 +33,13 @@ import statistics
 from collections import Counter
 from concurrent.futures import ThreadPoolExecutor
 from datetime import date
+from urllib.parse import urlsplit
 
 from app import registry
 from app.ml.env import feature_llm, strip_thinking
 from app.ml.features import evidence as ev
 from app.ml.features.schema import FEATURE_NAMES, FEATURE_SCHEMA_VERSION
+from app.radar.connectors._terms import relevant
 
 # LLM разметки: по умолчанию openai/gpt-5.6-luna через OpenRouter; при RADAR_PROVIDER=local —
 # локальный сервер; FEATURE_MODEL / FEATURE_LLM_URL / FEATURE_LLM_EXTRA — только для разметки
@@ -212,6 +214,151 @@ EVENT_TYPES = {"pilot", "deployment", "product", "funding", "grant", "standard_f
                "regulation", "procurement"}
 
 
+def _needs_patent_metrics(requested_features: set[str] | None) -> bool:
+    if requested_features is None:
+        return True
+    patent_inputs = {feature for feature in FEATURE_NAMES if feature.startswith("patent_")} | {"missing_patents"}
+    return bool(requested_features & patent_inputs)
+
+
+def _publication_visualization(science: ev.Science) -> dict:
+    available = science.ok
+    latest_year = max((int(year) for year in science.year_counts if str(year).isdigit()), default=None)
+    recent_year_counts = ({year: count for year, count in science.year_counts.items()
+                           if latest_year is not None and str(year).isdigit()
+                           and int(year) >= latest_year - 5}
+                          if available else {})
+    return {
+        "science_status": ("unavailable" if not available else
+                           "complete" if science.history_complete else "partial"),
+        "publication_total_found": science.total if available else None,
+        "publication_total_complete": science.history_complete,
+        "publication_recent_3y_found": science.count_3y if science.recent_3y_complete else None,
+        "publication_recent_share_found": (round(science.count_3y / science.total, 4)
+                                            if science.history_complete and science.recent_3y_complete
+                                            and science.total else None),
+        # The compact list sparkline stays at six annual bins; the full timeline
+        # uses evidence_timeline and expands to every available dated year.
+        "publication_year_counts": recent_year_counts,
+        "publication_total_capped": science.older_results_capped if available else False,
+        "publication_years_capped": science.recent_results_capped if available else False,
+    }
+
+
+def _evidence_timeline_visualization(snapshot: date, science: ev.Science, media: ev.Media,
+                                    structured_refs: list[dict]) -> dict:
+    """Aggregate per-channel search results; do not derive the chart from citation links."""
+    science_counts = science.year_counts if science.ok else {}
+    news_counts: dict[str, int] = {}
+    found: dict[str, dict[str, int]] = {
+        key: {} for key in ("funding", "adoption", "community", "other", "news")
+    }
+    start = ev.years_before(snapshot, 4)
+    seen_news: set[tuple[str, str]] = set()
+
+    # Google News exposes dated hits rather than an annual total. Count the unique
+    # returned title/publisher pairs; years outside its four-year query window stay unknown.
+    if media.ok:
+        for items in media.windows.values():
+            for item in items:
+                item_date = str(item.get("date") or "")
+                title = re.sub(r"\W+", " ", str(item.get("title") or "").casefold()).strip()
+                host = str(item.get("host") or item.get("publisher") or "").casefold().strip()
+                try:
+                    published = date.fromisoformat(item_date[:10])
+                except ValueError:
+                    continue
+                key = (title, host)
+                if published > snapshot or published < start or not title or key in seen_news:
+                    continue
+                seen_news.add(key)
+                news_counts[str(published.year)] = news_counts.get(str(published.year), 0) + 1
+
+    # Structured connectors return capped record lists. These are counts of rows actually
+    # returned by those channels, not totals from an unbounded world-wide catalogue.
+    for ref in structured_refs:
+        raw_event = ref.get("structured_event") or {}
+        raw_date = ((ref.get("document") or {}).get("date") or ref.get("observed_at")
+                    or raw_event.get("date"))
+        try:
+            event_date = date.fromisoformat(str(raw_date)[:10])
+        except ValueError:
+            continue
+        if event_date > snapshot:
+            continue
+        event_type = str(raw_event.get("type") or "").lower()
+        provider = str(ref.get("source_provider") or "").lower()
+        source_channel = str(ref.get("channel") or "").lower()
+        if event_type in {"pilot", "deployment", "product", "procurement", "trial", "regulation", "standard_final"}:
+            channel = "adoption"
+        elif event_type in {"grant", "funding", "funding_round", "grant_call"} or source_channel == "money":
+            channel = "funding"
+        elif "github" in provider or "huggingface" in provider or source_channel == "community":
+            channel = "community"
+        elif source_channel == "market" or event_type in {"news", "media"}:
+            channel = "news"
+        else:
+            channel = "other"
+        key = str(event_date.year)
+        if channel == "news":
+            title = re.sub(r"\W+", " ", str(ref.get("title") or "").casefold()).strip()
+            host = (urlsplit(str(ref.get("url") or "")).hostname or provider).casefold()
+            identity = (title, host)
+            if title and identity in seen_news:
+                continue
+            if title:
+                seen_news.add(identity)
+        found[channel][key] = found[channel].get(key, 0) + 1
+
+    observed_years = [int(year) for year in science_counts]
+    observed_years.extend(int(year) for values in found.values() for year in values)
+    observed_years.extend(int(year) for year in news_counts)
+    first_year = min(observed_years, default=snapshot.year)
+    years = [str(year) for year in range(first_year, snapshot.year + 1)]
+
+    def series(values: dict[str, int | None] | None = None):
+        values = values or {}
+        return {year: values.get(year) for year in years}
+
+    channels = {
+        "science": {"label": "Научные работы", "counts": series(science_counts),
+                    "capped": science.older_results_capped or science.recent_results_capped},
+        "patents": {"label": "Патенты", "counts": series(), "capped": False},
+        "news": {"label": "Новости и медиа", "counts": series(),
+                 "capped": any(len(items) >= 100 for items in media.windows.values())},
+        "funding": {"label": "Финансирование и гранты", "counts": series(), "capped": True},
+        "adoption": {"label": "Пилоты, внедрения и закупки", "counts": series(), "capped": True},
+        "community": {"label": "Технические сообщества", "counts": series(), "capped": True},
+        "other": {"label": "Другие источники", "counts": series(), "capped": True},
+    }
+
+    if media.ok:
+        for year in years:
+            year_start = date(int(year), 1, 1)
+            if year_start >= start:
+                channels["news"]["counts"][year] = news_counts.get(year, 0)
+            elif news_counts.get(year):
+                channels["news"]["counts"][year] = news_counts[year]
+
+    for channel, values in found.items():
+        if values:
+            first_channel_year = min(map(int, values))
+            channel_counts = {
+                year: (values.get(year, 0) if int(year) >= first_channel_year else None)
+                for year in years
+            }
+            if channel == "news":
+                channel_counts = {
+                    year: (None if count is None and channels["news"]["counts"][year] is None
+                           else (count or 0) + (channels["news"]["counts"][year] or 0))
+                    for year, count in channel_counts.items()
+                }
+            channels[channel]["counts"] = channel_counts
+
+    return {"years": years, "channels": channels,
+            "note": "Показаны найденные датированные результаты по каждому доступному каналу; шкала не обрезается по фиксированному числу лет. Это не полный мировой подсчёт: у источников свои периоды покрытия и лимиты выдачи, а один материал может попасть в несколько каналов."}
+
+
 def select_headlines(med: ev.Media, per_window: int = 30) -> list[dict]:
     """Детерминированная выборка ленты для LLM: по окнам, свежие первыми, без дублей."""
     seen, out = set(), []
@@ -283,7 +430,8 @@ def _months_between(a: date, b: date) -> int:
 
 
 def compute(snapshot: date, query: dict, sci: ev.Science, pat: ev.Patents, med: ev.Media,
-            ext: dict | None, structured_refs: list[dict] | None = None) -> dict:
+            ext: dict | None, structured_refs: list[dict] | None = None, historical: bool = False) -> dict:
+    """Признаки по собранным свидетельствам. historical — срез в прошлом (машина времени)."""
     f: dict = {name: "" for name in FEATURE_NAMES}
     s = snapshot.isoformat()
     cut = {m: ev.years_before(snapshot, m / 12).isoformat() for m in (6, 12, 24, 36, 48)}
@@ -300,8 +448,11 @@ def compute(snapshot: date, query: dict, sci: ev.Science, pat: ev.Patents, med: 
         f["papers_log_3y"] = _log(sci.count_3y)
         f["paper_growth_2y"] = _growth(w0, w1)
         f["paper_acceleration"] = round(_growth(w0, w1) - _growth(w1, w2), 6)
+        # Crossref отдаёт число цитирований на сегодня: в прошлом это сведения из будущего
+        # (статьи по темам, которые потом выстрелили, набрали цитирования после среза) —
+        # признак не считается, модель подставляет медиану.
         velocities = []
-        for w in sci.recent:
+        for w in ([] if historical else sci.recent):
             try:
                 published = date.fromisoformat((w.get("publicationDate") or f"{w['year']}-07-01")[:10])
             except (KeyError, ValueError):
@@ -473,38 +624,154 @@ def compute(snapshot: date, query: dict, sci: ev.Science, pat: ev.Patents, med: 
 
 # -------------------------------------------------------------------------- конвейер
 
+MONEY_EVENT_LIMIT = 12
+MONEY_REVIEW_LIMIT = 40
+MONEY_SEARCH_SECONDS = float(os.getenv("FEATURE_MONEY_SEARCH_SECONDS", "45"))
+
+MONEY_PROMPT = """Кандидат в технологические сигналы: «{name}» (поисковый термин «{term}»), тема: «{domain}».
+
+Ниже денежные события, найденные по поисковому термину: гранты, контракты, тендеры,
+раунды, отчётность компаний. Поиск словарный, поэтому многие события про другое
+(например, медицинский грант для банковской темы).
+
+{events}
+
+Оставь только события, которые прямо касаются ЭТОЙ технологии или её применения в теме:
+финансируют её разработку, закупают или внедряют её, компания строит на ней продукт.
+Совпадения отдельных слов недостаточно. Событие про тему в целом (например, раунд
+компании, которая занимается безопасностью ИИ-агентов вообще) подходит, только если в
+нём назван именно этот подход. Ответ — JSON: {{"keep": [номера событий]}}."""
+
+
+def _snippet(ref: dict) -> str:
+    """Начало описания без служебной шапки коннектора (у NIH и CORDIS она до пустой строки)."""
+    text = str((ref.get("document") or {}).get("text") or "")
+    _, sep, body = text.partition("\n\n")
+    return " ".join((body if sep and body.strip() else text).split())[:240]
+
+
+def _relevant_money(events: list[dict], refs: dict[str, dict], name: str, domain: str,
+                    terms: list[str]) -> list[dict]:
+    """Проверка LLM, что событие про кандидата; без ответа — строгий фильтр по заголовку."""
+    if not events:
+        return events
+    lines = "\n".join(f'{i}. [{e["kind"]}] {e["title"]} — {_snippet(refs.get(e["url"]) or {})}'
+                      for i, e in enumerate(events, 1))
+    try:
+        keep = llm_json(MONEY_PROMPT.format(name=name, term=terms[0], domain=domain or "не задана",
+                                            events=lines)).get("keep")
+        if not isinstance(keep, list):
+            raise ValueError("нет списка keep")
+        chosen = {int(i) for i in keep if str(i).strip().isdigit()}
+        return [e for i, e in enumerate(events, 1) if i in chosen]
+    except Exception:  # noqa: BLE001 — карточка не должна падать из-за проверки
+        return [e for e in events if relevant(e["title"], terms, min_share=1.0)]
+
+
+def money_events(refs: list[dict], snapshot: date, *, name: str = "", domain: str = "",
+                 terms: list[str] | None = None) -> list[dict]:
+    """Денежные и закупочные события кандидата для карточки: свежие первыми, не позже snapshot.
+
+    С terms события проходят проверку релевантности (_relevant_money): словарный поиск
+    API по короткому термину приносит гранты на чужие темы. Денежные документы, которые
+    радар прочитал по веткам, приходят в refs вместе с ответами коннекторов.
+    """
+    events, seen = [], set()
+    for ref in refs:
+        raw = ref.get("structured_event")
+        if not isinstance(raw, dict) or ref.get("channel") != "money" or not raw.get("date"):
+            continue
+        if str(raw["date"])[:10] > snapshot.isoformat():
+            continue
+        # Один грант приходит из нескольких API (NSF и USAspending): склеиваем по началу
+        # заголовка, USAspending дописывает к названию NSF хвост описания.
+        key = " ".join(re.findall(r"\w+", str(ref.get("title") or ref.get("url")).lower())[:6])
+        if key in seen:
+            continue
+        seen.add(key)
+        events.append({"kind": raw.get("kind") or raw.get("type"), "date": str(raw["date"])[:10],
+                       "amount_usd_m": raw.get("amount_usd_m"), "company": raw.get("company") or "",
+                       "customer": raw.get("customer"), "funder": raw.get("funder"),
+                       "title": ref.get("title") or "", "url": ref.get("url"),
+                       "connector": ref.get("connector") or ref.get("source_provider")})
+    events.sort(key=lambda e: e["date"], reverse=True)
+    if terms:
+        events = _relevant_money(events[:MONEY_REVIEW_LIMIT], {r.get("url"): r for r in refs},
+                                 name, domain, terms)
+    return events[:MONEY_EVENT_LIMIT]
+
+
 def featurize(name: str, domain: str, snapshot: date, query: dict | None = None,
-              requested_features: list[str] | tuple[str, ...] | None = None) -> dict:
-    """Разметка одной технологии; serving may request only the selected model inputs."""
+              requested_features: list[str] | tuple[str, ...] | None = None,
+              feature_connectors: frozenset[str] | set[str] | None = None,
+              with_money_events: bool = False, money_refs: list[dict] | None = None,
+              historical: bool | None = None) -> dict:
+    """Разметка одной технологии; serving may request only the selected model inputs.
+
+    feature_connectors — источники, по которым модель обучалась: ссылки остальных
+    источников в признаки не попадают (другое распределение), но с with_money_events
+    возвращаются в поле money_events для карточки. None — все включённые источники.
+    money_refs — денежные документы запуска радара: только для карточки, не для признаков.
+    historical — срез в прошлом (без источников без достоверной даты); по умолчанию
+    snapshot < сегодня. False — для пересчёта среза, снятого вживую (обучающая выборка).
+    """
     query = query or derive_query(name, domain)
     if not query["term"]:
         raise ValueError(f"не удалось получить поисковый термин для «{name}»")
     terms = [query["term"], *query["aliases"]]
+    from app.radar.connectors import is_historical
     from app.radar.research_apis import search_structured_sources
 
+    if historical is None:
+        historical = is_historical(snapshot)
+
     needed = set(requested_features) if requested_features is not None else None
+    # The deployed LR has no patent-specific inputs, and its training data has
+    # missing_patents=1 throughout. Keep patent collection for offline dataset
+    # building and future models, but don't make live scoring depend on FPO today.
+    needs_patent_metrics = _needs_patent_metrics(needed)
     affiliation_features = {"institution_count_log_3y", "industry_affiliation_share_3y",
                             "science_country_count_log_3y"}
     include_affiliations = needed is None or bool(needed & affiliation_features)
-    with ThreadPoolExecutor(4) as pool:
+    with ThreadPoolExecutor(5) as pool:
         sci_f = pool.submit(ev.science, terms, snapshot, include_affiliations=include_affiliations)
-        pat_f = pool.submit(ev.patents, terms, snapshot)
+        pat_f = pool.submit(ev.patents, terms, snapshot) if needs_patent_metrics else None
         med_f = pool.submit(ev.media, terms, snapshot)
         # Science features already query OpenAlex inside ev.science(); avoid a
         # second independent OpenAlex lookup for the same technology.
         structured_f = pool.submit(search_structured_sources, terms, snapshot,
-                                   per_source=3, include_openalex=False)
-        sci, pat, med, structured_refs = sci_f.result(), pat_f.result(), med_f.result(), structured_f.result()
+                                   per_source=3, include_openalex=False, historical=historical,
+                                   only=frozenset(feature_connectors) if feature_connectors is not None else None)
+        # Источники вне обучения модели нужны только карточке: ограничены по времени и
+        # не задерживают признаки (иначе кандидат чаще уходит в медианную подстановку).
+        money_f = (pool.submit(search_structured_sources, terms, snapshot, per_source=3,
+                               include_openalex=False, historical=historical,
+                               skip=frozenset(feature_connectors),
+                               deadline=MONEY_SEARCH_SECONDS)
+                   if with_money_events and feature_connectors is not None else None)
+        sci = sci_f.result()
+        pat = pat_f.result() if pat_f else ev.Patents(source="not_used_by_active_model")
+        med, structured_refs = med_f.result(), structured_f.result()
+        extra_refs = money_f.result() if money_f else []
     headlines = select_headlines(med) if med.ok else []
-    try:
-        ext = extract_events(query, name, snapshot, headlines, sci, pat, structured_refs)
-    except RuntimeError:
-        ext = None
-    features = compute(snapshot, query, sci, pat, med, ext, structured_refs)
+    with ThreadPoolExecutor(1) as pool:
+        # Проверка денежных событий карточки — отдельный вызов LLM: идёт параллельно с
+        # разметкой событий, иначе кандидат ждёт её последовательно (прогон 7 не уложился).
+        events_f = (pool.submit(money_events, [*(money_refs or []), *structured_refs, *extra_refs],
+                                snapshot, name=name, domain=domain, terms=terms)
+                    if with_money_events else None)
+        try:
+            ext = extract_events(query, name, snapshot, headlines, sci, pat, structured_refs)
+        except RuntimeError:
+            ext = None
+        card_events = events_f.result() if events_f else []
+    features = compute(snapshot, query, sci, pat, med, ext, structured_refs, historical=historical)
     if needed is not None:
         features = {name: value for name, value in features.items() if name in needed}
     status = {"science": sci.ok, "patents": pat.ok, "media": med.ok, "llm": ext is not None}
-    return {
+    extra = {"money_events": card_events} if with_money_events else {}
+    result = {
+        **extra,
         "search_term": query["term"], "search_aliases": "; ".join(query["aliases"]),
         "snapshot_date": snapshot.isoformat(), "feature_schema_version": FEATURE_SCHEMA_VERSION,
         "extractor_version": f"{EXTRACTOR_VERSION}:{MODEL}",
@@ -518,3 +785,8 @@ def featurize(name: str, domain: str, snapshot: date, query: dict | None = None,
              sorted(ref.get("url", "") for ref in structured_refs)], sort_keys=True).encode()).hexdigest()[:12],
         **features,
     }
+    if requested_features is not None:
+        result["visualization"] = {**_publication_visualization(sci),
+                                    "evidence_timeline": _evidence_timeline_visualization(
+                                        snapshot, sci, med, structured_refs)}
+    return result

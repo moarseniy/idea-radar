@@ -18,6 +18,9 @@ from typing import Any
 
 import httpx
 
+from app.radar.connectors._terms import near, relevant, short_phrases
+from app.radar.connectors.events import make_event
+
 ROOT = Path(__file__).resolve().parents[2]
 CACHE_DIR = Path(os.getenv("FEATURE_CACHE_DIR", str(ROOT / "ml" / ".cache" / "features"))) / "research_apis"
 CACHE_TTL = 6 * 60 * 60
@@ -49,7 +52,25 @@ LIMITERS = {
     "github": _Limiter(6.1), "huggingface": _Limiter(0.5), "ted": _Limiter(0.2),
     "clinicaltrials": _Limiter(0.5), "openfda": _Limiter(0.5),
 }
-_SLOTS = threading.BoundedSemaphore(8)
+_LIMITERS_LOCK = threading.Lock()
+
+
+def limiter(provider: str, interval: float = 1.0) -> _Limiter:
+    """Пауза между запросами к провайдеру; новые коннекторы получают её при первом вызове."""
+    with _LIMITERS_LOCK:
+        return LIMITERS.setdefault(provider, _Limiter(interval))
+
+
+def contact_email() -> str:
+    """Контакт для вежливых пулов и User-Agent (SEC требует его); пусто — не задан."""
+    from app.ml.env import env
+
+    return env("CONTACT_EMAIL") or env("OPENALEX_MAILTO")
+
+
+# Общие слоты HTTP на поиск и сбор признаков (8 потоков модели + проверочный поиск); темп
+# каждого API держит его собственный limiter.
+_SLOTS = threading.BoundedSemaphore(12)
 _RATE_LIMIT_LOCK = threading.Lock()
 _RATE_LIMITED_UNTIL: dict[str, float] = {}
 
@@ -63,8 +84,14 @@ def _cache_key(provider: str, method: str, url: str, params: dict | None,
 
 def _json_request(provider: str, url: str, *, params: dict | None = None,
                   body: dict | None = None, headers: dict | None = None,
-                  allow_404: bool = False, timeout: float = 18) -> dict:
-    key = _cache_key(provider, "POST" if body is not None else "GET", url, params, body)
+                  allow_404: bool = False, timeout: float = 18, as_text: bool = False,
+                  files: dict[str, str] | None = None) -> Any:
+    """JSON (или текст при as_text) с дисковым кэшем, паузой и охлаждением после 429.
+
+    files — поля multipart-формы с JSON-значениями (так фильтры принимает поиск SEDIA).
+    """
+    key = _cache_key(provider, "POST" if body is not None or files else "GET", url, params,
+                     body if files is None else {"files": files})
     cache = CACHE_DIR / provider / f"{key}.json"
     if cache.exists() and time.time() - cache.stat().st_mtime < CACHE_TTL:
         return json.loads(cache.read_text(encoding="utf-8"))
@@ -79,10 +106,15 @@ def _json_request(provider: str, url: str, *, params: dict | None = None,
         last: Exception | None = None
         last_status: int | None = None
         for attempt in range(3):
-            LIMITERS[provider].wait()
+            limiter(provider).wait()
             try:
                 request_headers = {"User-Agent": USER_AGENT, "Accept": "application/json", **(headers or {})}
-                if body is not None:
+                if files:
+                    response = httpx.post(url, params=params, headers=request_headers, timeout=timeout,
+                                          files={name: (None, value, "application/json")
+                                                 for name, value in files.items()},
+                                          follow_redirects=True)
+                elif body is not None:
                     response = httpx.post(url, json=body, params=params, headers=request_headers,
                                           timeout=timeout, follow_redirects=True)
                 else:
@@ -93,7 +125,7 @@ def _json_request(provider: str, url: str, *, params: dict | None = None,
                 if response.status_code in {408, 425, 429, 500, 502, 503, 504}:
                     response.raise_for_status()
                 response.raise_for_status()
-                result = response.json()
+                result = response.text if as_text else response.json()
                 cache.parent.mkdir(parents=True, exist_ok=True)
                 temp = cache.with_suffix(".tmp")
                 temp.write_text(json.dumps(result, ensure_ascii=False), encoding="utf-8")
@@ -185,8 +217,9 @@ def openalex_works(terms: list[str], start: date, end: date, *, limit: int = 100
         "per-page": max(1, min(limit, 100)),
         "sort": "publication_date:desc",
         "select": fields,
-        "mailto": os.getenv("OPENALEX_MAILTO", "").strip() or "hackathon@example.org",
     }
+    if contact_email():
+        params["mailto"] = contact_email()
     api_key = os.getenv("OPENALEX_API_KEY", "").strip()
     if api_key:
         params["api_key"] = api_key
@@ -228,14 +261,41 @@ def openalex_works(terms: list[str], start: date, end: date, *, limit: int = 100
     return rows
 
 
+def crossref_created_after(dois: list[str], as_of: date, *, chunk: int = 25) -> set[str]:
+    """DOI, чья запись Crossref создана позже as_of: статью задним числом положили в старый выпуск.
+
+    Дата публикации у таких записей — дата выпуска (например, 2022-06-30), а сама запись
+    появилась в 2024-м: на дату оценки её не существовало. У OpenAlex своя дата создания
+    для этого не годится — после перестройки базы она у большинства записей 2025-10-10.
+    """
+    found: set[str] = set()
+    unique = sorted({doi.lower() for doi in dois if doi})
+    for start in range(0, len(unique), chunk):
+        group = unique[start:start + chunk]
+        params = {"filter": ",".join([f"doi:{doi}" for doi in group] + [f"from-created-date:{(as_of + timedelta(days=1)):%Y-%m-%d}"]),
+                  "rows": len(group), "select": "DOI"}
+        if contact_email():
+            params["mailto"] = contact_email()
+        payload = _json_request("crossref", "https://api.crossref.org/works", params=params) or {}
+        found.update(str(item.get("DOI") or "").lower() for item in (payload.get("message") or {}).get("items") or [])
+    return found
+
+
 def search_openalex(terms: list[str], as_of: date, *, limit: int = 8) -> list[dict]:
     if not openalex_enabled():
         return []
     start = as_of - timedelta(days=365 * 6)
+    works = openalex_works(terms, start, as_of, limit=max(12, min(100, limit * 3)))
+    late: set[str] = set()
+    if as_of < date.today():  # noqa: DTZ011 — машина времени, как connectors.is_historical
+        try:
+            late = crossref_created_after([item["doi"] for item in works], as_of)
+        except RuntimeError:
+            late = set()  # Crossref недоступен: остаётся отсечка по дате публикации
     refs = []
-    for item in openalex_works(terms, start, as_of, limit=max(12, min(100, limit * 3))):
+    for item in works:
         abstract = item["abstract"]
-        if not abstract:
+        if not abstract or item["doi"].lower() in late:
             continue
         url = (f"https://doi.org/{item['doi']}" if item["doi"] else item["id"])
         if not url.startswith("https://"):
@@ -246,23 +306,28 @@ def search_openalex(terms: list[str], as_of: date, *, limit: int = 8) -> list[di
     return refs[:limit]
 
 
+def _nih_query(phrases: list[str]) -> str:
+    """Булев запрос NIH: слова фразы связаны AND, фразы — OR (B4: точная фраза почти не находится)."""
+    return " OR ".join("(" + " AND ".join(phrase.split()) + ")" for phrase in phrases)
+
+
 def _nih_rows(terms: list[str], as_of: date, limit: int) -> list[dict]:
-    terms = _clean_terms(terms, 3)
-    if not terms:
+    phrases = short_phrases(terms)
+    if not phrases:
         return []
     after = as_of - timedelta(days=365 * 4)
-    search_text = " OR ".join(f'"{term}"' for term in terms)
     body = {
         "criteria": {
-            "advanced_text_search": {"operator": "or", "search_field": "projecttitle,abstracttext",
-                                     "search_text": search_text},
+            "advanced_text_search": {"operator": "advanced", "search_field": "projecttitle,abstracttext",
+                                     "search_text": _nih_query(phrases)},
             "award_notice_date": {"from_date": after.isoformat(), "to_date": as_of.isoformat()},
             "fiscal_years": [], "include_active_projects": True,
         },
         "include_fields": ["ProjectTitle", "AbstractText", "FiscalYear", "AwardAmount", "OrgName",
                            "CoreProjectNum", "ProjectNum", "ProjectStartDate", "ProjectEndDate",
                            "AwardNoticeDate", "AgencyCode", "OpportunityNumber"],
-        "offset": 0, "limit": max(1, min(limit, 10)), "sort_field": "award_notice_date", "sort_order": "desc",
+        # Берём с запасом: часть ответа отсеет проверка близости слов фразы.
+        "offset": 0, "limit": max(1, min(limit * 4, 30)), "sort_field": "award_notice_date", "sort_order": "desc",
     }
     response = _json_request("nih", "https://api.reporter.nih.gov/v2/projects/search", body=body, timeout=25)
     return response.get("results", [])
@@ -291,39 +356,44 @@ def search_nih_grants(terms: list[str], as_of: date, *, limit: int = 5) -> list[
         title = str(_field(row, "ProjectTitle", "project_title") or "").strip()
         abstract = str(_field(row, "AbstractText", "abstract_text") or "").strip()
         project_number = str(_field(row, "CoreProjectNum", "ProjectNum", "project_num") or "").strip()
-        if not title or not project_number:
+        if not title or not project_number or not near(f"{title} {abstract}", terms):
             continue
         org_data = row.get("organization") or row.get("org") or {}
         org = str(_field(row, "OrgName", "org_name") or
                   _field(org_data, "OrgName", "org_name", "name") or "").strip()
         awarded = _date_prefix(_field(row, "AwardNoticeDate")) or _date_prefix(_field(row, "ProjectStartDate"))
+        if not awarded:
+            continue  # без даты событие не попадёт в окна признаков
         amount = _field(row, "AwardAmount")
-        try:
-            amount_usd_m = round(float(amount) / 1_000_000, 6) if amount is not None else None
-        except (TypeError, ValueError):
-            amount_usd_m = None
         url = f"https://reporter.nih.gov/project-details/{project_number}"
         text = (f"Federal research grant. Award/project: {title}. Organization: {org}. "
-                f"Award notice date: {awarded or 'unknown'}. Award amount (USD): {amount or 'unknown'}.\n\n{abstract}")
+                f"Award notice date: {awarded}. Award amount (USD): {amount or 'unknown'}.\n\n{abstract}")
         refs.append(_document(url, title, text, awarded, "en", "nih_reporter_project",
-                              structured_event={"type": "grant", "date": awarded, "company": org,
-                                                "amount_usd_m": amount_usd_m, "round": "grant",
-                                                "strategic": False, "source_id": project_number},
+                              structured_event=make_event("grant", awarded, project_number, amount=amount,
+                                                          company=org, funder="NIH"),
                               source_country="US"))
-    return refs
+    return refs[:limit]
 
 
 def _sparql_literal(value: str) -> str:
     return json.dumps(value, ensure_ascii=False)
 
 
+def _cordis_filter(phrases: list[str]) -> str:
+    """Фраза = все слова встречаются в заголовке или аннотации (&&); фразы — через ||."""
+    haystack = 'LCASE(CONCAT(STR(?title), " ", COALESCE(STR(?abstract), "")))'
+    groups = []
+    for phrase in phrases:
+        words = [f"CONTAINS({haystack}, {_sparql_literal(word)})" for word in phrase.lower().split()]
+        groups.append("(" + " && ".join(words) + ")")
+    return " || ".join(groups)
+
+
 def search_cordis_grants(terms: list[str], as_of: date, *, limit: int = 5) -> list[dict]:
-    terms = _clean_terms(terms, 3)
-    if not terms:
+    phrases = short_phrases(terms)
+    if not phrases:
         return []
     start = as_of - timedelta(days=365 * 5)
-    tests = " || ".join(f"CONTAINS(LCASE(STR(?title)), LCASE({_sparql_literal(t)})) || "
-                        f"CONTAINS(LCASE(STR(?abstract)), LCASE({_sparql_literal(t)}))" for t in terms)
     query = f"""PREFIX eurio: <http://data.europa.eu/s66#>
 SELECT DISTINCT ?project_id ?title ?abstract ?start_date ?funding_amount WHERE {{
   ?project a eurio:Project ; eurio:identifier ?project_id ; eurio:title ?title ; eurio:startDate ?start_date .
@@ -336,8 +406,8 @@ SELECT DISTINCT ?project_id ?title ?abstract ?start_date ?funding_amount WHERE {
   }}
   FILTER(?start_date >= \"{start.isoformat()}\"^^<http://www.w3.org/2001/XMLSchema#date> &&
          ?start_date <= \"{as_of.isoformat()}\"^^<http://www.w3.org/2001/XMLSchema#date>)
-  FILTER({tests})
-}} LIMIT {max(1, min(limit, 8))}"""
+  FILTER({_cordis_filter(phrases)})
+}} LIMIT {max(1, min(limit * 3, 24))}"""
     payload = _json_request("cordis", "https://cordis.europa.eu/datalab/sparql",
                             params={"query": query}, headers={"Accept": "application/sparql-results+json"},
                             timeout=25)
@@ -360,16 +430,17 @@ SELECT DISTINCT ?project_id ?title ?abstract ?start_date ?funding_amount WHERE {
     for project_id, item in by_id.items():
         title, abstract, published = item["title"], item["abstract"], item["date"]
         amount = item["amount"]
+        if not published or not near(f"{title} {abstract}", terms):
+            continue
         text = (f"European Commission-funded research project. Project: {title}. "
-                f"Start date: {published or 'unknown'}. Maximum observed funding amount (EUR): "
+                f"Start date: {published}. Maximum observed funding amount (EUR): "
                 f"{amount if amount is not None else 'unknown'}.\n\n{abstract}")
         refs.append(_document(f"https://cordis.europa.eu/project/id/{project_id}", title, text,
                               published, "en", "cordis_project",
-                              structured_event={"type": "grant", "date": published, "company": "",
-                                                "amount_usd_m": None, "amount_native": amount,
-                                                "currency": "EUR", "round": "grant", "strategic": False,
-                                                "source_id": project_id}, source_country="EU"))
-    return refs
+                              structured_event=make_event("grant", published, project_id, amount=amount,
+                                                          currency="EUR", funder="European Commission"),
+                              source_country="EU"))
+    return refs[:limit]
 
 
 def search_funding(terms: list[str], as_of: date, *, limit: int = 5) -> list[dict]:
@@ -418,35 +489,56 @@ def search_github(terms: list[str], as_of: date, *, limit: int = 5) -> list[dict
     return refs
 
 
+ML_HINTS = frozenset({
+    "model", "models", "neural", "llm", "llms", "vision", "speech", "transformer", "transformers", "diffusion",
+    "embedding", "embeddings", "agent", "agents", "inference", "generative", "gpt", "nlp", "multimodal",
+    "classification", "detection", "recognition", "ocr", "rag", "fine-tuning", "pretrained", "tokenizer",
+    "language", "learning", "segmentation", "translation", "chatbot", "copilot", "reinforcement",
+    "kv", "quantization", "distillation", "compression", "red-teaming", "jailbreak", "prompt",
+})
+
+
+def is_ml_topic(terms: list[str]) -> bool:
+    """Hugging Face держит модели: для нетехнических тем (здравоохранение, строительство) не спрашиваем (B12)."""
+    words = {w for term in terms for w in re.findall(r"[a-z0-9][a-z0-9+\-]*", str(term).lower())}
+    return bool(words & ML_HINTS) or bool(re.search(r"\b(?:ai|ml)\b", " ".join(map(str, terms)).lower()))
+
+
 def search_huggingface(terms: list[str], as_of: date, *, limit: int = 5) -> list[dict]:
-    terms = _clean_terms(terms, 2)
-    refs = []
-    for term in terms:
-        params = {"search": term, "limit": max(1, min(limit, 8)), "sort": "downloads",
+    if not is_ml_topic(terms):
+        return []
+    refs: dict[str, dict] = {}
+    headers = {}
+    token = os.getenv("HF_TOKEN", "").strip()
+    if token:
+        headers["Authorization"] = f"Bearer {token}"
+    for phrase in short_phrases(terms, limit=2):
+        params = {"search": phrase, "limit": max(1, min(limit * 3, 24)), "sort": "downloads",
                   "direction": -1, "full": "true"}
-        headers = {}
-        token = os.getenv("HF_TOKEN", "").strip()
-        if token:
-            headers["Authorization"] = f"Bearer {token}"
         payload = _json_request("huggingface", "https://huggingface.co/api/models", params=params,
                                 headers=headers)
         for model in payload if isinstance(payload, list) else []:
             model_id = str(model.get("modelId") or model.get("id") or "").strip()
             if not model_id:
                 continue
-            title = f"Hugging Face model {model_id}"
-            updated = _date_prefix(model.get("lastModified"))
             pipeline = str(model.get("pipeline_tag") or "unknown")
-            tags = model.get("tags") or []
+            tags = [str(t) for t in (model.get("tags") or [])]
+            # Название модели пишут через дефисы и слэши: «red-teaming» → «red teaming».
+            searchable = re.sub(r"[-_/.]+", " ", f"{model_id} {pipeline} {' '.join(tags[:20])}")
+            if not relevant(searchable, terms):
+                continue
+            updated = _date_prefix(model.get("lastModified"))
+            title = f"Hugging Face model {model_id}"
             text = (f"Public Hugging Face model: {model_id}. Task: {pipeline}. "
                     f"Downloads: {model.get('downloads', 0)}; likes: {model.get('likes', 0)}; "
-                    f"last update: {updated or 'unknown'}. Tags: {', '.join(map(str, tags[:12]))}.")
-            refs.append(_document(f"https://huggingface.co/{model_id}", title, text,
-                                  updated, "en", "huggingface_model",
-                                  adoption_metrics={"downloads": model.get("downloads", 0),
-                                                    "likes": model.get("likes", 0), "last_update": updated}))
-    unique = {item["url"]: item for item in refs}
-    return list(unique.values())[:limit]
+                    f"last update: {updated or 'unknown'}. Tags: {', '.join(tags[:12])}.")
+            refs.setdefault(f"https://huggingface.co/{model_id}", _document(
+                f"https://huggingface.co/{model_id}", title, text, updated, "en", "huggingface_model",
+                adoption_metrics={"downloads": model.get("downloads", 0),
+                                  "likes": model.get("likes", 0), "last_update": updated}))
+        if len(refs) >= limit:
+            break  # первой фразы хватило: лишний запрос не нужен
+    return list(refs.values())[:limit]
 
 
 def search_developer_adoption(terms: list[str], as_of: date, *, limit: int = 5) -> list[dict]:
@@ -460,20 +552,26 @@ def search_developer_adoption(terms: list[str], as_of: date, *, limit: int = 5) 
     return list(unique.values())[:limit * 2]
 
 
+def _ted_query(phrases: list[str], as_of: date) -> str:
+    """Запрос TED v3: полнотекстовый FT ~ (слова фразы), фразы через OR, окно дат с верхней границей."""
+    text = " OR ".join(f"FT ~ ({' '.join(phrase.split())})" for phrase in phrases)
+    return f"({text}) AND PD >= {as_of - timedelta(days=365 * 5):%Y%m%d} AND PD <= {as_of:%Y%m%d}"
+
+
 def search_ted(terms: list[str], as_of: date, *, limit: int = 6) -> list[dict]:
-    terms = _clean_terms(terms, 2)
-    if not terms:
+    phrases = short_phrases(terms)
+    if not phrases:
         return []
-    q = " OR ".join(f"FT = {_sparql_literal(term)}" for term in terms)
-    q += f" AND PD >= {(as_of - timedelta(days=365 * 5)):%Y%m%d}"
+    q = _ted_query(phrases, as_of)
     body = {"query": q, "fields": ["publication-number", "notice-title", "publication-date", "buyer-name",
                                     "description-proc", "description-lot", "notice-purpose",
                                     "contract-nature", "classification-cpv"],
-            "limit": max(1, min(limit, 10)), "scope": "ALL", "checkQuerySyntax": False,
+            "limit": max(1, min(limit * 2, 20)), "scope": "ALL", "checkQuerySyntax": False,
             "paginationMode": "PAGE_NUMBER"}
     payload = _json_request("ted", "https://api.ted.europa.eu/v3/notices/search", body=body)
     notices = payload.get("notices") or payload.get("results") or []
     refs = []
+    titles: set[str] = set()
     for notice in notices:
         pub = str(_field(notice, "publication-number", "publicationNumber", "publication_number") or "").strip()
         title_value = _field(notice, "notice-title", "noticeTitle", "title")
@@ -486,17 +584,22 @@ def search_ted(terms: list[str], as_of: date, *, limit: int = 6) -> list[dict]:
         cpv = _localized_text(_field(notice, "classification-cpv"))
         buyer_text = _localized_text(buyer)
         description_text = " ".join(part for part in descriptions if part)
-        if not pub or not title:
+        if not pub or not title or not published or title in titles:
+            continue  # одна закупка часто публикуется несколькими уведомлениями с тем же заголовком
+        # FT-поиск идёт по всем языкам уведомления, а английский заголовок есть не всегда:
+        # проверку релевантности делаем только там, где есть английский текст.
+        english = (isinstance(title_value, dict) and any(str(k).lower() in {"eng", "en"} for k in title_value))
+        if english and not near(f"{title} {description_text}", terms):
             continue
         url = f"https://ted.europa.eu/en/notice/{pub}/xml"
         text = (f"EU public procurement notice. Title: {title}. Buyer: {buyer_text}. "
                 f"Date: {published or 'unknown'}. Contract nature: {contract_nature or 'unknown'}. "
                 f"CPV: {cpv or 'unknown'}. {description_text}")
+        titles.add(title)
         refs.append(_document(url, title, text, published, "en", "ted_procurement_notice",
-                              structured_event={"type": "procurement", "date": published,
-                                                "company": "", "customer": buyer_text or None,
-                                                "source_id": pub}))
-    return refs
+                              structured_event=make_event("tender", published, pub,
+                                                          customer=buyer_text or None)))
+    return refs[:limit]
 
 
 HEALTH_HINTS = ("health", "medical", "medicine", "clinical", "biotech", "biomedical", "pharma", "drug",
@@ -610,18 +713,36 @@ def search_health(terms: list[str], as_of: date, *, limit: int = 5) -> list[dict
 
 
 def search_structured_sources(terms: list[str], as_of: date, *, per_source: int = 5,
-                              include_openalex: bool = True) -> list[dict]:
-    """All default-on direct API connectors, shared by radar and data mining."""
+                              include_openalex: bool = True, historical: bool = False,
+                              only: frozenset[str] | None = None, skip: frozenset[str] = frozenset(),
+                              deadline: float | None = None) -> list[dict]:
+    """All enabled direct API connectors for one candidate, queried in parallel.
+
+    Shared by radar feature extraction and data mining. Provider pacing lives in
+    _json_request, so parallel connectors never exceed a provider's own rate.
+    only/skip select connectors by name; with deadline (seconds) connectors that have
+    not answered in time are dropped instead of delaying the caller.
+    """
     if os.getenv("FEATURE_STRUCTURED_SOURCES", "1") == "0":
         return []
-    providers = (search_funding, search_developer_adoption, search_ted, search_health)
-    if include_openalex and openalex_enabled():
-        providers = (search_openalex, *providers)
-    refs = []
-    for provider in providers:
+    from concurrent.futures import ThreadPoolExecutor, wait
+
+    from app.radar.connectors import connectors
+
+    exclude = (skip if include_openalex else skip | {"OpenAlex"})
+    selected = connectors(terms, historical=historical, exclude=exclude, scope="candidate", only=only)
+    if not selected:
+        return []
+
+    def run(connector) -> list[dict]:
         try:
-            refs.extend(provider(terms, as_of, limit=per_source))
-        except Exception:  # noqa: BLE001, S112 — isolate provider failures and keep partial evidence
-            continue
-    unique = {item["url"]: item for item in refs}
+            return connector.run(terms, as_of, per_source)
+        except Exception:  # noqa: BLE001 — isolate provider failures and keep partial evidence
+            return []
+
+    pool = ThreadPoolExecutor(max_workers=min(8, len(selected)), thread_name_prefix="structured")
+    futures = [pool.submit(run, connector) for connector in selected]
+    done, _ = wait(futures, timeout=deadline)
+    pool.shutdown(wait=deadline is None, cancel_futures=True)
+    unique = {item["url"]: item for future in futures if future in done for item in future.result()}
     return list(unique.values())

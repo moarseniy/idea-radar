@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useState, type FormEvent } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { radar, type Registry, type RegistryDomainInput } from '../api'
 import { Empty, TrustTag } from '../components/parts'
 import { dateText, safeUrl, STATUS } from '../labels'
@@ -262,16 +262,19 @@ export function CatalogPage() {
   const { data, error } = useResource(() => radar.catalog(), [])
   const [q, setQ] = useState('')
   const [domain, setDomain] = useState('')
+  const navigate = useNavigate()
   if (error && !data) return <Empty title="Каталог не загружен" text={error} />
   if (!data) return <div className="loading">Загрузка каталога…</div>
   const records = data.records.filter(
-    (r) => (!domain || r.domain === domain) && `${r.title} ${r.companies} ${r.domain}`.toLowerCase().includes(q.toLowerCase()),
+    (r) => (!domain || r.domain === domain) &&
+      `${r.title} ${r.application ?? ''} ${r.companies} ${r.domain} ${r.sources.map((source) => source.title).join(' ')}`
+        .toLowerCase().includes(q.toLowerCase()),
   )
   return (
     <section>
       <div className="eyebrow">Материалы организаторов</div>
       <h1 className="compact-title">Каталог примеров</h1>
-      <p className="muted">100 технологических сигналов из исходной таблицы. Они используются только для валидации модели, не как готовые ответы поиска.</p>
+      <p className="muted">{data.count} примеров из набора валидации. Они помогают проверять модель и не используются как готовые ответы поиска.</p>
       <div className="catalog-toolbar">
         <input type="search" placeholder="Поиск по технологии, компании или области" value={q} onChange={(e) => setQ(e.target.value)} aria-label="Поиск по каталогу" />
         <select value={domain} onChange={(e) => setDomain(e.target.value)} aria-label="Область">
@@ -285,7 +288,8 @@ export function CatalogPage() {
         </span>
       </div>
       <div className="notice">
-        Показаны показатели, которые учитывает модель. Пустое значение означает «нет данных», а не ноль. Наведите курсор на показатель, чтобы увидеть его определение.
+        {data.note || 'Показаны признаки активной модели. Пустое значение означает «нет данных», а не ноль.'}
+        {' '}Пустые значения признаков означают «нет данных», а не ноль. Наведите курсор на признак, чтобы увидеть его определение.
       </div>
       {records.map((r) => (
         <article className="catalog-card" key={r.id}>
@@ -293,11 +297,12 @@ export function CatalogPage() {
           <h3>
             {r.id}. {r.title}
           </h3>
-          <p>{r.companies}</p>
+          <p>{r.application ? `Применение: ${r.application}` : r.companies || 'Компании в наборе не указаны.'}</p>
           <span className="tag">{r.stage}</span>
-          <span className="tag">Авторский балл: {r.reference_score}</span>
+          {r.reference_score != null && <span className="tag">Авторский балл: {r.reference_score}</span>}
+          {r.reference_label && <span className="tag">{r.reference_label}</span>}
           <details>
-            <summary>Объяснение и источники из Excel</summary>
+            <summary>Основание и источники из набора</summary>
             <p>{r.reference_explanation}</p>
             <p>{r.mention_trend}</p>
             {r.sources.map((s) => (
@@ -306,6 +311,9 @@ export function CatalogPage() {
               </a>
             ))}
           </details>
+          <button className="subtle" type="button" onClick={() => navigate('/', {
+            state: { prefillQuery: `Проверить раннюю стадию технологии: ${r.title}` },
+          })}>Искать эту тему ↗</button>
           <details className="catalog-features">
             <summary>
               Признаки модели: {r.measured_feature_count} из {r.features.length} заполнены

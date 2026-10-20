@@ -148,3 +148,27 @@ def test_create_search_rejects_more_confirmed_directions_than_branch_capacity(mo
     with pytest.raises(HTTPException) as error:
         create_search(request, SimpleNamespace(app=SimpleNamespace(state=SimpleNamespace())))
     assert error.value.status_code == 422
+
+
+def test_health_reports_deployed_version(monkeypatch, tmp_path):
+    import app.main as main
+
+    monkeypatch.setattr(main, "__file__", str(tmp_path / "main.py"))
+    assert main.deployed_version() == "dev"
+    (tmp_path / "VERSION").write_text("57d7fcf 2026-10-17 feat/money-time-machine\n", encoding="utf-8")
+    assert main.deployed_version() == "57d7fcf 2026-10-17 feat/money-time-machine"
+
+
+def test_model_info_compares_feature_llm_from_artifact(monkeypatch):
+    import app.ml.env as ml_env
+    import app.ml.scorer as scorer
+    from app.radar.api import model_info
+
+    settings = type("Settings", (), {"use_model": True})()
+    artifact = {"name": "logreg_v2", "features": ["a"], "threshold": 0.5,
+                "training_data": "ml/datasets/enriched/training.csv", "feature_model": "openai/gpt-5.6-luna"}
+    monkeypatch.setattr(scorer, "default_scorer", lambda: type("S", (), {"artifact": artifact})())
+    monkeypatch.setattr(ml_env, "feature_llm", lambda: {"model": "openai/gpt-5.6-luna"})
+    assert "warning" not in model_info(settings)
+    monkeypatch.setattr(ml_env, "feature_llm", lambda: {"model": "qwen/qwen3.6-35b-a3b"})
+    assert "warning" in model_info(settings)

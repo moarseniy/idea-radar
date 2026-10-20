@@ -21,6 +21,7 @@ def test_contributions_sum_to_logit_exactly():
     art = scorer.artifact
     result = scorer.score(gold_rows()[0])
     base = art["calibration"]["a"] * art["intercept"] + art["calibration"]["b"]
+    assert math.isclose(base, result["baseline_logit"], abs_tol=1e-9)
     assert math.isclose(base + sum(c["contribution"] for c in result["contributions"]), result["logit"], abs_tol=1e-3)
     assert math.isclose(result["probability"], 1 / (1 + math.exp(-result["logit"])))
 

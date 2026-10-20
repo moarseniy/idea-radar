@@ -129,11 +129,20 @@ def shutdown() -> None:
     app.state.radar_manager.close()
 
 
+def deployed_version() -> str:
+    """Хеш коммита, записанный scripts/deploy.sh; без файла — локальная разработка."""
+    try:
+        return (Path(__file__).parent / "VERSION").read_text(encoding="utf-8").strip() or "dev"
+    except OSError:
+        return "dev"
+
+
 @app.get("/api/health")
 def health() -> dict[str, Any]:
     return {
         "ok": True,
         "app": settings.app_name,
+        "version": deployed_version(),
         "openrouter_enabled": ai.enabled,
         "openrouter_model": settings.openrouter_model,
         "openrouter_research_model": settings.openrouter_research_model,

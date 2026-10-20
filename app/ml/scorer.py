@@ -4,7 +4,7 @@
     result = score_candidate("Нейроморфные чипы для edge-устройств", "Edge")
     result["probability"], result["is_signal"], result["top_for"], result["exclusion_reasons"]
 
-Модель читается из JSON (app/ml/model/logreg_v1.json, см. ml/scripts/export_model.py),
+Модель читается из JSON (app/ml/model/logreg_v2.json, см. ml/scripts/train_v2.py и export_model.py),
 сам расчёт оценки по входам модели — чистый Python и практически мгновенный: импутация медианой,
 стандартизация, линейная часть, калибровка Платта. Задержку создаёт featurize():
 сбор данных из источников и два вызова LLM на кандидата. Вклад признака — его слагаемое в откалиброванном логите:
@@ -28,14 +28,24 @@ def model_path(feature_model: str | None = None) -> Path:
     """Модель обучена на признаках конкретной LLM, поэтому артефакт выбирается по LLM разметки.
 
     SIGNAL_MODEL_PATH — явный путь; иначе logreg_v1_<LLM разметки>.json, если такой есть
-    (например logreg_v1_qwen3.6-35b-a3b.json для qwen3.6:35b-a3b); иначе основная logreg_v1.json
-    (обучена на разметке openai/gpt-5.6-luna).
+    (например logreg_v1_qwen3.6-35b-a3b.json для qwen3.6:35b-a3b); иначе основная logreg_v2.json,
+    если она обучена на разметке этой LLM (поле feature_model, сейчас openai/gpt-5.6-luna);
+    иначе прежняя logreg_v1.json.
     """
     explicit = env("SIGNAL_MODEL_PATH")
     if explicit:
         return Path(explicit)
-    matched = MODEL_DIR / f"logreg_v1_{model_slug(feature_model or feature_llm()['model'])}.json"
-    return matched if matched.exists() else MODEL_DIR / "logreg_v1.json"
+    llm = feature_model or feature_llm()["model"]
+    matched = MODEL_DIR / f"logreg_v1_{model_slug(llm)}.json"
+    if matched.exists():
+        return matched
+    main = MODEL_DIR / "logreg_v2.json"
+    try:
+        if json.loads(main.read_text(encoding="utf-8")).get("feature_model") == llm:
+            return main
+    except (OSError, ValueError):
+        pass
+    return MODEL_DIR / "logreg_v1.json"
 
 
 MODEL_PATH = model_path()
@@ -170,7 +180,8 @@ class Scorer:
     def score(self, features: dict) -> dict:
         art, a = self.artifact, self._a
         contributions = []
-        logit = a * art["intercept"] + self._b
+        baseline_logit = a * art["intercept"] + self._b
+        logit = baseline_logit
         for i, name in enumerate(self.features):
             raw = _num(features.get(name))
             value = art["median"][i] if raw is None else raw
@@ -187,6 +198,7 @@ class Scorer:
         is_signal = probability >= self.threshold
         return {
             "probability": probability, "logit": logit, "is_signal": is_signal,
+            "baseline_logit": baseline_logit,
             "threshold": self.threshold, "confident": probability > 0.75,
             "top_for": [c for c in contributions if c["contribution"] > 0][:5],
             "top_against": [c for c in contributions if c["contribution"] < 0][:5],
@@ -209,15 +221,25 @@ def default_scorer() -> Scorer:
         return _default
 
 
-def score_candidate(name: str, domain: str, snapshot: date | None = None, scorer: Scorer | None = None) -> dict:
-    """Разметка признаков (сеть + LLM, кэшируется) и оценка одного кандидата."""
+def score_candidate(name: str, domain: str, snapshot: date | None = None, scorer: Scorer | None = None,
+                    money_refs: list[dict] | None = None) -> dict:
+    """Разметка признаков (сеть + LLM, кэшируется) и оценка одного кандидата.
+
+    money_refs — денежные документы запуска радара для блока «Деньги» карточки.
+    """
     from app.ml.features.extract import featurize
+    from app.radar.connectors import model_connectors
 
     scorer = scorer or default_scorer()
-    row = featurize(name, domain, snapshot or date.today(), requested_features=scorer.features)
+    trained_on = scorer.artifact.get("feature_connectors")
+    row = featurize(name, domain, snapshot or date.today(), requested_features=scorer.features,
+                    feature_connectors=frozenset(trained_on) if trained_on else model_connectors(),
+                    with_money_events=True, money_refs=money_refs)
+    events = row.pop("money_events", [])
     result = scorer.score(row)
     return {"name": name, "domain": domain, "search_term": row["search_term"],
             "snapshot_date": row["snapshot_date"], "extraction_status": row["extraction_status"],
             "patent_source": row.get("patent_source", "unavailable"),
-            "patent_warning": row.get("patent_warning", ""),
+            "patent_warning": row.get("patent_warning", ""), "money_events": events,
+            "visualization": row.get("visualization"),
             "features": {k: row[k] for k in row if k in FEATURE_LABELS}, **result}

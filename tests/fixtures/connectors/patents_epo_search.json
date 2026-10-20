@@ -1,0 +1,6 @@
+{"ops:world-patent-data": {"@xmlns": {"ops": "http://ops.epo.org"},
+ "ops:biblio-search": {"@total-result-count": "37",
+  "ops:query": {"$": "ta all \"agent security\" and pd within \"20190101 20211231\""},
+  "ops:search-result": {"ops:publication-reference": [
+   {"@family-id": "71234567", "@system": "ops.epo.org", "document-id": {"@document-id-type": "docdb", "country": {"$": "EP"}, "doc-number": {"$": "3975021"}, "kind": {"$": "B1"}}},
+   {"@family-id": "71234568", "@system": "ops.epo.org", "document-id": {"@document-id-type": "docdb", "country": {"$": "US"}, "doc-number": {"$": "11882128"}, "kind": {"$": "B2"}}}]}}}}

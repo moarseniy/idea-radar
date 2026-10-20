@@ -1,0 +1,34 @@
+{
+ "links": {
+  "link": [
+   {
+    "href": "http://gtr.ukri.org/gtr/api/organisations/082B386F-6FF5-40C0-B99E-1B7F867318BE",
+    "rel": "FUNDER",
+    "start": 1506812400000,
+    "end": 1538262000000,
+    "otherAttributes": {}
+   },
+   {
+    "href": "http://gtr.ukri.org/gtr/api/projects/304DACBE-D868-4A40-AB9D-B7B0B3646E60",
+    "rel": "FUNDED",
+    "start": 1506812400000,
+    "end": 1538262000000,
+    "otherAttributes": {}
+   }
+  ]
+ },
+ "ext": null,
+ "id": "F117477E-1890-4801-AD96-1DB5327C669E",
+ "outcomeid": null,
+ "href": "http://gtr.ukri.org/gtr/api/funds/F117477E-1890-4801-AD96-1DB5327C669E",
+ "created": 1788431797000,
+ "updated": null,
+ "start": 1506812400000,
+ "end": 1538262000000,
+ "valuePounds": {
+  "currencyCode": "GBP",
+  "amount": 286604
+ },
+ "category": "INCOME_ACTUAL",
+ "type": null
+}

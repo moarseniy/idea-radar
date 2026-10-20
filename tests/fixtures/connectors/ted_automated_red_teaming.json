@@ -1,0 +1,136 @@
+{
+ "notices": [
+  {
+   "publication-number": "568076-2021",
+   "classification-cpv": [
+    "38000000"
+   ],
+   "contract-nature": [
+    "supplies"
+   ],
+   "publication-date": "2021-11-08+01:00",
+   "buyer-name": {
+    "deu": [
+     "Institute of Science and Technology Austria"
+    ]
+   },
+   "notice-title": {
+    "lav": "Austrija-Klosterneuburg: Laboratorijas, optiskās un precīzijas ierīces (izņemot brilles)",
+    "hun": "Ausztria-Klosterneuburg: Laboratóriumi, optikai és precíziós felszerelések (kivéve szemüvegek)",
+    "swe": "Österrike-Klosterneuburg: Laboratorieutrustning, optisk utrustning och precisionsutrustning (exkl. glas)",
+    "gle": "Ostair, an-Klosterneuburg: Laboratory, optical and precision equipments (excl. glasses)",
+    "ell": "Αυστρία-Klosterneuburg: Εξοπλισμός εργαστηριακός, οπτικός και ακριβείας (εκτός από γυαλιά)",
+    "spa": "Austria-Klosterneuburg: Equipo de laboratorio, óptico y de precisión (excepto gafas)",
+    "nld": "Oostenrijk-Klosterneuburg: Laboratoriuminstrumenten, optische en precisie-instrumenten (uitgezonderd brillen)",
+    "est": "Austria-Klosterneuburg: Laboriseadmed, optika- ja täppisinstrumendid (v.a klaasid)",
+    "fin": "Itävalta-Klosterneuburg: Laboratoriolaitteet, optiset ja tarkkuuslaitteet (lukuun ottamatta silmälaseja)",
+    "pol": "Austria-Klosterneuburg: Sprzęt laboratoryjny, optyczny i precyzyjny (z wyjątkiem szklanego)",
+    "hrv": "Austrija-Klosterneuburg: Laboratorijska, optička i precizna oprema (osim naočala)",
+    "ron": "Austria-Klosterneuburg: Echipamente de laborator, optice şi de precizie (cu excepţia ochelarilor)",
+    "ces": "Rakousko-Klosterneuburg: Laboratorní, optické a přesné přístroje a zařízení (mimo skel)",
+    "dan": "Østrig-Klosterneuburg: Laboratorieudstyr, optisk udstyr og præcisionsudstyr (ikke briller)",
+    "por": "Áustria-Klosterneuburg: Equipamento laboratorial, óptico e de precisão (exc. óculos)",
+    "slk": "Rakúsko-Klosterneuburg: Laboratórne, optické a presné prístroje a vybavenie (s výnimkou skiel)",
+    "mlt": "l-Awstrija-Klosterneuburg: Tagħmir tal-laboratorju, ottiku u ta' preċiżjoni (minbarra nuċċalijiet)",
+    "fra": "Autriche-Klosterneuburg: Équipements de laboratoire, d'optique et de précision (excepté les lunettes)",
+    "deu": "Österreich-Klosterneuburg: Laborgeräte, optische Geräte und Präzisionsgeräte (außer Gläser)",
+    "lit": "Austrija-Klosterneuburg: Laboratorinė, optinė ir precizinė įranga (išskyrus akinius)",
+    "ita": "Austria-Klosterneuburg: Attrezzature da laboratorio, ottiche e di precisione (escluso vetri)",
+    "bul": "Aвcтpия-Klosterneuburg: Лабораторно, оптично и прецизно оборудване (без стъклени изделия)",
+    "slv": "Avstrija-Klosterneuburg: Laboratorijska, optična in precizna oprema (razen očal)",
+    "eng": "Austria-Klosterneuburg: Laboratory, optical and precision equipments (excl. glasses)"
+   }
+  },
+  {
+   "publication-number": "596304-2021",
+   "classification-cpv": [
+    "33100000",
+    "50421000"
+   ],
+   "contract-nature": [
+    "services"
+   ],
+   "publication-date": "2021-11-22+01:00",
+   "buyer-name": {
+    "eng": [
+     "Scottish National Blood Transfusion Service"
+    ]
+   },
+   "notice-title": {
+    "swe": "Förenade kungariket-Edinburgh: Reparation och underhåll av medicinsk utrustning",
+    "lav": "Apvienotā Karaliste-Edinburga: Medicīnisko iekārtu remonta un tehniskās apkopes pakalpojumi",
+    "hun": "Egyesült Királyság-Edinburgh: Gyógyászati berendezéssel kapcsolatos javítási és karbantartási szolgáltatások",
+    "gle": "Ríocht Aontaithe, an-Dún Éideann: Repair and maintenance services of medical equipment",
+    "ell": "Ηνωμένο Βασίλειο-Εδιμβούργο: Υπηρεσίες επισκευής και συντήρησης ιατρικού εξοπλισμού",
+    "spa": "Reino Unido-Edimburgo: Servicios de reparación y mantenimiento de equipos médicos",
+    "est": "Suurbritannia / Ühendkuningriik-Edinburgh: Meditsiiniseadmete remondi- ja hooldusteenused",
+    "nld": "Verenigd Koninkrijk-Edinburgh: Reparatie en onderhoud van medische uitrusting",
+    "fin": "Yhdistynyt kuningaskunta-Edinburgh: Lääketieteellisten laitteiden korjaus ja huolto",
+    "pol": "Zjednoczone Królestwo-Edynburg: Usługi w zakresie napraw i konserwacji sprzętu medycznego",
+    "hrv": "Ujedinjena Kraljevina-Edinburgh: Usluge popravaka i održavanja medicinske opreme",
+    "dan": "Forenede Kongerige, Det-Edinburgh: Reparation og vedligeholdelse af medicinsk udstyr",
+    "ces": "Spojené království/Velká Británie-Edinburgh: Opravy a údržba zdravotnických přístrojů",
+    "ron": "Regatul Unit-Edinburgh: Servicii de reparare şi de întreţinere a echipamentului medical",
+    "por": "Reino Unido-Edimburgo: Serviços de reparação e manutenção de equipamento médico",
+    "slk": "Spojené kráľovstvo-Edinburgh: Opravy a údržba lekárskych zariadení",
+    "mlt": "Ir-Renju Unit-Edinbugh: Servizzi ta’ tiswija u tal-manutenzjoni ta’ l-apparat mediku",
+    "fra": "Royaume-Uni-Édimbourg: Services de réparation et d'entretien de matériel médical",
+    "deu": "das Vereinigte Königreich-Edinburgh: Reparatur und Wartung von medizinischen Einrichtungen",
+    "lit": "Jungtinė Karalystė, Didžioji Britanija-Edinburgas: Medicinos įrangos remonto ir priežiūros paslaugos",
+    "ita": "Regno Unito-Edimburgo: Servizi di riparazione e manutenzione di attrezzature mediche",
+    "bul": "Обединено кралство-Единбург: Услуги по ремонт и поддържане на медицинско оборудване",
+    "slv": "Združeno kraljestvo-Edinburgh: Storitve popravila in vzdrževanja medicinske opreme",
+    "eng": "United Kingdom-Edinburgh: Repair and maintenance services of medical equipment"
+   }
+  },
+  {
+   "publication-number": "640004-2021",
+   "classification-cpv": [
+    "33100000",
+    "38000000",
+    "38432000",
+    "38433100",
+    "38436500",
+    "38437100",
+    "38500000",
+    "38950000"
+   ],
+   "contract-nature": [
+    "supplies"
+   ],
+   "publication-date": "2021-12-15+01:00",
+   "buyer-name": {
+    "hun": [
+     "Magyar Honvédség Egészségügyi Központ"
+    ]
+   },
+   "notice-title": {
+    "swe": "Ungern-Budapest: Medicinsk utrustning",
+    "hun": "Magyarország-Budapest: Orvosi felszerelések",
+    "lav": "Ungārija-Budapešta: Medicīniskās ierīces",
+    "gle": "Ungáir, an-Búdaipéist: Medical equipments",
+    "ell": "Ουγγαρία-Βουδαπέστη: Ιατρικές συσκευές",
+    "spa": "Hungría-Budapest: Equipamiento médico",
+    "nld": "Hongarije-Boedapest: Medische apparatuur",
+    "est": "Ungari-Budapest: Meditsiiniseadmed",
+    "fin": "Unkari-Budapest: Lääketieteelliset laitteet",
+    "pol": "Węgry-Budapeszt: Urządzenia medyczne",
+    "hrv": "Mađarska-Budimpešta: Medicinske naprave",
+    "dan": "Ungarn-Budapest: Medicinsk udstyr",
+    "ron": "Ungaria-Budapesta: Echipamente medicale",
+    "ces": "Maďarsko-Budapešť: Zdravotnické přístroje",
+    "por": "Hungria-Budapeste: Equipamento médico",
+    "slk": "Maďarsko-Budapešť: Zdravotnícke vybavenie",
+    "fra": "Hongrie-Budapest: Équipements médicaux",
+    "mlt": "l-Ungerija-Budapest: Tagħmir mediku",
+    "deu": "Ungarn-Budapest: Medizinische Geräte",
+    "lit": "Vengrija-Budapeštas: Medicinos įranga",
+    "ita": "Ungheria-Budapest: Apparecchiature mediche",
+    "bul": "Унгapия-Будапеща: Медицинско оборудване",
+    "slv": "Madžarska-Budimpešta: Medicinska oprema",
+    "eng": "Hungary-Budapest: Medical equipments"
+   }
+  }
+ ],
+ "totalNoticeCount": 3
+}

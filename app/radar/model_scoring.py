@@ -15,6 +15,7 @@
 from __future__ import annotations
 
 import logging
+import math
 import os
 from concurrent.futures import Future, ThreadPoolExecutor, TimeoutError as FutureTimeoutError
 from datetime import date
@@ -26,7 +27,8 @@ logger = logging.getLogger("idea.radar.model")
 
 MODEL_FIELDS = ("probability", "is_signal", "threshold", "confident", "top_for", "top_against",
                 "exclusion_reasons", "warnings", "search_term", "extraction_status", "snapshot_date",
-                "patent_source", "patent_warning", "model", "fallback", "fallback_reason")
+                "patent_source", "patent_warning", "model", "fallback", "fallback_reason", "money_events",
+                "visualization", "baseline_logit", "logit")
 MATURE_HINTS = ("зрелост", "массово", "стандарт", "существует")
 
 
@@ -41,7 +43,40 @@ def public_result(result: dict) -> dict:
         out[key] = [{k: c[k] for k in ("feature", "label", "display_value", "relative", "contribution")}
                     for c in out[key] or []]
     out["probability"] = round(float(out["probability"]), 4)
+    out["money_events"] = out["money_events"] or []
+    contributions = result.get("contributions") or []
+    steps = [{k: c.get(k) for k in ("feature", "label", "display_value", "relative", "contribution", "imputed")}
+             for c in contributions]
+    baseline_logit = float(result.get("baseline_logit", 0.0))
+    final_logit = float(result.get("logit", baseline_logit))
+    out["waterfall"] = {
+        "baseline_logit": baseline_logit,
+        "baseline_probability": 1 / (1 + math.exp(-baseline_logit)),
+        "final_logit": final_logit,
+        "final_probability": out["probability"],
+        "steps": steps,
+    }
     return out
+
+
+def money_refs(sources: list[dict]) -> list[dict]:
+    """Прочитанные денежные документы запуска в форме ответов коннекторов.
+
+    Без structured_event (деловая новость без суммы) документ становится событием news
+    с датой публикации: релевантность кандидату потом проверяет money_events.
+    """
+    refs = []
+    for s in sources:
+        if s.get("channel") != "money" or s.get("status") != "read" or s.get("duplicate_of"):
+            continue
+        event = s.get("structured_event") or (
+            {"kind": "news", "date": s["published_at"]} if s.get("published_at") else None)
+        if not event:
+            continue
+        refs.append({"url": s["url"], "title": s.get("title") or s["url"], "channel": "money",
+                     "connector": s.get("connector") or s.get("publisher"),
+                     "document": {"text": (s.get("text") or "")[:600]}, "structured_event": event})
+    return refs
 
 
 class ModelScorer:
@@ -56,13 +91,19 @@ class ModelScorer:
         self.as_of = as_of
         self.pool = ThreadPoolExecutor(max_workers=workers, thread_name_prefix="radar-model")
         self.futures: dict[str, Future] = {}
+        self.failures: dict[str, str] = {}
+        self.money_refs: list[dict] = []
 
-    def submit(self, candidates: list[dict]) -> None:
+    def submit(self, candidates: list[dict], sources: list[dict] | None = None) -> None:
+        """sources — прочитанные документы запуска: денежные идут в карточку кандидата."""
         from app.ml.scorer import score_candidate
+        if sources is not None:
+            self.money_refs = money_refs(sources)
         for c in candidates:
             if c["id"] not in self.futures:
                 self.futures[c["id"]] = self.pool.submit(
-                    score_candidate, candidate_name(c), c.get("domain", ""), self.as_of, self.scorer)
+                    score_candidate, candidate_name(c), c.get("domain", ""), self.as_of, self.scorer,
+                    self.money_refs)
 
     def result(self, candidate_id: str, timeout: float) -> dict | None:
         future = self.futures.get(candidate_id)
@@ -75,7 +116,10 @@ class ModelScorer:
             # without treating a pending candidate as a model failure.
             return None
         except Exception as exc:  # noqa: BLE001 — кандидат остаётся с оценкой LLM и пометкой
-            logger.warning("Model scoring failed for %s: %s", candidate_id, type(exc).__name__)
+            status = getattr(exc, "status_code", None) or getattr(getattr(exc, "response", None), "status_code", None)
+            error = type(exc).__name__ + (f" HTTP {status}" if isinstance(status, int) else "")
+            getattr(self, "failures", {}).setdefault(candidate_id, error)
+            logger.warning("Model scoring failed for %s: %s", candidate_id, error)
             return None
 
     def fallback_result(self, candidate_id: str, reason: str) -> dict:

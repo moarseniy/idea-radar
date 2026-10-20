@@ -9,9 +9,12 @@
 """
 from __future__ import annotations
 
+from datetime import date
+
 from openai import OpenAI
 
 from app.radar.config import RadarSettings
+from app.radar.connectors import is_historical
 from app.radar.provider import SYSTEM, ResearchProvider, T
 from app.radar.sources import canonical_url
 
@@ -26,6 +29,22 @@ SEARCH_PROMPT = """Выполни поиск по открытым источн�
 содержательных источников, а не подборки трендов и перепечатки одного анонса.
 Неподтверждённые знания модели не являются результатом поиска."""
 
+# Машина времени: веб-поиск идёт по сегодняшнему интернету, а документы позже даты
+# оценки потом всё равно отсекаются при чтении. Без этой вставки до половины ссылок
+# оказываются свежими и только занимают места чтения.
+HISTORICAL_SEARCH = """
+Это историческая оценка: нужны только материалы, опубликованные не позже {as_of}.
+Добавляй к запросам годы {years} или оператор before:{as_of}. Не приводи более поздние
+источники, даже если они полнее, и не опирайся на то, что стало известно после {as_of}."""
+
+
+def search_prompt(query: str, as_of: str) -> str:
+    prompt = SEARCH_PROMPT.format(as_of=as_of, query=query)
+    day = date.fromisoformat(str(as_of)[:10])
+    if is_historical(day):
+        prompt += HISTORICAL_SEARCH.format(as_of=day.isoformat(), years=f"{day.year - 2}–{day.year}")
+    return prompt
+
 
 class OpenRouterProvider(ResearchProvider):
     provider_name = "OpenRouter"
@@ -37,12 +56,34 @@ class OpenRouterProvider(ResearchProvider):
         self.model = settings.model
         self.research_model = settings.research_model
 
+    def _reasoning(self, role: str) -> dict:
+        """OpenRouter reasoning control: RADAR_REASONING_EFFORT for every call, if set.
+
+        RADAR_REASONING_BY_ROLE overrides it per call role ("default" = the model's own
+        depth). Without either setting DeepSeek keeps the previous behaviour: low effort
+        only for candidate assessment, the model's default depth elsewhere.
+        """
+        settings = getattr(self, "settings", None)
+        effort = getattr(settings, "reasoning_effort", "")
+        effort = dict(getattr(settings, "reasoning_by_role", ())).get(role, effort)
+        if effort == "default":
+            return {}
+        if effort == "none":
+            return {"reasoning": {"enabled": False}}
+        if effort:
+            return {"reasoning": {"effort": effort}}
+        if role == "critical_assessment" and self.model.startswith("deepseek/"):
+            return {"reasoning_effort": "low"}
+        return {}
+
     def structured(self, role: str, prompt: str, schema: type[T], max_tokens: int = 6000) -> T:
-        # DeepSeek V4.1 supports OpenRouter's reasoning-effort control. Keep the
-        # faster setting limited to candidate assessment; planning and search
-        # interpretation retain the model's default reasoning depth.
-        extra_body = ({"reasoning_effort": "low"}
-                      if role == "critical_assessment" and self.model.startswith("deepseek/") else None)
+        extra_body = self._reasoning(role) or None
+        settings = getattr(self, "settings", None)
+        if getattr(settings, "reasoning_effort", "") == "none" and \
+                dict(getattr(settings, "reasoning_by_role", ())).get(role, "none") != "none":
+            # Рассуждения входят в max_tokens: роль, где они оставлены при общем «none»,
+            # получает двойной запас, иначе ответ обрезается (LengthFinishReasonError).
+            max_tokens *= 2
 
         def invoke(timeout):
             kwargs = {
@@ -64,8 +105,9 @@ class OpenRouterProvider(ResearchProvider):
         response = self._call("web_search", self.research_model, lambda timeout: self.client.chat.completions.create(
             model=self.research_model, max_tokens=2600, temperature=0,
             messages=[{"role": "system", "content": SYSTEM},
-                      {"role": "user", "content": SEARCH_PROMPT.format(as_of=as_of, query=query)}],
-            extra_body={"plugins": [{"id": "web", "max_results": 12}]}, timeout=timeout))
+                      {"role": "user", "content": search_prompt(query, as_of)}],
+            extra_body={"plugins": [{"id": "web", "max_results": 12}], **self._reasoning("web_search")},
+            timeout=timeout))
         message = response.choices[0].message
         references: dict[str, dict] = {}
         for annotation in (message.model_dump().get("annotations") or []):

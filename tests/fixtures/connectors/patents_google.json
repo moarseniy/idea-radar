@@ -1,0 +1,95 @@
+{
+ "results": {
+  "total_num_results": 232,
+  "total_num_pages": 12,
+  "many_results": false,
+  "num_page": 0,
+  "cluster": [
+   {
+    "result": [
+     {
+      "id": "patent/US10841420B2/en",
+      "rank": 0,
+      "patent": {
+       "title": " Virtual communications assessment system in a multimedia environment",
+       "snippet": " A system for data recording across a network includes a session border controller connecting incoming data from the network to an endpoint recorder. A load balancer is connected to the network between the session border controller and the endpoint and receives the incoming data from the session &hellip;",
+       "priority_date": "2016-09-12",
+       "filing_date": "2019-08-05",
+       "grant_date": "2020-11-17",
+       "publication_date": "2020-11-17",
+       "assignee": "Verint Americas Inc.",
+       "publication_number": "US10841420B2",
+       "language": "en"
+      },
+      "is_similar_document": false,
+      "entity_matches": {
+       "additional": 0
+      },
+      "measure_matches": {}
+     },
+     {
+      "id": "patent/US10432588B2/en",
+      "rank": 1,
+      "patent": {
+       "title": " Systems and methods for improving HTTPS security",
+       "snippet": "&hellip;  a cloud based proxy gateway illustrating cookie security; FIG. 11 is a network diagram of interactions between a user device, a browser/app on the user device, a server associated with a requested domain, an HSTS application, and a cloud based proxy gateway illustrating User-<b>Agent security</b>; FIG. 12",
+       "priority_date": "2016-10-17",
+       "filing_date": "2019-01-21",
+       "grant_date": "2019-10-01",
+       "publication_date": "2019-10-01",
+       "assignee": "Zscaler, Inc.",
+       "publication_number": "US10432588B2",
+       "language": "en"
+      },
+      "is_similar_document": false,
+      "entity_matches": {
+       "additional": 0
+      },
+      "measure_matches": {}
+     },
+     {
+      "id": "patent/US10938837B2/en",
+      "rank": 2,
+      "patent": {
+       "title": " Isolated network stack to manage security for virtual machines",
+       "snippet": " 10. A non-transitory machine readable medium storing a <b>security agent</b> for execution by at least one processing unit of a host machine, wherein the <b>security agent</b> executing in a first data compute node (DCN) on the host machine to monitor the first DCN, the first DCN comprising a first network stack &hellip;",
+       "priority_date": "2016-08-30",
+       "filing_date": "2017-01-31",
+       "grant_date": "2021-03-02",
+       "publication_date": "2021-03-02",
+       "assignee": "Nicira, Inc.",
+       "publication_number": "US10938837B2",
+       "language": "en"
+      },
+      "is_similar_document": false,
+      "entity_matches": {
+       "additional": 0
+      },
+      "measure_matches": {}
+     },
+     {
+      "id": "patent/CN110351257B/en",
+      "rank": 3,
+      "patent": {
+       "title": " Distributed Internet of things security access system",
+       "snippet": " the lightweight secure transmission protocol UC for the edge terminal and the cloud platform is used for data interaction between the terminal equipment and the cloud platform, the data interaction is based on a pre-authorized <b>agent security</b> authentication mechanism, and the terminal equipment is &hellip;",
+       "priority_date": "2019-06-27",
+       "filing_date": "2019-06-27",
+       "grant_date": "2021-03-23",
+       "publication_date": "2021-03-23",
+       "assignee": "绿城科技产业服务集团有限公司",
+       "publication_number": "CN110351257B",
+       "language": "en"
+      },
+      "is_similar_document": false,
+      "entity_matches": {
+       "additional": 0
+      },
+      "measure_matches": {}
+     }
+    ]
+   }
+  ],
+  "chem_exhausted": false
+ }
+}

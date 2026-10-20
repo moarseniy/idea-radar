@@ -33,8 +33,23 @@ def test_broad_pass_covers_all_locales_and_followup_keeps_ru_en_and_user_languag
                  for code in ("en", "ru", "zh", "es", "fr", "de", "pt", "ja", "ko", "ar", "hi", "it", "tr", "id")]
     broad = select_search_locales(localized, "fr", broad=True)
     focused = select_search_locales(localized, "fr")
+    expanded = select_search_locales(localized, "fr", query_limit=6)
     assert len(broad) == 14
     assert {item["language"] for item in focused} == {"ru", "en", "fr"}
+    assert len(expanded) == 6 and {"ru", "en", "fr"}.issubset({item["language"] for item in expanded})
+
+
+def test_search_task_can_keep_more_than_forty_results_when_configured(monkeypatch):
+    monkeypatch.setattr("app.radar.web_search.load_search_settings", lambda: SimpleNamespace(max_queries=3))
+    monkeypatch.setattr("app.radar.web_search.web_search", lambda query: {
+        "providers": [],
+        "results": [{"url": f"https://example.org/{index}", "title": f"Result {index}"}
+                    for index in range(60)],
+    })
+    result = search_task({"branch": "Topic", "query": "topic", "per_query": 60, "max_refs": 60,
+                          "queries": [{"language": "en", "query": "topic"}]},
+                         date(2026, 9, 29).isoformat())
+    assert len(result["references"]) == 60
 
 
 def test_root_web_search_can_exceed_global_cap_and_prioritizes_user_language(monkeypatch):

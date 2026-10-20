@@ -12,6 +12,7 @@ export interface Counters {
   candidates: number
   assessed: number
   confident?: number
+  channel_mix?: Record<string, number>
 }
 
 export interface RunSummary {
@@ -26,6 +27,14 @@ export interface RunSummary {
   signal_count: number
 }
 
+export interface CandidateAuditItem {
+  stage: string
+  action: 'merged_duplicate' | 'limit_excluded' | 'not_retained' | string
+  candidate: { id?: string; title: string; application?: string; domain?: string; source_ids?: string[] }
+  merged_into?: { id?: string; title: string; application?: string; domain?: string; source_ids?: string[] }
+  reason: string
+}
+
 export interface Source {
   id: string
   url: string
@@ -37,6 +46,7 @@ export interface Source {
   trust_reason: string
   primary_only?: boolean
   registry_match?: string | null
+  channel?: string | null
   language: string
   published_at: string | null
   retrieved_at: string
@@ -55,6 +65,12 @@ export interface Source {
   transcript_timestamped?: boolean
   media_license?: string
   audio_url?: string
+  structured_event?: {
+    type?: string
+    date?: string | null
+    company?: string | null
+    customer?: string | null
+  } | null
 }
 
 export interface Candidate {
@@ -89,6 +105,44 @@ export interface Contribution {
   contribution: number
 }
 
+export interface WaterfallStep extends Contribution {
+  imputed?: boolean
+}
+
+export interface ModelWaterfall {
+  baseline_logit: number
+  baseline_probability: number
+  final_logit: number
+  final_probability: number
+  steps: WaterfallStep[]
+}
+
+export interface PublicationVisualization {
+  science_status: 'complete' | 'partial' | 'unavailable'
+  publication_total_found: number | null
+  publication_total_complete: boolean
+  publication_recent_3y_found: number | null
+  publication_recent_share_found: number | null
+  publication_year_counts: Record<string, number | null>
+  publication_total_capped: boolean
+  publication_years_capped: boolean
+  evidence_timeline?: EvidenceTimelineData
+}
+
+export interface EvidenceTimelineChannel {
+  label: string
+  counts: Record<string, number | null>
+  capped?: boolean
+  undated_records?: number
+  outside_range_records?: number
+}
+
+export interface EvidenceTimelineData {
+  years: string[]
+  channels: Record<string, EvidenceTimelineChannel>
+  note?: string
+}
+
 export interface ModelResult {
   probability: number
   is_signal: boolean
@@ -102,8 +156,27 @@ export interface ModelResult {
   extraction_status: string
   patent_source?: string
   patent_warning?: string
+  visualization?: PublicationVisualization | null
+  waterfall?: ModelWaterfall | null
+  baseline_logit?: number
+  logit?: number
+  fallback?: boolean
   snapshot_date: string
   model: string
+  money_events?: MoneyEvent[]
+}
+
+/** Денежное или закупочное событие кандидата из прямых источников (гранты, контракты, раунды). */
+export interface MoneyEvent {
+  kind: string
+  date: string
+  amount_usd_m: number | null
+  company: string
+  customer: string | null
+  funder: string | null
+  title: string
+  url: string
+  connector: string
 }
 
 export interface LlmPredictor {
@@ -156,11 +229,12 @@ export interface Run {
   }[] } | null
   sources: Source[]
   candidates: Candidate[]
+  candidate_audit?: { extracted_count: number; filtered: CandidateAuditItem[] }
   signals: Assessment[]
   top_candidates?: Assessment[]
   rejected: Assessment[]
   assessments: Assessment[]
-  searches?: { branch: string; connector?: string; references: unknown[]; error?: string | null;
+  searches?: { branch: string; connector?: string; query?: string; references: unknown[]; error?: string | null;
     query_count?: number; query_languages?: string[] }[]
   calls: { role: string; model: string; seconds: number; status: string; usage?: { input_tokens?: number; output_tokens?: number } }[]
   warnings: string[]
@@ -168,6 +242,7 @@ export interface Run {
   counters: Counters
   config: { model: string; provider: string; max_sources: number; max_candidates: number }
   score_note: string
+  mode?: 'live_search' | 'historical'
   elapsed_seconds?: number
 }
 
@@ -240,9 +315,11 @@ export interface CatalogRecord {
   id: number
   title: string
   domain: string
+  application?: string
   companies: string
   stage: string
-  reference_score: number
+  reference_score?: number | null
+  reference_label?: string
   reference_explanation: string
   mention_trend: string
   sources: { title: string; url: string }[]
@@ -306,6 +383,8 @@ export const radar = {
     api<Registry>(`/api/sources/registry/domains/${encodeURIComponent(domain)}`, { method: 'DELETE' }),
   catalog: () => api<{
     count: number
+    filename?: string
+    note?: string
     domains: Record<string, number>
     records: CatalogRecord[]
     feature_groups: Record<string, string>

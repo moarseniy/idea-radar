@@ -12,6 +12,17 @@ def now() -> str:
     return datetime.now(timezone.utc).isoformat(timespec="seconds")
 
 
+def _without_nul(value):
+    """JSONB не хранит \\u0000, а он встречается в тексте PDF: без чистки сохранение роняет прогон."""
+    if isinstance(value, str):
+        return value.replace("\x00", "")
+    if isinstance(value, dict):
+        return {_without_nul(k): _without_nul(v) for k, v in value.items()}
+    if isinstance(value, (list, tuple)):
+        return [_without_nul(v) for v in value]
+    return value
+
+
 class RadarStore:
     """PostgreSQL for the stand; explicit SQLite fallback for local development/tests."""
 
@@ -59,7 +70,7 @@ class RadarStore:
     def _encode(self, value):
         if self.url:
             from psycopg.types.json import Jsonb
-            return Jsonb(value)
+            return Jsonb(_without_nul(value))
         return json.dumps(value, ensure_ascii=False)
 
     @staticmethod

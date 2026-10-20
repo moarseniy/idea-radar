@@ -1,0 +1,180 @@
+{
+ "links": null,
+ "ext": null,
+ "page": 1,
+ "size": 2,
+ "totalPages": 558,
+ "totalSize": 13930,
+ "project": [
+  {
+   "links": {
+    "link": [
+     {
+      "href": "http://gtr.ukri.org/gtr/api/organisations/4E4B9EA3-A624-4574-B5E3-978276BF15F3",
+      "rel": "LEAD_ORG",
+      "start": null,
+      "end": null,
+      "otherAttributes": {}
+     },
+     {
+      "href": "http://gtr.ukri.org/gtr/api/funds/7D6434EE-E256-4D6A-B7C1-8B5034AEDC8E",
+      "rel": "FUND",
+      "start": 1727737200000,
+      "end": 1838070000000,
+      "otherAttributes": {}
+     }
+    ]
+   },
+   "ext": null,
+   "id": "A7925F07-F2E1-4FB5-9F41-6AD98514D13B",
+   "outcomeid": null,
+   "href": "http://gtr.ukri.org/gtr/api/projects/A7925F07-F2E1-4FB5-9F41-6AD98514D13B",
+   "created": 1788431759000,
+   "updated": null,
+   "identifiers": {
+    "identifier": [
+     {
+      "value": "2934306",
+      "type": "RCUK"
+     }
+    ]
+   },
+   "title": "Quantum Sensing and Imaging",
+   "status": "Active",
+   "grantCategory": "Studentship",
+   "leadFunder": "EPSRC",
+   "leadOrganisationDepartment": "Physics and Astronomy",
+   "abstractText": "In this project, we are investigating if we can solve the inverse problem for magnetic sensing by using entanglement and the Aharonov-Bohm effect.",
+   "techAbstractText": null,
+   "potentialImpact": null,
+   "healthCategories": {
+    "healthCategory": []
+   },
+   "researchActivities": {
+    "researchActivity": []
+   },
+   "researchSubjects": {
+    "researchSubject": []
+   },
+   "researchTopics": {
+    "researchTopic": [
+     {
+      "id": "6CFA1E1F-F25C-4C23-8FE1-C47AE53E333E",
+      "text": "Unclassified",
+      "percentage": null
+     }
+    ]
+   },
+   "rcukProgrammes": {
+    "rcukProgramme": []
+   },
+   "start": null,
+   "end": null,
+   "participantValues": null
+  },
+  {
+   "links": {
+    "link": [
+     {
+      "href": "http://gtr.ukri.org/gtr/api/persons/6BFBA79E-1601-4278-A1FA-99EB39D1FEA9",
+      "rel": "PM_PER",
+      "start": null,
+      "end": null,
+      "otherAttributes": {}
+     },
+     {
+      "href": "http://gtr.ukri.org/gtr/api/organisations/A6099C1C-9770-427D-BA9E-D9E5D9CF385D",
+      "rel": "LEAD_ORG",
+      "start": null,
+      "end": null,
+      "otherAttributes": {}
+     },
+     {
+      "href": "http://gtr.ukri.org/gtr/api/organisations/A6099C1C-9770-427D-BA9E-D9E5D9CF385D",
+      "rel": "PARTICIPANT_ORG",
+      "start": null,
+      "end": null,
+      "otherAttributes": {}
+     },
+     {
+      "href": "http://gtr.ukri.org/gtr/api/organisations/5F757471-288A-4A3C-8E66-E5C76C12C99C",
+      "rel": "PARTICIPANT_ORG",
+      "start": null,
+      "end": null,
+      "otherAttributes": {}
+     },
+     {
+      "href": "http://gtr.ukri.org/gtr/api/funds/F117477E-1890-4801-AD96-1DB5327C669E",
+      "rel": "FUND",
+      "start": 1506812400000,
+      "end": 1538262000000,
+      "otherAttributes": {}
+     }
+    ]
+   },
+   "ext": null,
+   "id": "304DACBE-D868-4A40-AB9D-B7B0B3646E60",
+   "outcomeid": null,
+   "href": "http://gtr.ukri.org/gtr/api/projects/304DACBE-D868-4A40-AB9D-B7B0B3646E60",
+   "created": 1788431759000,
+   "updated": null,
+   "identifiers": {
+    "identifier": [
+     {
+      "value": "103434",
+      "type": "RCUK"
+     }
+    ]
+   },
+   "title": "Diamond Quantum Magnetic Sensing",
+   "status": "Closed",
+   "grantCategory": "Collaborative R&D",
+   "leadFunder": "ISCF",
+   "leadOrganisationDepartment": null,
+   "abstractText": "Diamond has shown itself to be a leading material for a range of applications requiring quantum-state control such as quantum computing and sensing. This is by virtue of the fact that the quantum-state (a ‘on’ or ‘off’) of engineered impurities (‘qubits’) contained within diamond can be controlled and read-out simply by shining light on the diamond, combined with the application of a microwave field, and measuring light that is emitted. Unlike many other materials such techniques can be conducted at normal room temperatures, instead of requiring dramatic cooling to temperatures &lt; -173 degrees C. These ‘quantum defects’ can be used to sense very small magnetic fields, hence sensors made from diamond have the potential to be used in applications for mining, underwater pipe detection and as diagnostic tools in medicine. Critical to the development of these devices is to have a man-made diamond material with an optimised fraction of quantum defects that is both reproducible and can be manufactured at scale. Therefore this project will work on all the elements required to turn prototype magnetic-field sensors into a productionised commercial process to enable the next generation of devices.",
+   "techAbstractText": null,
+   "potentialImpact": null,
+   "healthCategories": {
+    "healthCategory": []
+   },
+   "researchActivities": {
+    "researchActivity": []
+   },
+   "researchSubjects": {
+    "researchSubject": []
+   },
+   "researchTopics": {
+    "researchTopic": [
+     {
+      "id": "6CFA1E1F-F25C-4C23-8FE1-C47AE53E333E",
+      "text": "Unclassified",
+      "percentage": null
+     }
+    ]
+   },
+   "rcukProgrammes": {
+    "rcukProgramme": []
+   },
+   "start": null,
+   "end": null,
+   "participantValues": {
+    "participant": [
+     {
+      "organisationId": "A6099C1C-9770-427D-BA9E-D9E5D9CF385D",
+      "organisationName": "ELEMENT SIX (UK) LIMITED.",
+      "role": "LEAD_PARTICIPANT",
+      "projectCost": 228087.0,
+      "grantOffer": 114050.0
+     },
+     {
+      "organisationId": "5F757471-288A-4A3C-8E66-E5C76C12C99C",
+      "organisationName": "UNIVERSITY OF WARWICK",
+      "role": "PARTICIPANT",
+      "projectCost": 172554.0,
+      "grantOffer": 172554.0
+     }
+    ]
+   }
+  }
+ ]
+}

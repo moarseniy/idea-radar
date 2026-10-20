@@ -29,12 +29,20 @@ def test_deepseek_flash_from_openrouter_is_an_allowed_radar_model():
     assert settings.configuration_error() is None
 
 
-def test_search_capacity_settings_accept_the_documented_env_maxima(monkeypatch):
-    monkeypatch.setenv("RADAR_SEARCH_BRANCHES", "8")
-    monkeypatch.setenv("RADAR_MAX_SOURCES", "128")
-    monkeypatch.setenv("RADAR_MAX_CANDIDATES", "64")
+def test_claude_sonnet_from_openrouter_is_an_allowed_radar_model():
+    settings = replace(RadarSettings(), model="anthropic/claude-sonnet-5.5",
+                       research_model="anthropic/claude-sonnet-5.5", openrouter_api_key="test-key")
+    assert settings.configuration_error() is None
+
+
+def test_search_capacity_settings_accept_the_expanded_env_maxima(monkeypatch):
+    monkeypatch.setenv("RADAR_SEARCH_BRANCHES", "16")
+    monkeypatch.setenv("RADAR_MAX_SOURCES", "512")
+    monkeypatch.setenv("RADAR_MAX_CANDIDATES", "128")
+    monkeypatch.setenv("RADAR_SEARCH_WORKERS", "8")
     settings = load_radar_settings()
-    assert (settings.branches, settings.max_sources, settings.max_candidates) == (8, 128, 64)
+    assert (settings.branches, settings.max_sources, settings.max_candidates, settings.search_workers) == (
+        16, 512, 128, 8)
 
 
 def test_remote_deadline_is_capped_at_provider_limit(monkeypatch):
@@ -67,3 +75,14 @@ def test_audio_transcription_is_disabled_without_url_and_allowlist_is_explicit(m
     settings = load_radar_settings()
     assert settings.audio_transcription_url.endswith("/v1/audio/transcriptions")
     assert settings.audio_transcription_allowlist == ("media.example", "cdn.example")
+
+
+def test_any_openrouter_model_can_be_enabled_from_env(monkeypatch):
+    monkeypatch.setattr("app.radar.config.dotenv_values", lambda *_: {})
+    monkeypatch.setenv("RADAR_EXTRA_MODELS", "qwen/qwen3.8-27b, not a model")
+    settings = replace(RadarSettings(), model="qwen/qwen3.8-27b", research_model="qwen/qwen3.8-27b",
+                       openrouter_api_key="test-key")
+    assert settings.configuration_error() is None
+    assert "not a model" not in __import__("app.radar.config", fromlist=["x"]).allowed_models()
+    monkeypatch.delenv("RADAR_EXTRA_MODELS")
+    assert replace(settings).configuration_error() is not None

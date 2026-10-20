@@ -1,13 +1,14 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
 import { radar, type Run, type Source } from '../api'
+import { AnalysisFunnel } from '../components/AnalysisFunnel'
 import { Empty, Modal, RejectedCard, SignalCard, SourceCard, SourceTranscriptText } from '../components/parts'
 import { RunStats } from '../components/RunStats'
 import { dateText, STAGES, STATUS, VERDICT } from '../labels'
 import { useApp, useResource } from '../state'
 
 const ACTIVE = new Set(['queued', 'running'])
-type Tab = 'top' | 'signals' | 'candidates' | 'rejected' | 'sources' | 'stats'
+type Tab = 'top' | 'candidates' | 'rejected' | 'sources' | 'stats'
 
 function durationText(seconds: number) {
   const minutes = Math.floor(seconds / 60)
@@ -20,7 +21,8 @@ export function RunPage() {
   const { runId = '' } = useParams()
   const { toast, refresh } = useApp()
   const [params, setParams] = useSearchParams()
-  const tab = (params.get('tab') as Tab) || 'top'
+  const requestedTab = params.get('tab')
+  const tab = (requestedTab === 'signals' ? 'top' : requestedTab || 'top') as Tab
   const setTab = (t: Tab) => setParams({ tab: t }, { replace: true })
   const [opened, setOpened] = useState<Source | null>(null)
   const [clientNow, setClientNow] = useState(() => Date.now())
@@ -42,6 +44,7 @@ export function RunPage() {
   if (!run) return <div className="loading">Загрузка исследования…</div>
   const active = ACTIVE.has(run.status)
   const topCandidates = run.top_candidates ?? run.signals
+  const topWeakSignals = topCandidates.filter((candidate) => candidate.verdict === 'weak_signal')
   const savedAt = Date.parse(run.updated_at || run.created_at)
   const noProgressSeconds = active && Number.isFinite(savedAt)
     ? Math.max(0, (clientNow - savedAt) / 1000)
@@ -65,6 +68,7 @@ export function RunPage() {
           <h2>{run.query}</h2>
           <p className="muted">
             {STATUS[run.status] ?? run.status} · на дату {dateText(run.as_of)}
+            {run.mode === 'historical' && ' · исторический прогон'}
           </p>
         </div>
         <div className="run-actions">
@@ -137,12 +141,12 @@ export function RunPage() {
           <small>Проверено: {run.counters.assessed} · открыть список →</small>
         </button>
         <div className="stat-signal">
-          <span>Выбрано сигналов</span>
+          <span>Слабых сигналов в ТОП-15</span>
           <strong>
-            {run.signals.length}
+            {topWeakSignals.length}
             <span>/ {run.limit}</span>
           </strong>
-          <small>Уверенность &gt; 75%: {run.signals.filter((x) => x.score_kind === 'model' && x.score > 75).length}</small>
+          <small>Других статусов в ТОП-15: {Math.max(0, topCandidates.length - topWeakSignals.length)}</small>
         </div>
       </div>
 
@@ -154,14 +158,15 @@ export function RunPage() {
         </div>
       )}
 
+      <AnalysisFunnel run={run} onOpenSource={openSource} />
+
       <div className="results-toolbar">
         <div className="tabs" role="tablist">
           {(
             [
               ['top', 'ТОП-15 кандидатов', topCandidates.length],
-              ['signals', 'ТОП сигналов', run.signals.length],
               ['candidates', 'Все кандидаты', run.candidates.length],
-              ['rejected', 'Исключённые', run.rejected.length],
+              ['rejected', 'Другие статусы', run.rejected.length],
               ['sources', 'Источники', run.sources.length],
               ['stats', 'Статистика', null],
             ] as [Tab, string, number | null][]
@@ -185,21 +190,12 @@ export function RunPage() {
             text={active ? 'Финальный список появится после завершения проверки.' : 'В этом запуске не удалось подтвердить кандидатов.'}
           />
         ))}
-      {tab === 'signals' &&
-        (run.signals.length ? (
-          run.signals.map((s) => <SignalCard key={s.id} s={s} />)
-        ) : (
-          <Empty
-            title="Подтверждённых сигналов пока нет"
-            text={active ? 'Результаты появятся после чтения источников и проверки кандидатов.' : 'Проверьте замечания к запуску или повторите поиск с более широким направлением.'}
-          />
-        ))}
       {tab === 'candidates' && <CandidatesTable run={run} />}
       {tab === 'rejected' &&
         (run.rejected.length ? (
           run.rejected.map((s) => <RejectedCard key={s.id} s={s} />)
         ) : (
-          <Empty title="Исключений пока нет" text="Здесь появятся кандидаты, не прошедшие проверку, и причины решения." />
+          <Empty title="Других вердиктов пока нет" text="Здесь появятся кандидаты, не получившие статус слабого сигнала. Некоторые из них могут попасть в ТОП-15, если подтверждённых сигналов меньше лимита." />
         ))}
       {tab === 'sources' &&
         (run.sources.length ? (
@@ -288,7 +284,7 @@ export function RunPage() {
 
       {opened && (
         <Modal onClose={() => setOpened(null)} wide>
-          <div className="eyebrow">Прочитанный источник</div>
+          <div className="eyebrow">{opened.status === 'read' ? 'Прочитанный источник' : 'Сведения об источнике'}</div>
           <h2>{opened.title}</h2>
           <p className="muted small">
             {dateText(opened.published_at)} · {opened.language} · {opened.type_label || opened.type}

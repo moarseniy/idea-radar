@@ -1,0 +1,202 @@
+[
+ {
+  "_id": "6627109460995500ad752e75",
+  "id": "wxzhang/dpo-selective-redteaming",
+  "author": "wxzhang",
+  "gated": false,
+  "lastModified": "2024-05-19T10:22:55.000Z",
+  "likes": 5,
+  "private": false,
+  "sha": "b1209aef79f5983cee3be3628cc34ffac8f392b0",
+  "downloads": 143,
+  "tags": [
+   "transformers",
+   "safetensors",
+   "mistral",
+   "text-generation",
+   "trl",
+   "dpo",
+   "generated_from_trainer",
+   "conversational",
+   "base_model:HuggingFaceH4/zephyr-7b-beta",
+   "base_model:finetune:HuggingFaceH4/zephyr-7b-beta",
+   "license:mit",
+   "text-generation-inference",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "text-generation",
+  "library_name": "transformers",
+  "createdAt": "2024-04-23T01:36:20.000Z",
+  "modelId": "wxzhang/dpo-selective-redteaming",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "all_results.json"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "eval_results.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "model-00001-of-00003.safetensors"
+   },
+   {
+    "rfilename": "model-00002-of-00003.safetensors"
+   },
+   {
+    "rfilename": "model-00003-of-00003.safetensors"
+   },
+   {
+    "rfilename": "model.safetensors.index.json"
+   },
+   {
+    "rfilename": "special_tokens_map.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer.model"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   },
+   {
+    "rfilename": "train_results.json"
+   },
+   {
+    "rfilename": "trainer_state.json"
+   },
+   {
+    "rfilename": "training_args.bin"
+   }
+  ]
+ },
+ {
+  "_id": "666d137065901a559f427c62",
+  "id": "Heoni/llama-3-KoEn-8b_sft_ep4_merged_red_teaming_20240614",
+  "author": "Heoni",
+  "gated": false,
+  "lastModified": "2024-06-16T05:38:18.000Z",
+  "likes": 5,
+  "private": false,
+  "sha": "d8ca9a4215ec4be5643424d6729c1383ae5214d2",
+  "downloads": 108,
+  "tags": [
+   "transformers",
+   "pytorch",
+   "llama",
+   "text-generation",
+   "conversational",
+   "license:cc-by-nc-nd-4.0",
+   "text-generation-inference",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "text-generation",
+  "library_name": "transformers",
+  "createdAt": "2024-06-15T04:07:12.000Z",
+  "modelId": "Heoni/llama-3-KoEn-8b_sft_ep4_merged_red_teaming_20240614",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "pytorch_model-00001-of-00002.bin"
+   },
+   {
+    "rfilename": "pytorch_model-00002-of-00002.bin"
+   },
+   {
+    "rfilename": "pytorch_model.bin.index.json"
+   },
+   {
+    "rfilename": "special_tokens_map.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ },
+ {
+  "_id": "666d12ddc0f3d5afc23418e9",
+  "id": "Heoni/llama-3-KoEn-8b_sft_ep3_merged_red_teaming_20240614",
+  "author": "Heoni",
+  "gated": false,
+  "lastModified": "2024-06-16T05:38:16.000Z",
+  "likes": 5,
+  "private": false,
+  "sha": "d6333ccf8face898a2d2f77f1a1bd315c7aed05e",
+  "downloads": 101,
+  "tags": [
+   "transformers",
+   "pytorch",
+   "llama",
+   "text-generation",
+   "conversational",
+   "license:cc-by-nc-nd-4.0",
+   "text-generation-inference",
+   "endpoints_compatible",
+   "region:us"
+  ],
+  "pipeline_tag": "text-generation",
+  "library_name": "transformers",
+  "createdAt": "2024-06-15T04:04:45.000Z",
+  "modelId": "Heoni/llama-3-KoEn-8b_sft_ep3_merged_red_teaming_20240614",
+  "siblings": [
+   {
+    "rfilename": ".gitattributes"
+   },
+   {
+    "rfilename": "README.md"
+   },
+   {
+    "rfilename": "config.json"
+   },
+   {
+    "rfilename": "generation_config.json"
+   },
+   {
+    "rfilename": "pytorch_model-00001-of-00002.bin"
+   },
+   {
+    "rfilename": "pytorch_model-00002-of-00002.bin"
+   },
+   {
+    "rfilename": "pytorch_model.bin.index.json"
+   },
+   {
+    "rfilename": "special_tokens_map.json"
+   },
+   {
+    "rfilename": "tokenizer.json"
+   },
+   {
+    "rfilename": "tokenizer_config.json"
+   }
+  ]
+ }
+]

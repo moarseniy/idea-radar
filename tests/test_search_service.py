@@ -125,6 +125,15 @@ def test_default_provider_is_searxng_and_unknown_is_rejected(monkeypatch):
         load_search_settings()
 
 
+def test_search_settings_accept_expanded_query_and_result_limits(monkeypatch):
+    monkeypatch.setattr("app.search.config.dotenv_values", lambda _: {})
+    monkeypatch.setenv("SEARCH_MAX_QUERIES", "15")
+    monkeypatch.setenv("SEARCH_RESULTS_PER_QUERY", "20")
+    settings = load_search_settings()
+    assert settings.max_queries == 15
+    assert settings.results_per_query == 20
+
+
 def test_iso_date_formats():
     assert iso_date("2025-11-15T00:00:00.000Z") == "2025-11-15"
     assert iso_date("20260310T120000") == "2026-03-10"

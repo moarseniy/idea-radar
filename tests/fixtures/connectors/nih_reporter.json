@@ -1,0 +1,4 @@
+{"meta": {"total": 2}, "results": [
+  {"ProjectTitle": "Wearable sweat sensor for continuous glucose monitoring", "AbstractText": "We develop a flexible sweat sensor that estimates blood glucose without needles.", "FiscalYear": 2021, "AwardAmount": 412000, "OrgName": "UNIVERSITY OF CALIFORNIA SAN DIEGO", "CoreProjectNum": "R01EB031234", "AwardNoticeDate": "2021-07-15T00:00:00", "AgencyCode": "NIH"},
+  {"ProjectTitle": "Sweat biosensing platform for athletes", "AbstractText": "A multiplexed patch measuring lactate and electrolytes.", "FiscalYear": 2020, "AwardAmount": 225000, "OrgName": "NORTHWESTERN UNIVERSITY", "CoreProjectNum": "R43GM135555", "AwardNoticeDate": "2020-09-01T00:00:00", "AgencyCode": "NIH"}
+]}

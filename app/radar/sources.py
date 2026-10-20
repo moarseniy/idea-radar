@@ -18,6 +18,7 @@ from datetime import date
 from pathlib import Path
 from urllib.parse import parse_qsl, urlencode, urljoin, urlsplit, urlunsplit
 
+from app.radar.connectors import channel_for_url
 from app.radar.resilience import CircuitBreaker
 from app.radar.spoken_media import (discover_transcript_links, parse_caption_text,
                                     is_youtube_url, parse_html_transcript,
@@ -364,6 +365,8 @@ class SourceFetcher:
                   "audio_url": reference.get("audio_url"),
                   "source_country": reference.get("source_country"),
                   "source_provider": reference.get("source_provider"),
+                  "channel": reference.get("channel") or channel_for_url(url),
+                  "connector": reference.get("connector"),
                   "structured_event": reference.get("structured_event"),
                   "adoption_metrics": reference.get("adoption_metrics"),
                   "text": "", "status": "failed", "error": None, "cached": False,

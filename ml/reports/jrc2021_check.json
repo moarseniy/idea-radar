@@ -1,0 +1,71 @@
+{
+ "as_of": "2021-06-30",
+ "all": {
+  "positives": 93,
+  "negatives": 89,
+  "v1": {
+   "roc_auc": 0.83,
+   "pr_auc": 0.813,
+   "recall_at_threshold": 0.871,
+   "false_positive_rate": 0.326,
+   "median_p_positive": 0.862,
+   "median_p_negative": 0.11
+  },
+  "v2": {
+   "roc_auc": 0.852,
+   "pr_auc": 0.845,
+   "recall_at_threshold": 0.839,
+   "false_positive_rate": 0.292,
+   "median_p_positive": 0.758,
+   "median_p_negative": 0.144
+  }
+ },
+ "without_leaks": {
+  "positives": 87,
+  "negatives": 89,
+  "v1": {
+   "roc_auc": 0.831,
+   "pr_auc": 0.807,
+   "recall_at_threshold": 0.862,
+   "false_positive_rate": 0.326,
+   "median_p_positive": 0.862,
+   "median_p_negative": 0.11
+  },
+  "v2": {
+   "roc_auc": 0.845,
+   "pr_auc": 0.825,
+   "recall_at_threshold": 0.839,
+   "false_positive_rate": 0.292,
+   "median_p_positive": 0.752,
+   "median_p_negative": 0.144
+  }
+ },
+ "jrc_ai_ict_only": {
+  "positives": 17,
+  "negatives": 89,
+  "v1": {
+   "roc_auc": 0.767,
+   "pr_auc": 0.46,
+   "recall_at_threshold": 0.765,
+   "false_positive_rate": 0.326,
+   "median_p_positive": 0.881,
+   "median_p_negative": 0.11
+  },
+  "v2": {
+   "roc_auc": 0.837,
+   "pr_auc": 0.608,
+   "recall_at_threshold": 0.765,
+   "false_positive_rate": 0.292,
+   "median_p_positive": 0.83,
+   "median_p_negative": 0.144
+  }
+ },
+ "leaked_positives": [
+  "Cognitive Digital Twin",
+  "Edge AI",
+  "External human-machine interface",
+  "Human Digital Twin",
+  "Chemodynamic Therapy",
+  "Green AI"
+ ]
+}

@@ -27,6 +27,8 @@ class SearchSettings:
     # Обычный лимит веб-поиска на одну задачу (ru, en, затем другие локали).
     # Широкий первый проход по исходной теме может явно задать отдельный per-task cap.
     max_queries: int = 3
+    # Число результатов на поисковую формулировку; конкретный провайдер может иметь меньший лимит.
+    results_per_query: int = 3
     # Пауза между запросами к самостоятельно поднятым метапоисковикам (SearXNG, OpenSERP),
     # чтобы их движки не упирались в капчу и лимиты.
     min_interval: float = 1.0
@@ -47,9 +49,10 @@ def load_search_settings() -> SearchSettings:
         timeout = float(val("SEARCH_TIMEOUT", "20"))
         cache_hours = int(val("SEARCH_CACHE_HOURS", "24"))
         max_queries = int(val("SEARCH_MAX_QUERIES", "3"))
+        results_per_query = int(val("SEARCH_RESULTS_PER_QUERY", "3"))
         min_interval = float(val("SEARCH_MIN_INTERVAL", "1.0"))
     except ValueError:
-        timeout, cache_hours, max_queries, min_interval = 20.0, 24, 3, 1.0
+        timeout, cache_hours, max_queries, results_per_query, min_interval = 20.0, 24, 3, 3, 1.0
     storage = Path(val("STORAGE_DIR", str(ROOT / "storage")))
     keys = {
         "searxng_url": val("SEARXNG_URL", "http://localhost:8888").rstrip("/"),
@@ -71,4 +74,6 @@ def load_search_settings() -> SearchSettings:
         timeout=max(3.0, min(120.0, timeout)), cache_hours=max(0, min(168, cache_hours)),
         cache_dir=Path(val("SEARCH_CACHE_DIR", str(storage / "search_cache"))),
         service_url=val("SEARCH_URL").rstrip("/"), service_token=val("SEARCH_SERVICE_TOKEN"),
-        max_queries=max(1, min(15, max_queries)), min_interval=max(0.0, min(10.0, min_interval)), keys=keys)
+        max_queries=max(1, min(15, max_queries)),
+        results_per_query=max(1, min(20, results_per_query)),
+        min_interval=max(0.0, min(10.0, min_interval)), keys=keys)

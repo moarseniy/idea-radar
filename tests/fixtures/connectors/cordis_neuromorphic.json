@@ -1,0 +1,138 @@
+{
+ "head": {
+  "link": [],
+  "vars": [
+   "project_id",
+   "title",
+   "abstract",
+   "start_date",
+   "funding_amount"
+  ]
+ },
+ "results": {
+  "distinct": false,
+  "ordered": true,
+  "bindings": [
+   {
+    "project_id": {
+     "type": "literal",
+     "value": "101107534"
+    },
+    "title": {
+     "type": "literal",
+     "value": "An Energy-Efficient AI Powered Portable Radar System for Human Activity Recognition"
+    },
+    "abstract": {
+     "type": "literal",
+     "value": "Radar systems have been used in ambient sensing to track various subjects using electromagnetic waves. Thanks to the increasing capability of artificial intelligence algorithms in solving classification tasks, human activity detection (HAR) using radar systems have become possible. However, most previous solutions use bulky fixed radar systems with tens to hundreds of watts of power consumption, requiring rigid wall plug connection, making them environmentally unfriendly and difficult to use in applications like indoor security, healthcare, and mobile robots.\n\nIn this project, we aim to develop a portable radar system for HAR by following a hardware-software co-design approach to significantly reduce the signal processing energy consumption compared to conventional radar-based HAR systems. On the software side, we will explore novel time-domain feature extraction methods to reduce the energy consumption of radar data analysis by at least 2 times. We will also apply brain-inspired neuromorphic principles to reduce 50 times the energy cost of state-of-the-art deep neural network architectures to solve radar-based HAR tasks. On the hardware side, we will develop artificial intelligence (AI) accelerator hardware based on field-programmable gated arrays (FPGAs) and application-specific integrated circuits (ASICs) to decrease the hardware energy consumption in radar data processing by at least 10 times. \n\nOverall, we expect the project results to revolutionize the paradigm of radar data processing to achieve over 20 times the whole system energy reduction, which will significantly contribute to the target of greenhouse gas emission reduction defined in the European Green Deal. The developed energy-efficient AI-powered portable radar system for HAR is promising to initiate a commercialized product for indoor security, healthcare, and mobile robot applications, and it will be competitive in the rapidly growing Internet-of-Things market worth USD 2400 billion by 2029."
+    },
+    "start_date": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#date",
+     "value": "2023-09-01"
+    },
+    "funding_amount": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "value": "203464.32"
+    }
+   },
+   {
+    "project_id": {
+     "type": "literal",
+     "value": "101070238"
+    },
+    "title": {
+     "type": "literal",
+     "value": "NEUROmorphic energy-efficient secure accelerators based on Phase change materials aUgmented siLicon photonicS"
+    },
+    "abstract": {
+     "type": "literal",
+     "value": "The growing need to transfer massive amounts of data among multitudes of interconnected devices for e.g., self-driving vehicles, IoT or industry 4.0 has led to a quest towards low-power and secure approaches to locally processing data. Neuromorphic computing, a brain-inspired approach, addresses this need by radically changing the processing of information. Although neuromorphic electrical computing systems offer advantages in terms of CMOS implementations and scalability, they inherit limitations of conventional electronics such as low energy-efficiency, high latency and low bandwidth density. Besides, such systems often require robust security layers for e.g., safety-critical applications. Security layers based on memory-stored secret keys are prone to several types of memory-accessing attacks. Therefore, silicon hardware approaches for security primitives such as physical unclonable functions (PUFs) are currently investigated because of their absence of long-term digital memory storage. Although electronic PUFs have received major attention thanks to their native CMOS implementation, for secure authentication they are prone to machine learning and side-channel attacks due to their CMOS technology.\nThe NEUROPULS project aims to build next-generation low-power and secure edge-computing systems by developing novel photonic computing architectures and security layers based on photonic PUFs in augmented silicon photonics CMOS-compatible platforms. The integration of emerging non-volatile phase change materials for synapses/neurons and III-V materials for on-chip spiking sources, for the first time, will allow to build novel neuromorphic accelerators featuring RISC-V compliant interfaces for smooth adoption and programmability. Optimal performance will be achieved thanks to a novel full-system simulation platform for design space exploration. Three relevant use-cases will be considered for benchmarking to demonstrate 2 orders of magnitude energy efficiency improvement."
+    },
+    "start_date": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#date",
+     "value": "2023-01-01"
+    },
+    "funding_amount": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "value": "448750"
+    }
+   },
+   {
+    "project_id": {
+     "type": "literal",
+     "value": "101070238"
+    },
+    "title": {
+     "type": "literal",
+     "value": "NEUROmorphic energy-efficient secure accelerators based on Phase change materials aUgmented siLicon photonicS"
+    },
+    "abstract": {
+     "type": "literal",
+     "value": "The growing need to transfer massive amounts of data among multitudes of interconnected devices for e.g., self-driving vehicles, IoT or industry 4.0 has led to a quest towards low-power and secure approaches to locally processing data. Neuromorphic computing, a brain-inspired approach, addresses this need by radically changing the processing of information. Although neuromorphic electrical computing systems offer advantages in terms of CMOS implementations and scalability, they inherit limitations of conventional electronics such as low energy-efficiency, high latency and low bandwidth density. Besides, such systems often require robust security layers for e.g., safety-critical applications. Security layers based on memory-stored secret keys are prone to several types of memory-accessing attacks. Therefore, silicon hardware approaches for security primitives such as physical unclonable functions (PUFs) are currently investigated because of their absence of long-term digital memory storage. Although electronic PUFs have received major attention thanks to their native CMOS implementation, for secure authentication they are prone to machine learning and side-channel attacks due to their CMOS technology.\nThe NEUROPULS project aims to build next-generation low-power and secure edge-computing systems by developing novel photonic computing architectures and security layers based on photonic PUFs in augmented silicon photonics CMOS-compatible platforms. The integration of emerging non-volatile phase change materials for synapses/neurons and III-V materials for on-chip spiking sources, for the first time, will allow to build novel neuromorphic accelerators featuring RISC-V compliant interfaces for smooth adoption and programmability. Optimal performance will be achieved thanks to a novel full-system simulation platform for design space exploration. Three relevant use-cases will be considered for benchmarking to demonstrate 2 orders of magnitude energy efficiency improvement."
+    },
+    "start_date": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#date",
+     "value": "2023-01-01"
+    },
+    "funding_amount": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "value": "0"
+    }
+   },
+   {
+    "project_id": {
+     "type": "literal",
+     "value": "101070238"
+    },
+    "title": {
+     "type": "literal",
+     "value": "NEUROmorphic energy-efficient secure accelerators based on Phase change materials aUgmented siLicon photonicS"
+    },
+    "abstract": {
+     "type": "literal",
+     "value": "The growing need to transfer massive amounts of data among multitudes of interconnected devices for e.g., self-driving vehicles, IoT or industry 4.0 has led to a quest towards low-power and secure approaches to locally processing data. Neuromorphic computing, a brain-inspired approach, addresses this need by radically changing the processing of information. Although neuromorphic electrical computing systems offer advantages in terms of CMOS implementations and scalability, they inherit limitations of conventional electronics such as low energy-efficiency, high latency and low bandwidth density. Besides, such systems often require robust security layers for e.g., safety-critical applications. Security layers based on memory-stored secret keys are prone to several types of memory-accessing attacks. Therefore, silicon hardware approaches for security primitives such as physical unclonable functions (PUFs) are currently investigated because of their absence of long-term digital memory storage. Although electronic PUFs have received major attention thanks to their native CMOS implementation, for secure authentication they are prone to machine learning and side-channel attacks due to their CMOS technology.\nThe NEUROPULS project aims to build next-generation low-power and secure edge-computing systems by developing novel photonic computing architectures and security layers based on photonic PUFs in augmented silicon photonics CMOS-compatible platforms. The integration of emerging non-volatile phase change materials for synapses/neurons and III-V materials for on-chip spiking sources, for the first time, will allow to build novel neuromorphic accelerators featuring RISC-V compliant interfaces for smooth adoption and programmability. Optimal performance will be achieved thanks to a novel full-system simulation platform for design space exploration. Three relevant use-cases will be considered for benchmarking to demonstrate 2 orders of magnitude energy efficiency improvement."
+    },
+    "start_date": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#date",
+     "value": "2023-01-01"
+    },
+    "funding_amount": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "value": "291250"
+    }
+   },
+   {
+    "project_id": {
+     "type": "literal",
+     "value": "101203197"
+    },
+    "title": {
+     "type": "literal",
+     "value": "In-Materio Reservoir Computing Using Tailored Epitaxial Complex Oxides"
+    },
+    "abstract": {
+     "type": "literal",
+     "value": "The ever-increasing power consumption of electronics necessitates the development of new energy-efficient device paradigms for data storage and computation. In this pursuit, approaches aimed at mimicking the functionality of the human brain in artificial devices, so-called neuromorphic engineering, have attracted a lot of attention. Reservoir computing relying on a random, untrained reservoir provides a powerful platform to exploit materials for brain-inspired computing without strict requirements on the device-to-device variability. Implementing reservoir computing in-materio is, however, challenging because of difficulties to adapt the two main reservoir properties  nonlinearity and memory capacity - to computational tasks. Epitaxial complex oxides offer a wealth of nonlinear material properties with tunable memory characteristics, making them ideal candidates for task-adaptive physical reservoir computing. \n\nWith RECOMPUTE, I aim to establish in-materio reservoir computing using epitaxial complex oxides to efficiently perform computational tasks. I propose to achieve this by combining in thin-film epitaxial heterostructures (i) rare-earth nickelates with a tunable nonlinear negative differential resistance and (ii) relaxor ferroelectrics with a memory capacity that is tunable via the chemical composition. By fabricating prototypical thin-film devices, characterizing and optimizing their electrical transport characteristics, and simulating their computational performance, I intend to shed light on the fundamental relationship between the intrinsic material properties of reservoir devices and their performance in solving different cognitive tasks  a crucial insight that has been elusive so far.\n\nUltimately, the successful implementation of the proposed research will establish novel reservoir computing devices based on complex oxides and serve as a template for the study of other nonlinear systems for unconventional computing among and beyond complex oxides."
+    },
+    "start_date": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#date",
+     "value": "2025-04-01"
+    },
+    "funding_amount": {
+     "type": "typed-literal",
+     "datatype": "http://www.w3.org/2001/XMLSchema#decimal",
+     "value": "217076.16"
+    }
+   }
+  ]
+ }
+}

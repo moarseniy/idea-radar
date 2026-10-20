@@ -3,7 +3,15 @@ from datetime import date
 import pytest
 
 from app.ml.features import evidence as ev
-from app.ml.features.extract import compute, extract_events, llm_json, select_headlines
+from app.ml.features.extract import (
+    _evidence_timeline_visualization,
+    _needs_patent_metrics,
+    _publication_visualization,
+    compute,
+    extract_events,
+    llm_json,
+    select_headlines,
+)
 from app.ml.features.schema import FEATURE_NAMES
 
 SNAPSHOT = date(2026, 9, 22)
@@ -39,6 +47,109 @@ def test_compute_returns_full_schema_and_is_deterministic():
     second = compute(SNAPSHOT, QUERY, sci, pat, med, EXT)
     assert list(first) == FEATURE_NAMES
     assert first == second
+
+
+def test_live_model_only_fetches_patents_if_patent_features_are_inputs():
+    from app.ml.scorer import default_scorer
+
+    assert not _needs_patent_metrics(set(default_scorer().features))
+    assert _needs_patent_metrics(None)
+    assert _needs_patent_metrics({"patent_growth_2y"})
+
+
+def test_publication_visualization_distinguishes_observed_zero_from_unavailable():
+    available = _publication_visualization(ev.Science(
+        ok=True, total=10, count_3y=7, history_complete=True, recent_3y_complete=True,
+        year_counts={"2021": 2, "2026": 3}, older_results_capped=True))
+    assert available["publication_total_found"] == 10
+    assert available["publication_recent_share_found"] == 0.7
+    assert available["publication_total_capped"] is True
+
+    empty = _publication_visualization(ev.Science(ok=True))
+    unavailable = _publication_visualization(ev.Science(ok=False))
+    assert empty["publication_total_found"] == 0
+    assert empty["publication_recent_share_found"] is None
+    assert unavailable["publication_total_found"] is None
+    assert unavailable["science_status"] == "unavailable"
+
+
+def test_evidence_timeline_uses_channel_search_aggregates_not_card_sources():
+    sci = ev.Science(ok=True, year_counts={"2021": 4, "2022": 3, "2023": 2,
+                                           "2024": 1, "2025": 0, "2026": 5})
+    med = ev.Media(ok=True, windows={
+        "0-6m": [{"title": "New report", "date": "2026-08-01", "publisher": "A", "host": "a.test"}],
+        "6-12m": [{"title": "Older report", "date": "2025-10-01", "publisher": "B", "host": "b.test"}],
+        "12-24m": [], "24-48m": [],
+    })
+    refs = [
+        {"source_provider": "nsf_award", "observed_at": "2014-05-01",
+         "structured_event": {"type": "grant", "date": "2014-05-01"}},
+        {"source_provider": "google_news", "channel": "market", "url": "https://example.test/story",
+         "title": "Archived media mention", "observed_at": "2016-05-01"},
+        {"source_provider": "nih_reporter_project", "observed_at": "2026-02-01",
+         "structured_event": {"type": "grant", "date": "2026-02-01"}},
+        {"source_provider": "github_repository", "observed_at": "2025-01-01"},
+        {"source_provider": "clinicaltrials_api", "observed_at": "2024-04-01",
+         "structured_event": {"type": "trial", "date": "2024-04-01"}},
+    ]
+
+    result = _evidence_timeline_visualization(SNAPSHOT, sci, med, refs)
+
+    assert result["years"] == [str(year) for year in range(2014, 2027)]
+    assert result["channels"]["science"]["counts"]["2026"] == 5
+    assert result["channels"]["science"]["counts"]["2014"] is None
+    assert result["channels"]["news"]["counts"]["2026"] == 1
+    assert result["channels"]["news"]["counts"]["2016"] == 1
+    assert result["channels"]["news"]["counts"]["2015"] is None
+    assert result["channels"]["news"]["counts"]["2014"] is None
+    assert result["channels"]["funding"]["counts"]["2014"] == 1
+    assert result["channels"]["funding"]["counts"]["2015"] == 0
+    assert result["channels"]["funding"]["counts"]["2026"] == 1
+    assert result["channels"]["community"]["counts"]["2025"] == 1
+    assert result["channels"]["adoption"]["counts"]["2024"] == 1
+    assert all(value is None for value in result["channels"]["patents"]["counts"].values())
+
+
+def test_science_returns_all_available_publication_years_without_extra_queries(monkeypatch):
+    monkeypatch.setenv("OPENALEX_ENABLED", "0")
+    monkeypatch.setenv("FEATURE_STRUCTURED_SOURCES", "1")
+    records = [
+        {"title": "Paper 2026", "publicationDate": "2026-02-01", "doi": "10.1/a"},
+        {"title": "Paper 2025", "publicationDate": "2025-03-01", "doi": "10.1/b"},
+        {"title": "Paper 2023", "publicationDate": "2023-06-01", "doi": "10.1/c"},
+        {"title": "Paper 2021", "publicationDate": "2021-08-01", "doi": "10.1/d"},
+        {"title": "Old paper", "publicationDate": "2019-07-01", "doi": "10.1/e"},
+    ]
+
+    def fake_crossref(_terms, start, end):
+        return [row for row in records if start.isoformat() <= row["publicationDate"] <= end.isoformat()]
+
+    monkeypatch.setattr(ev, "_crossref", fake_crossref)
+    result = ev.science(["edge sensor"], SNAPSHOT)
+
+    assert result.ok
+    assert result.total == 5
+    assert result.year_counts == {"2019": 1, "2020": 0, "2021": 1, "2022": 0, "2023": 1,
+                                  "2024": 0, "2025": 1, "2026": 1}
+
+
+def test_google_patents_web_fallback_keeps_only_patent_pages(monkeypatch):
+    monkeypatch.setattr(ev.LIMITS["google_patents"], "wait", lambda: None)
+    requested = {}
+
+    def fake_search(query):
+        requested["query"] = query
+        return {"results": [
+            {"url": "https://patents.google.com/patent/US123/en", "title": "Patent A"},
+            {"url": "https://example.org/patent/US456", "title": "Not a patent result"},
+            {"url": "https://patents.google.com/search?q=x", "title": "Search page"},
+        ]}
+
+    monkeypatch.setattr("app.search.client.web_search", fake_search)
+    refs = ev.search_patents_google_web(["battery separator"], SNAPSHOT)
+    assert [ref["title"] for ref in refs] == ["Patent A"]
+    assert refs[0]["source_provider"] == "Google Patents web search"
+    assert "site:patents.google.com/patent" in requested["query"].text
 
 
 def test_compute_values_follow_evidence():
@@ -165,3 +276,58 @@ def test_disabled_openalex_does_not_turn_failed_crossref_into_measured_zero(monk
 
     assert result.ok is False
     assert result.count_3y == 0
+
+
+def test_citation_velocity_is_not_computed_in_the_past():
+    # Число цитирований Crossref — на сегодня: в историческом срезе это утечка из будущего.
+    live = compute(SNAPSHOT, QUERY, *evidence(), EXT)
+    past = compute(SNAPSHOT, QUERY, *evidence(), EXT, historical=True)
+    assert live["citation_velocity_median"] != ""
+    assert past["citation_velocity_median"] == ""
+    assert past["papers_log_3y"] == live["papers_log_3y"]
+
+
+def test_science_counts_historical_years_from_existing_query_windows(monkeypatch):
+    monkeypatch.setenv("OPENALEX_ENABLED", "0")
+    monkeypatch.setenv("FEATURE_STRUCTURED_SOURCES", "1")
+    records = [
+        {"title": "Paper 2026", "publicationDate": "2026-02-01", "doi": "10.1000/a"},
+        {"title": "Paper 2025", "publicationDate": "2025-03-01", "doi": "10.1000/b"},
+        {"title": "Paper 2023", "publicationDate": "2023-06-01", "doi": "10.1000/c"},
+        {"title": "Paper 2021", "publicationDate": "2021-08-01", "doi": "10.1000/d"},
+        {"title": "Old paper", "publicationDate": "2019-07-01", "doi": "10.1000/e"},
+    ]
+
+    def fake_crossref(_terms, start, end):
+        return [row for row in records if start.isoformat() <= row["publicationDate"] <= end.isoformat()]
+
+    monkeypatch.setattr(ev, "_crossref", fake_crossref)
+    result = ev.science(["edge sensor"], SNAPSHOT)
+
+    assert result.ok is True
+    assert result.total == 5
+    assert result.history_complete is True
+    assert result.year_counts == {"2019": 1, "2020": 0, "2021": 1, "2022": 0, "2023": 1,
+                                  "2024": 0, "2025": 1, "2026": 1}
+
+
+def test_science_marks_years_unknown_when_a_query_window_fails(monkeypatch):
+    monkeypatch.setenv("OPENALEX_ENABLED", "0")
+    monkeypatch.setenv("FEATURE_STRUCTURED_SOURCES", "1")
+    snapshot = date(2026, 9, 22)
+    failed_start = ev.years_before(snapshot, 4)
+
+    def partial_crossref(_terms, start, end):
+        if start == failed_start:
+            raise RuntimeError("temporary Crossref error")
+        return [{"title": f"Paper {start.year}", "publicationDate": f"{start.year}-11-01",
+                 "doi": f"10.1000/{start.year}"}]
+
+    monkeypatch.setattr(ev, "_crossref", partial_crossref)
+    result = ev.science(["edge sensor"], snapshot)
+
+    assert result.ok is True and result.history_complete is False
+    assert result.year_counts["2023"] is None
+    assert result.year_counts["2026"] is not None
+    assert result.recent_3y_complete is False
+    assert _publication_visualization(result)["publication_recent_share_found"] is None

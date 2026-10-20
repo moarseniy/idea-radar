@@ -15,7 +15,7 @@ from app.search.client import web_search
 from app.search.config import load_search_settings
 from app.radar.spoken_media import is_youtube_url
 
-MAX_REFS = 18
+MAX_REFS = 100
 
 
 def task_queries(task: dict, limit: int | None = None) -> list[dict]:
@@ -74,7 +74,7 @@ def search_task(task: dict, as_of: str, per_query: int = 8) -> dict:
     used = sorted({a["name"] for a in audit if a.get("count")})
     failed = [a["error"] for a in audit if a.get("error")]
     connector = task.get("connector_label") or f"Веб-поиск ({', '.join(used) or 'нет выдачи'})"
-    ref_limit = max(1, min(40, int(task.get("max_refs", MAX_REFS))))
+    ref_limit = max(1, min(MAX_REFS, int(task.get("max_refs", MAX_REFS))))
     return {"query": task["query"], "branch": task["branch"], "summary": "", "references": refs[:ref_limit],
             "connector": connector, "providers": audit, "query_count": len(queries),
             "query_languages": list(dict.fromkeys(q["language"] for q in queries)),

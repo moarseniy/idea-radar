@@ -1,0 +1,65 @@
+{
+  "errorcode": 0,
+  "msg": "Webservice Succeeds",
+  "data": {
+    "hitCount": 4726,
+    "oppHits": [
+      {
+        "id": "352320",
+        "number": "DE-FOA-0003264",
+        "title": "Advancements in Artificial Intelligence for Science",
+        "agencyCode": "PAMS-SC",
+        "agency": "Office of Science",
+        "openDate": "02/13/2024",
+        "closeDate": "05/22/2024",
+        "oppStatus": "archived",
+        "docType": "synopsis",
+        "cfdaList": [
+          "81.049"
+        ]
+      },
+      {
+        "id": "364068",
+        "number": "24-554",
+        "title": "Artificial Intelligence, Formal Methods, and Mathematical Reasoning (AIMing)",
+        "agencyCode": "NSF",
+        "agency": "U.S. National Science Foundation",
+        "openDate": "10/13/2026",
+        "closeDate": "",
+        "oppStatus": "archived",
+        "docType": "synopsis",
+        "cfdaList": [
+          "47.049"
+        ]
+      },
+      {
+        "id": "333855",
+        "number": "2021-NIST-AI3-01",
+        "title": "NIST Public Safety Innovation Accelerator Program &ndash; Artificial Intelligence for IoT Information Prize Competition",
+        "agencyCode": "DOC-NIST",
+        "agency": "National Institute of Standards and Technology",
+        "openDate": "05/27/2021",
+        "closeDate": "07/26/2021",
+        "oppStatus": "archived",
+        "docType": "synopsis",
+        "cfdaList": [
+          "11.609"
+        ]
+      },
+      {
+        "id": "287284",
+        "number": "DARPA-BAA-16-53",
+        "title": "Explainable Artificial Intelligence (XAI)",
+        "agencyCode": "DOD-DARPA-I2O",
+        "agency": "DARPA - Information Innovation Office",
+        "openDate": "08/10/2016",
+        "closeDate": "11/01/2016",
+        "oppStatus": "archived",
+        "docType": "synopsis",
+        "cfdaList": [
+          "12.910"
+        ]
+      }
+    ]
+  }
+}

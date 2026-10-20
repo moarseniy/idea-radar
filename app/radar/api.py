@@ -8,7 +8,7 @@ from fastapi import APIRouter, HTTPException, Request
 from fastapi.responses import Response
 
 from app.radar.analysis import RUBRIC_VERSION, WEIGHTS
-from app.radar.config import ALLOWED_MODELS, load_radar_settings
+from app.radar.config import allowed_models, load_radar_settings
 from app.radar.dataset import read_catalog
 from app.radar.models import (
     RegistryDomainInput,
@@ -46,7 +46,10 @@ def model_info(settings) -> dict:
     info = {"kind": "model", "name": art["name"], "features": len(art["features"]),
             "threshold": art["threshold"], "validation": art.get("validation", {}),
             "artifact": MODEL_PATH.name, "feature_model": llm}
-    if model_slug(llm) not in art.get("training_data", ""):
+    # feature_model артефакта — LLM разметки обучающих строк; у старых артефактов её
+    # имя видно только в пути training_data (model_compare/<модель>/training.csv).
+    trained_on = art.get("feature_model")
+    if (llm != trained_on) if trained_on else (model_slug(llm) not in art.get("training_data", "")):
         # Признаки размечает одна LLM, а модель обучена на разметке другой — вероятности смещены.
         info["warning"] = (f"Модель скоринга обучена не на разметке {llm}; добавьте артефакт "
                            f"logreg_v1_{model_slug(llm)}.json или задайте SIGNAL_MODEL_PATH.")
@@ -105,7 +108,7 @@ def configuration(request: Request):
                               "candidates": settings.max_candidates},
             "model": settings.active_model, "research_model": settings.active_research_model,
             "provider": settings.provider_label, "web_search": web_search_info(settings),
-            "storage": request.app.state.radar_store.backend, "allowed_models": sorted(ALLOWED_MODELS),
+            "storage": request.app.state.radar_store.backend, "allowed_models": sorted(allowed_models()),
             "rubric_version": RUBRIC_VERSION, "weights": WEIGHTS, "scoring": model_info(settings),
             "score_note": ("Скоринг — калиброванная вероятность обученной логистической регрессии."
                            if settings.use_model else

@@ -63,3 +63,29 @@ export function safeUrl(value?: string) {
 export function percent(p: number) {
   return `${Math.round(p * 100)}%`
 }
+
+export const CHANNEL: Record<string, string> = {
+  science: 'Наука и патенты',
+  money: 'Деньги: гранты, контракты, венчур',
+  market: 'Рынок и новости',
+  adoption: 'Внедрение: код, модели, испытания',
+  other: 'Прочее',
+}
+
+export const MONEY_KIND: Record<string, string> = {
+  grant: 'Грант',
+  grant_call: 'Конкурс грантов',
+  contract: 'Госконтракт',
+  tender: 'Тендер',
+  funding_round: 'Венчурный раунд',
+  accelerator: 'Акселератор',
+  filing_mention: 'Упоминание в отчётности',
+  procurement: 'Закупка',
+  funding: 'Финансирование',
+  news: 'Деловая новость',
+}
+
+export function usd(millions: number | null) {
+  if (!millions) return ''  // UKRI отдаёт 0 вместо неизвестной суммы
+  return millions >= 1 ? `$${millions.toFixed(millions >= 10 ? 0 : 1)} млн` : `$${Math.round(millions * 1000)} тыс.`
+}

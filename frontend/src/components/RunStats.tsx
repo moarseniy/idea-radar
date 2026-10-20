@@ -1,5 +1,6 @@
 import type { Run } from '../api'
-import { TRUST, VERDICT } from '../labels'
+import { CHANNEL, TRUST, VERDICT } from '../labels'
+import { PublicationMap } from './SignalVisuals'
 
 interface Bar {
   label: string
@@ -57,6 +58,9 @@ export function RunStats({ run }: { run: Run }) {
   )
     .sort((a, b) => b[1] - a[1])
     .map(([label, value]) => ({ label, value }))
+  const channels = Object.keys(CHANNEL)
+    .map((key) => ({ label: CHANNEL[key], value: read.filter((s) => (s.channel || 'other') === key).length }))
+    .filter((c) => c.value > 0)
   const domains = Object.entries(
     run.signals.reduce<Record<string, number>>((acc, s) => {
       acc[s.domain] = (acc[s.domain] ?? 0) + 1
@@ -105,7 +109,16 @@ export function RunStats({ run }: { run: Run }) {
         />
         <Bars title="Решения по кандидатам" bars={verdicts} total={run.assessments.length} />
         <Bars title="Доверие к прочитанным документам" note="По реестру источников." bars={trust} total={read.length} />
+        {channels.length > 0 && (
+          <Bars
+            title="Каналы прочитанных документов"
+            note="Деньгам резервируется часть мест чтения; остальное — без квот."
+            bars={channels}
+            total={read.length}
+          />
+        )}
         <Bars title="Типы источников" bars={types} total={read.length} />
+        <PublicationMap candidates={topCandidates} />
         {domains.some((d) => d.value > 1) && <Bars title="Области сигналов в ТОП" bars={domains} total={run.signals.length} />}
         {reasons.length > 0 && <Bars title="Причины исключения (по модели)" bars={reasons} />}
       </div>

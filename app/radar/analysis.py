@@ -18,16 +18,34 @@ def candidate_key(text: str) -> str:
     return re.sub(r"[^\w]+", " ", text.casefold()).strip()
 
 
-def merge_candidates(candidates: list[dict], limit: int) -> list[dict]:
+def _candidate_audit_item(item: dict) -> dict:
+    return {key: item.get(key) for key in ("id", "title", "application", "domain", "source_ids")}
+
+
+def merge_candidates_with_audit(candidates: list[dict], limit: int, stage: str = "deduplication") -> tuple[list[dict], list[dict]]:
+    """Merge near-duplicate technology/application pairs and report every removed row."""
     merged: list[dict] = []
+    filtered: list[dict] = []
     for item in candidates:
         key = candidate_key(item["title"] + " " + item["application"])
         duplicate = next((c for c in merged if SequenceMatcher(None, key, c["_key"]).ratio() > .86), None)
         if duplicate:
             duplicate["source_ids"] = sorted(set(duplicate["source_ids"] + item["source_ids"]))
+            filtered.append({"stage": stage, "action": "merged_duplicate",
+                             "candidate": _candidate_audit_item(item),
+                             "merged_into": _candidate_audit_item(duplicate),
+                             "reason": "Похожее название и применение; источники объединены."})
         elif len(merged) < limit:
             merged.append({**item, "id": "cand_" + hashlib.sha256(key.encode()).hexdigest()[:12], "_key": key})
-    return [{k: v for k, v in c.items() if k != "_key"} for c in merged]
+        else:
+            filtered.append({"stage": stage, "action": "limit_excluded",
+                             "candidate": _candidate_audit_item(item),
+                             "reason": f"Превышен лимит этапа: не более {limit} кандидатов."})
+    return [{k: v for k, v in c.items() if k != "_key"} for c in merged], filtered
+
+
+def merge_candidates(candidates: list[dict], limit: int) -> list[dict]:
+    return merge_candidates_with_audit(candidates, limit)[0]
 
 
 def checked_assessment(candidate: dict, assessment: Assessment, source_map: dict, as_of: date) -> dict:

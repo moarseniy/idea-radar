@@ -1,5 +1,5 @@
 import { useRef, useState, type FormEvent } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { radar, type ScopeChatMessage, type ScopeSuggestion } from '../api'
 import { useApp } from '../state'
 
@@ -23,9 +23,11 @@ function today() {
 export function Home() {
   const { config, refresh, toast } = useApp()
   const navigate = useNavigate()
+  const location = useLocation()
   const requestId = useRef(0)
-  const [query, setQuery] = useState('')
+  const [query, setQuery] = useState(() => (location.state as { prefillQuery?: string } | null)?.prefillQuery ?? '')
   const [asOf, setAsOf] = useState(today())
+  const [trackingEnabled, setTrackingEnabled] = useState(false)
   const [busy, setBusy] = useState(false)
   const [scopeStep, setScopeStep] = useState<ScopeStep>('closed')
   const [chatBusy, setChatBusy] = useState(false)
@@ -46,6 +48,7 @@ export function Home() {
   function changeQuery(value: string) {
     requestId.current += 1
     setQuery(value)
+    setTrackingEnabled(false)
     setScopeStep('closed')
     setChatBusy(false)
     setChatMessages([])
@@ -163,12 +166,33 @@ export function Home() {
           </button>
         </div>
         <div className="search-bottom">
-          <div className="suggestions">
-            {SUGGESTIONS.map(([label, text]) => (
-              <button type="button" key={label} onClick={() => changeQuery(text)}>
-                {label}
-              </button>
-            ))}
+          <div className="search-bottom-left">
+            <div className="suggestions">
+              {SUGGESTIONS.map(([label, text]) => (
+                <button type="button" key={label} onClick={() => changeQuery(text)}>
+                  {label}
+                </button>
+              ))}
+            </div>
+            <section className="tracking-demo" aria-label="Регулярное отслеживание">
+              <label className="tracking-demo-toggle">
+                <input type="checkbox" checked={trackingEnabled} onChange={(event) => setTrackingEnabled(event.target.checked)} />
+                <span className="tracking-demo-check" aria-hidden="true">{trackingEnabled ? '✓' : ''}</span>
+                <span className="tracking-demo-copy">
+                  <strong>Отслеживать регулярно</strong>
+                  <small>Ежедневно искать новые сигналы по этой теме</small>
+                </span>
+              </label>
+              <label className="tracking-demo-email">
+                <span className="tracking-demo-email-heading">
+                  <span>Уведомлять о новых сигналах</span>
+                  <b>Beta</b>
+                </span>
+                <input type="text" inputMode="email" aria-label="Электронная почта для уведомлений"
+                  placeholder="Электронная почта" autoComplete="off"
+                  onKeyDown={(event) => { if (event.key === 'Enter') event.preventDefault() }} />
+              </label>
+            </section>
           </div>
           <label className="date-label">
             <span className="date-label-title"><span aria-hidden="true">◷</span> Дата среза</span>

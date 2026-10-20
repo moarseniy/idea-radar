@@ -147,6 +147,15 @@ def test_spoken_search_uses_original_language_and_ru_en_terms():
     assert broad["max_queries"] == 14
     assert broad["per_query"] == 2
 
+    expanded = spoken_media_search_task(
+        Branch(topic="Sensor deployments", query_ru="датчики на заводах", query_en="industrial sensors"),
+        [{"language": code, "query": f"topic {code}"}
+         for code in ("en", "ru", "zh", "es", "fr", "de", "pt", "ja")],
+        "fr", query_limit=6, results_per_query=5,
+    )
+    assert expanded["max_queries"] == 6
+    assert expanded["per_query"] == 5 and expanded["max_refs"] == 30
+
 
 def test_asr_requires_allowlisted_non_youtube_host(monkeypatch):
     assert host_is_allowed("https://media.example/show.mp3", ("example",))

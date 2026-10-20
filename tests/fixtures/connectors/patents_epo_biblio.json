@@ -1,0 +1,17 @@
+{"ops:world-patent-data": {"ops:biblio-search": null,
+ "exchange-documents": {"exchange-document": [
+  {"@country": "EP", "@doc-number": "3975021", "@kind": "B1",
+   "bibliographic-data": {
+    "publication-reference": {"document-id": [{"@document-id-type": "docdb", "country": {"$": "EP"}, "doc-number": {"$": "3975021"}, "kind": {"$": "B1"}, "date": {"$": "20210915"}}]},
+    "application-reference": {"document-id": [{"@document-id-type": "docdb", "country": {"$": "EP"}, "doc-number": {"$": "21200001"}, "kind": {"$": "A"}, "date": {"$": "20200929"}}]},
+    "priority-claims": {"priority-claim": [{"document-id": [{"@document-id-type": "docdb", "country": {"$": "US"}, "doc-number": {"$": "202017037"}, "kind": {"$": "A"}, "date": {"$": "20200929"}}]}]},
+    "invention-title": [{"@lang": "en", "$": "Agent based security monitoring of application data flow"}],
+    "parties": {"applicants": {"applicant": [{"@data-format": "epodoc", "applicant-name": {"name": {"$": "Dynatrace LLC"}}}]}}},
+   "abstract": {"@lang": "en", "p": {"$": "A security agent deployed in an execution environment identifies vulnerabilities in the application."}}},
+  {"@country": "US", "@doc-number": "11882128", "@kind": "B2",
+   "bibliographic-data": {
+    "publication-reference": {"document-id": [{"@document-id-type": "docdb", "country": {"$": "US"}, "doc-number": {"$": "11882128"}, "kind": {"$": "B2"}, "date": {"$": "20210301"}}]},
+    "application-reference": {"document-id": [{"@document-id-type": "docdb", "country": {"$": "US"}, "doc-number": {"$": "17024000"}, "kind": {"$": "A"}, "date": {"$": "20200917"}}]},
+    "invention-title": [{"@lang": "en", "$": "Heat storage device"}],
+    "parties": {"applicants": {"applicant": [{"applicant-name": {"name": {"$": "Thermo Inc"}}}]}}},
+   "abstract": {"@lang": "en", "p": {"$": "A device for storing heat."}}}]}}}

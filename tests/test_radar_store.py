@@ -15,3 +15,10 @@ def test_delete_run_removes_only_that_run_and_cascades_sources(tmp_path):
     assert store.get("second") is not None
     assert store.source("second", "second-source") is not None
     assert store.delete_run("missing") is False
+
+
+def test_postgres_payload_drops_nul_characters():
+    from app.radar.store import _without_nul
+
+    source = {"id": "s1", "document": {"text": "f(x) =sim\x00 x", "chunks": ["a\x00b", ("c\x00",)]}, "n": 3}
+    assert _without_nul(source) == {"id": "s1", "document": {"text": "f(x) =sim x", "chunks": ["ab", ["c"]]}, "n": 3}

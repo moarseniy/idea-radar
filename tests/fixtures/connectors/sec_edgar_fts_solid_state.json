@@ -1,0 +1,222 @@
+{
+ "took": 35,
+ "timed_out": false,
+ "_shards": {
+  "total": 50,
+  "successful": 50,
+  "skipped": 0,
+  "failed": 0
+ },
+ "hits": {
+  "total": {
+   "value": 38,
+   "relation": "eq"
+  },
+  "max_score": 19.343512,
+  "hits": [
+   {
+    "_index": "edgar_file",
+    "_id": "0001193125-21-044982:d137857dex991.htm",
+    "_score": 19.343512,
+    "_source": {
+     "ciks": [
+      "0001811414"
+     ],
+     "period_ending": "2021-02-16",
+     "file_num": [
+      "001-39345"
+     ],
+     "display_names": [
+      "QuantumScape Corp  (QS)  (CIK 0001811414)"
+     ],
+     "xsl": null,
+     "sequence": 2,
+     "root_forms": [
+      "8-K"
+     ],
+     "file_date": "2021-02-16",
+     "biz_states": [
+      "CA"
+     ],
+     "sics": [
+      "3690"
+     ],
+     "form": "8-K",
+     "adsh": "0001193125-21-044982",
+     "film_num": [
+      "21639443"
+     ],
+     "biz_locations": [
+      "San Jose, CA"
+     ],
+     "file_type": "EX-99.1",
+     "file_description": "EX-99.1",
+     "inc_states": [
+      "DE"
+     ],
+     "items": [
+      "2.02",
+      "9.01"
+     ]
+    }
+   },
+   {
+    "_index": "edgar_file",
+    "_id": "0001193125-21-310291:d248805dex992.htm",
+    "_score": 18.721119,
+    "_source": {
+     "ciks": [
+      "0001844862"
+     ],
+     "period_ending": "2021-10-27",
+     "file_num": [
+      "001-40284"
+     ],
+     "display_names": [
+      "Decarbonization Plus Acquisition Corp III  (SLDP, SLDPW)  (CIK 0001844862)"
+     ],
+     "xsl": null,
+     "sequence": 2,
+     "root_forms": [
+      "8-K"
+     ],
+     "file_date": "2021-10-28",
+     "biz_states": [
+      "CA"
+     ],
+     "sics": [
+      "3690"
+     ],
+     "form": "8-K",
+     "adsh": "0001193125-21-310291",
+     "film_num": [
+      "211354927"
+     ],
+     "biz_locations": [
+      "Menlo Park, CA"
+     ],
+     "file_type": "EX-99.2",
+     "file_description": "EX-99.2",
+     "inc_states": [
+      "DE"
+     ],
+     "items": [
+      "3.02",
+      "7.01",
+      "9.01"
+     ]
+    }
+   },
+   {
+    "_index": "edgar_file",
+    "_id": "0001564590-21-007621:qs-10k_20201231.htm",
+    "_score": 18.657337,
+    "_source": {
+     "ciks": [
+      "0001811414"
+     ],
+     "period_ending": "2020-12-31",
+     "file_num": [
+      "001-39345"
+     ],
+     "display_names": [
+      "QuantumScape Corp  (QS)  (CIK 0001811414)"
+     ],
+     "xsl": null,
+     "sequence": 1,
+     "root_forms": [
+      "10-K"
+     ],
+     "file_date": "2021-02-23",
+     "biz_states": [
+      "CA"
+     ],
+     "sics": [
+      "3690"
+     ],
+     "form": "10-K",
+     "adsh": "0001564590-21-007621",
+     "film_num": [
+      "21666571"
+     ],
+     "biz_locations": [
+      "San Jose, CA"
+     ],
+     "file_type": "10-K",
+     "file_description": "10-K",
+     "inc_states": [
+      "DE"
+     ],
+     "items": []
+    }
+   }
+  ]
+ },
+ "query": {
+  "_source": {
+   "exclude": [
+    "doc_text"
+   ]
+  },
+  "query": {
+   "bool": {
+    "must": [
+     {
+      "match_phrase": {
+       "doc_text": "solid-state battery"
+      }
+     }
+    ],
+    "must_not": [],
+    "should": [],
+    "filter": [
+     {
+      "terms": {
+       "root_forms": [
+        "10-K",
+        "10-Q",
+        "8-K"
+       ]
+      }
+     },
+     {
+      "range": {
+       "file_date": {
+        "gte": "2020-12-31",
+        "lte": "2021-12-31"
+       }
+      }
+     }
+    ]
+   }
+  },
+  "from": 0,
+  "size": 100,
+  "aggregations": {
+   "form_filter": {
+    "terms": {
+     "field": "root_forms",
+     "size": 30
+    }
+   },
+   "entity_filter": {
+    "terms": {
+     "field": "display_names.raw",
+     "size": 30
+    }
+   },
+   "sic_filter": {
+    "terms": {
+     "field": "sics",
+     "size": 30
+    }
+   },
+   "biz_states_filter": {
+    "terms": {
+     "field": "biz_states",
+     "size": 30
+    }
+   }
+  }
+ }
+}

@@ -33,10 +33,12 @@ from pathlib import Path
 
 import httpx
 
+from app.ml.env import env
+
 ROOT = Path(__file__).resolve().parents[3]
 CACHE_DIR = Path(os.getenv("FEATURE_CACHE_DIR", str(ROOT / "ml" / ".cache" / "features")))
-CONTACT = os.getenv("OPENALEX_MAILTO", "").strip() or "hackathon@example.org"
-UA = {"User-Agent": f"Mozilla/5.0 (compatible; weak-signal-radar/0.2; {CONTACT})"}
+CONTACT = env("CONTACT_EMAIL") or env("OPENALEX_MAILTO")
+UA = {"User-Agent": "Mozilla/5.0 (compatible; weak-signal-radar/0.2" + (f"; {CONTACT})" if CONTACT else ")")}
 
 
 class HostLimiter:
@@ -181,7 +183,7 @@ def _crossref(terms: list[str], start: date, end: date) -> list[dict]:
     """
     params = {"query.bibliographic": " ".join(terms), "rows": 1000, "select": CROSSREF_SELECT,
               "filter": f"from-pub-date:{start.isoformat()},until-pub-date:{end.isoformat()}",
-              "mailto": CONTACT}
+              **({"mailto": CONTACT} if CONTACT else {})}
     url = "https://api.crossref.org/works?" + urllib.parse.urlencode(params)
 
     def parse(text: str) -> list[dict]:
@@ -209,6 +211,11 @@ class Science:
     ok: bool = False
     total: int = 0
     windows: list[int] = field(default_factory=lambda: [0, 0, 0])  # [0-2 лет, 2-4, 4-6]
+    year_counts: dict[str, int | None] = field(default_factory=dict)  # None означает неполное покрытие года
+    older_results_capped: bool = False
+    recent_results_capped: bool = False
+    history_complete: bool = False
+    recent_3y_complete: bool = False
     count_3y: int = 0
     first_date: str | None = None
     recent: list[dict] = field(default_factory=list)  # работы последних 2 лет
@@ -225,25 +232,32 @@ def science(terms: list[str], snapshot: date, *, include_affiliations: bool = Tr
     day = timedelta(days=1)
     b2, b3, b4, b6 = (years_before(snapshot, y) for y in (2, 3, 4, 6))
     windows = ((b2, snapshot), (b4, b2 - day), (b6, b4 - day))
-    crossref_windows, openalex_windows = [], []
+    crossref_windows, openalex_windows, window_available = [], [], []
     any_ok = False
     for start, end in windows:
+        crossref_ok = False
         try:
             crossref_windows.append(_crossref(terms, start, end))
+            crossref_ok = True
             any_ok = True
         except RuntimeError:
             crossref_windows.append([])
+        openalex_ok = False
         if os.getenv("FEATURE_STRUCTURED_SOURCES", "1") == "0" or not openalex_enabled():
             openalex_windows.append([])
         else:
             try:
                 openalex_windows.append(openalex_works(terms, start, end, limit=100,
                                                        include_affiliations=include_affiliations))
+                openalex_ok = True
                 any_ok = True
             except RuntimeError:
                 openalex_windows.append([])
+        window_available.append(crossref_ok or openalex_ok)
+    older_ok = False
     try:
         older = _crossref(terms, date(1900, 1, 1), b6 - day)
+        older_ok = True
         any_ok = True
     except RuntimeError:
         older = []
@@ -264,9 +278,65 @@ def science(terms: list[str], snapshot: date, *, include_affiliations: bool = Tr
     w0, w1, w2 = merged
     all_recent = [item for window in merged for item in window]
     out.windows = [len(w0), len(w1), len(w2)]
+    out.recent_results_capped = any(len(window) >= 1000 for window in merged)
     out.count_3y = len(w0) + sum(w["publicationDate"] >= b3.isoformat() for w in w1)
-    out.total = len({str(item.get("doi") or item.get("title", "")).casefold()
-                     for item in [*all_recent, *older]})
+    def work_key(item: dict) -> str:
+        doi = re.sub(r"^https?://doi.org/", "", str(item.get("doi") or "")).casefold().strip()
+        title = re.sub(r"\W+", " ", str(item.get("title") or "").casefold()).strip()
+        return f"doi:{doi}" if doi else f"title:{title}"
+
+    all_observed = [item for item in [*all_recent, *older] if work_key(item) != "title:"]
+    out.total = len({work_key(item) for item in all_observed})
+    out.older_results_capped = len(older) >= 1000
+    # The old Crossref query already retrieves works older than six years for the
+    # total/first-publication features. Reuse those returned records for the annual
+    # chart instead of silently truncating its history at six years.
+    counts_by_year: dict[int, int] = {}
+    seen_yearly = set()
+    for item in [*older, *all_recent]:
+        key = work_key(item)
+        published = str(item.get("publicationDate") or "")[:10]
+        try:
+            publication_day = date.fromisoformat(published)
+        except ValueError:
+            continue
+        if publication_day > snapshot or key in seen_yearly:
+            continue
+        seen_yearly.add(key)
+        counts_by_year[publication_day.year] = counts_by_year.get(publication_day.year, 0) + 1
+
+    first_observed_year = min(counts_by_year, default=snapshot.year - 5)
+    first_year = min(snapshot.year - 5, first_observed_year)
+
+    # A calendar year is known when the successful date-filtered requests cover
+    # every day in it. The pre-six-year request and the three recent windows form
+    # one continuous range when each succeeded.
+    coverage: list[tuple[date, date]] = []
+    if older_ok:
+        coverage.append((date(1900, 1, 1), b6 - day))
+    coverage.extend((start, end) for (start, end), available in zip(windows, window_available)
+                    if available)
+
+    def year_is_covered(year: int) -> bool:
+        target_end = min(date(year, 12, 31), snapshot)
+        cursor = date(year, 1, 1)
+        for start, end in sorted(coverage):
+            if end < cursor:
+                continue
+            if start > cursor:
+                return False
+            cursor = max(cursor, end + day)
+            if cursor > target_end:
+                return True
+        return cursor > target_end
+
+    out.year_counts = {}
+    for year in range(first_year, snapshot.year + 1):
+        out.year_counts[str(year)] = counts_by_year.get(year, 0) if year_is_covered(year) else None
+    out.history_complete = older_ok and all(window_available)
+    recent_windows = [index for index, (start, end) in enumerate(windows)
+                      if start <= snapshot and end >= b3]
+    out.recent_3y_complete = bool(recent_windows) and all(window_available[index] for index in recent_windows)
     out.recent = w0
     out.titles = [w["title"] for w in sorted(w0, key=lambda w: w["publicationDate"], reverse=True)[:40]]
     recent_3y = [item for item in [*w0, *w1] if item.get("publicationDate") and
@@ -335,6 +405,7 @@ class Patents:
     assignees_before: list[str] = field(default_factory=list)
     assignee_counts_3y: dict[str, int] = field(default_factory=dict)
     titles: list[str] = field(default_factory=list)
+    year_counts: dict[str, int | None] = field(default_factory=dict)
     source: str = "unavailable"
     warning: str = ""
 
@@ -385,8 +456,38 @@ def search_patents_fpo(terms: list[str], snapshot: date, *, limit: int = 12,
     # FPO sometimes closes TLS connections mid-response. One retry is useful;
     # repeated retries on a failing endpoint stall source collection for minutes.
     data = _patents(terms, after, snapshot, tries=2, timeout=15)
-    return [{**item, "source_country": None, "observed_at": None, "document": None}
+    return [{**item, "source_country": None, "observed_at": None, "document": None,
+             "source_provider": "FreePatentsOnline"}
             for item in data.get("references", [])[:limit]]
+
+
+def search_patents_google_web(terms: list[str], snapshot: date, *, limit: int = 12) -> list[dict]:
+    """Discover patent pages via configured web search; do not infer counts from snippets."""
+    from app.search.base import SearchQuery
+    from app.search.client import web_search
+
+    phrases = list(dict.fromkeys(re.sub(r"\s+", " ", term).strip() for term in terms if term.strip()))[:3]
+    if not phrases:
+        return []
+    expression = " OR ".join(f'"{term[:100]}"' for term in phrases)
+    query = f"site:patents.google.com/patent ({expression})"
+    LIMITS["google_patents"].wait()
+    response = web_search(SearchQuery(text=query[:590], as_of=snapshot, language="en", limit=limit,
+                                      lookback_days=15 * 365))
+    refs, seen = [], set()
+    for item in response.get("results", []):
+        url = str(item.get("url") or "").strip()
+        parsed = urllib.parse.urlsplit(url)
+        if (parsed.scheme not in {"http", "https"} or parsed.hostname != "patents.google.com"
+                or not parsed.path.startswith("/patent/") or url in seen):
+            continue
+        seen.add(url)
+        title = html.unescape(re.sub(r"<[^>]+>", " ", str(item.get("title") or ""))).strip() or url
+        refs.append({"url": url, "title": title, "source_language": "en", "observed_at": None,
+                     "source_country": None, "document": None, "source_provider": "Google Patents web search"})
+        if len(refs) >= max(1, min(limit, 20)):
+            break
+    return refs
 
 
 def patents(terms: list[str], snapshot: date) -> Patents:
@@ -395,6 +496,25 @@ def patents(terms: list[str], snapshot: date) -> Patents:
     result = _patents_from_fpo(terms, snapshot)
     if not result.ok:
         result.source = "freepatentsonline_unavailable"
+    return result
+
+
+def patent_year_counts(terms: list[str], snapshot: date) -> dict[str, int | None]:
+    """Annual FPO result totals for the UI chart, independent of classifier inputs.
+
+    The endpoint can be flaky, so use one short request per year and report unavailable
+    counts as unknown rather than blocking scoring for repeated long retries.
+    """
+    years = range(snapshot.year - 5, snapshot.year + 1)
+    if not PATENTS_ENABLED:
+        return {str(year): None for year in years}
+    result: dict[str, int | None] = {}
+    for year in years:
+        start, end = date(year, 1, 1), min(date(year, 12, 31), snapshot)
+        try:
+            result[str(year)] = _patents(terms, start, end, tries=1, timeout=5)["total"]
+        except Exception:  # noqa: BLE001 — chart data must not break candidate scoring
+            result[str(year)] = None
     return result
 
 

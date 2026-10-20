@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import os
+import re
 from dataclasses import dataclass
 from pathlib import Path
 from urllib.parse import urlsplit
@@ -8,7 +9,17 @@ from urllib.parse import urlsplit
 from dotenv import dotenv_values
 
 ALLOWED_MODELS = {"openai/gpt-4.1", "openai/gpt-4.1-2025-04-14", "openai/gpt-5.6-luna",
-                  "deepseek/deepseek-v4.1-flash"}
+                  "deepseek/deepseek-v4.1-flash", "deepseek/deepseek-v4.1-flash-1017",
+                  "anthropic/claude-sonnet-5.5"}
+REASONING_EFFORTS = ("none", "minimal", "low", "medium", "high")
+# Модель OpenRouter вне списка подключается без правки кода: RADAR_EXTRA_MODELS=vendor/model,…
+MODEL_ID = re.compile(r"^[a-z0-9][a-z0-9._-]*/[a-z0-9][a-z0-9._:-]*$")
+
+
+def allowed_models() -> set[str]:
+    extra = {*os.environ.get("RADAR_EXTRA_MODELS", "").split(","),
+             *str(dotenv_values(ROOT / ".env").get("RADAR_EXTRA_MODELS") or "").split(",")}
+    return ALLOWED_MODELS | {m.strip() for m in extra if MODEL_ID.match(m.strip())}
 ROOT = Path(__file__).resolve().parents[2]
 
 
@@ -23,6 +34,7 @@ class RadarSettings:
     max_sources: int = 110
     max_candidates: int = 60
     search_workers: int = 3
+    model_workers: int = 8
     max_active_runs: int = 1
     deadline_seconds: int = 1080
     fetch_timeout: int = 12
@@ -48,6 +60,18 @@ class RadarSettings:
     audio_transcription_allowlist: tuple[str, ...] = ()
     audio_transcription_timeout: int = 180
     audio_transcription_max_mb: int = 20
+    # Мягкий резерв мест чтения под денежные источники (гранты, контракты, венчур): доля
+    # слотов, которую деньги получают первыми; недобор отдаётся остальным, потолков нет.
+    money_min_share: float = 0.3
+    # Сколько первых веток плана опрашивают денежные коннекторы (остальные — только прежние).
+    money_branches: int = 3
+    # Глубина рассуждений LLM радара (OpenRouter reasoning): "" — по умолчанию модели;
+    # none — без рассуждений; minimal/low/medium/high. Рассуждающие модели (DeepSeek V4.1)
+    # тратят на них до 2/3 выходных токенов: прогон дольше и ответы обрезаются по лимиту.
+    reasoning_effort: str = ""
+    # Переопределение по ролям вызовов: "critical_assessment:default,consolidate:low";
+    # default — глубина модели по умолчанию (без параметра reasoning).
+    reasoning_by_role: tuple[tuple[str, str], ...] = ()
 
     @property
     def active_model(self) -> str:
@@ -74,7 +98,8 @@ class RadarSettings:
                 return ("Для RADAR_PROVIDER=local нужен сервис поиска (RADAR_WEB_SEARCH=service) или открытые "
                         "источники (RADAR_OPEN_SOURCES=1): веб-плагина у локальной модели нет.")
             return None
-        if self.model not in ALLOWED_MODELS or self.research_model not in ALLOWED_MODELS:
+        allowed = allowed_models()
+        if self.model not in allowed or self.research_model not in allowed:
             return "Выбранная конфигурация LLM не поддерживается приложением."
         if not self.openrouter_api_key:
             return "Добавьте OPENROUTER_API_KEY в .env. Каталог примеров доступен без ключа."
@@ -93,6 +118,12 @@ def load_radar_settings() -> RadarSettings:
         except ValueError:
             return default
 
+    def share(key: str, default: float, high: float) -> float:
+        try:
+            return max(0.0, min(high, float(val(key, str(default)))))
+        except ValueError:
+            return default
+
     model = val("OPENROUTER_MODEL", "openai/gpt-4.1")
     provider = "local" if val("RADAR_PROVIDER", "openrouter").lower() == "local" else "openrouter"
     deadline_limit = 3600 if provider == "local" else 1200
@@ -106,10 +137,11 @@ def load_radar_settings() -> RadarSettings:
         database_url=val("RADAR_DATABASE_URL"),
         storage_dir=Path(val("STORAGE_DIR", str(ROOT / "storage"))),
         data_dir=Path(val("SAMPLE_DATA_DIR", str(ROOT / "data"))),
-        branches=num("RADAR_SEARCH_BRANCHES", 4, 1, 8),
-        max_sources=num("RADAR_MAX_SOURCES", 110, 8, 128),
-        max_candidates=num("RADAR_MAX_CANDIDATES", 60, 15, 64),
-        search_workers=num("RADAR_SEARCH_WORKERS", 3, 1, 4),
+        branches=num("RADAR_SEARCH_BRANCHES", 4, 1, 16),
+        max_sources=num("RADAR_MAX_SOURCES", 110, 8, 512),
+        max_candidates=num("RADAR_MAX_CANDIDATES", 60, 15, 128),
+        search_workers=num("RADAR_SEARCH_WORKERS", 3, 1, 8),
+        model_workers=num("RADAR_MODEL_WORKERS", 8, 1, 12),
         max_active_runs=num("RADAR_MAX_ACTIVE_RUNS", 1, 1, 3),
         # Облачный профиль целится в 18 минут и жёстко ограничен 20; локальной модели — до часа.
         deadline_seconds=num("RADAR_DEADLINE_SECONDS", 1080, 60, deadline_limit),
@@ -133,4 +165,12 @@ def load_radar_settings() -> RadarSettings:
         audio_transcription_allowlist=audio_hosts,
         audio_transcription_timeout=num("RADAR_AUDIO_TRANSCRIPTION_TIMEOUT", 180, 15, 600),
         audio_transcription_max_mb=num("RADAR_AUDIO_TRANSCRIPTION_MAX_MB", 20, 1, 25),
+        money_min_share=share("RADAR_MONEY_MIN_SHARE", 0.3, 0.6),
+        money_branches=num("RADAR_MONEY_BRANCHES", 3, 0, 16),
+        reasoning_effort=(val("RADAR_REASONING_EFFORT").lower()
+                          if val("RADAR_REASONING_EFFORT").lower() in REASONING_EFFORTS else ""),
+        reasoning_by_role=tuple(
+            (role.strip(), effort.strip().lower())
+            for role, _, effort in (item.partition(":") for item in val("RADAR_REASONING_BY_ROLE").split(","))
+            if role.strip() and effort.strip().lower() in (*REASONING_EFFORTS, "default")),
     )

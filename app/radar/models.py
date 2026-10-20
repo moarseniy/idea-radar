@@ -73,6 +73,9 @@ class SearchPlan(StrictModel):
     interpretation: str
     branches: list[Branch]
     query_language: str = "und"
+    # Короткие английские названия подходов внутри темы для денежных API: гранты и раунды
+    # находятся по "agent identity", но не по "AI agent security in banking systems".
+    money_phrases: list[str] = Field(default_factory=list)
 
 
 class ScopeChatMessage(StrictModel):
